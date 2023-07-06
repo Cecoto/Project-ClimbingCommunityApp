@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-ClimbingCommunity.Web-2b978a0c-eb16-4c5b-a30e-72adcea2accd</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CLimbingCommunity.Common\ClimbingCommunity.Common.csproj" />
+    <ProjectReference Include="..\ClimbingCommunity.Data.Models\ClimbingCommunity.Data.Models.csproj" />
+    <ProjectReference Include="..\ClimbingCommunity.Data\ClimbingCommunity.Data.csproj" />
+    <ProjectReference Include="..\ClimbingCommunity.Services\ClimbingCommunity.Services.csproj" />
+    <ProjectReference Include="..\ClimbingCommunity.Web.Infrastructure\ClimbingCommunity.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\ClimbingCommunity.Web.ViewModels\ClimbingCommunity.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

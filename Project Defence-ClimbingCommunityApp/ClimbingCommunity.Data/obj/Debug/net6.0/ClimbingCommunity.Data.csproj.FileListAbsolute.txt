@@ -1,0 +1,17 @@
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\bin\Debug\net6.0\ClimbingCommunity.Data.deps.json
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\bin\Debug\net6.0\ClimbingCommunity.Data.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\bin\Debug\net6.0\ClimbingCommunity.Data.pdb
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\bin\Debug\net6.0\CLimbingCommunity.Common.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\bin\Debug\net6.0\ClimbingCommunity.Data.Models.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\bin\Debug\net6.0\CLimbingCommunity.Common.pdb
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\bin\Debug\net6.0\ClimbingCommunity.Data.Models.pdb
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ClimbingCommunity.Data.csproj.AssemblyReference.cache
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ClimbingCommunity.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ClimbingCommunity.Data.AssemblyInfoInputs.cache
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ClimbingCommunity.Data.AssemblyInfo.cs
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ClimbingCommunity.Data.csproj.CoreCompileInputs.cache
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ClimbingCommunity.Data.csproj.CopyComplete
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ClimbingCommunity.Data.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\refint\ClimbingCommunity.Data.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ClimbingCommunity.Data.pdb
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Data\obj\Debug\net6.0\ref\ClimbingCommunity.Data.dll

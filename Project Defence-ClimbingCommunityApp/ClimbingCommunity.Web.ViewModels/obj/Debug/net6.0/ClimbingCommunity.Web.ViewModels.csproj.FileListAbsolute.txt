@@ -1,0 +1,15 @@
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\bin\Debug\net6.0\ClimbingCommunity.Web.ViewModels.deps.json
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\bin\Debug\net6.0\ClimbingCommunity.Web.ViewModels.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\bin\Debug\net6.0\ClimbingCommunity.Web.ViewModels.pdb
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ClimbingCommunity.Web.ViewModels.csproj.AssemblyReference.cache
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ClimbingCommunity.Web.ViewModels.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ClimbingCommunity.Web.ViewModels.AssemblyInfoInputs.cache
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ClimbingCommunity.Web.ViewModels.AssemblyInfo.cs
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ClimbingCommunity.Web.ViewModels.csproj.CoreCompileInputs.cache
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ClimbingCommunity.Web.ViewModels.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\refint\ClimbingCommunity.Web.ViewModels.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ClimbingCommunity.Web.ViewModels.pdb
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ref\ClimbingCommunity.Web.ViewModels.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\bin\Debug\net6.0\CLimbingCommunity.Common.dll
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\bin\Debug\net6.0\CLimbingCommunity.Common.pdb
+D:\MyProject-ClimbingCommunityApp\Project Defencce-ClimbingCommunityApp\ClimbingCommunity.Web.ViewModels\obj\Debug\net6.0\ClimbingCommunity.Web.ViewModels.csproj.CopyComplete
