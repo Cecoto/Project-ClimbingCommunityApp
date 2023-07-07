@@ -1,18 +1,22 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 20px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 50px;
+}
+.logo {
+    width: 250px; /* Adjust this value to control the width of the logo */
+    height: 50px; /* Adjust this value to control the height of the logo */
 }

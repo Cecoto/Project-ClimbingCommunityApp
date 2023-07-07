@@ -1,8 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Our App 2</title>
+    <link rel="stylesheet" href="~/css/index.css" />
+</head>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<body>
+    <div class="indexContainer">
+        <h1>Welcome to Our App</h1>
+
+        <p>Join our community and start your journey with us!</p>
+
+        <a class="cta-button" asp-area="" asp-controller="Account" asp-action="Register">Join Now</a>
+
+        <p>
+            <a asp-area="" asp-controller="Account" asp-action="Register">Already a member of our community? Click here to login.</a>
+        </p>
+
+    </div>
+</body>
+</html>

@@ -1,10 +1,11 @@
 ﻿namespace ClimbingCommunity.Web.Controllers
 {
     using ClimbingCommunity.Web.ViewModels.Home;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -13,12 +14,20 @@
             _logger = logger;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [AllowAnonymous]
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult FAQ()
         {
             return View();
         }

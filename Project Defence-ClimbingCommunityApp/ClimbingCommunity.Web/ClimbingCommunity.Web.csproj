@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.14" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,22 @@
     <ProjectReference Include="..\ClimbingCommunity.Services\ClimbingCommunity.Services.csproj" />
     <ProjectReference Include="..\ClimbingCommunity.Web.Infrastructure\ClimbingCommunity.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\ClimbingCommunity.Web.ViewModels\ClimbingCommunity.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\bootstrap\" />
+    <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
+    <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />
+    <Folder Include="wwwroot\lib\jquery-validation\" />
+    <Folder Include="wwwroot\lib\jquery-validation\dist\" />
+    <Folder Include="wwwroot\lib\jquery\" />
+    <Folder Include="wwwroot\lib\jquery\dist\" />
   </ItemGroup>
 
 </Project>

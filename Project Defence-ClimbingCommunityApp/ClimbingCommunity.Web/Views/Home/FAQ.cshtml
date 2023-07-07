@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "FAQ";
+}
+
+<link rel="stylesheet" href="~/css/faq.css" asp-append-version="true" />
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="accordion" id="faqAccordion">
+
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="faqHeading1">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                Question 1: What is ClimbingCommunity?
+            </button>
+        </h3>
+        <div id="faqCollapse1" class="accordion-collapse collapse show" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+                Answer 1: ClimbingCommunity is a platform for climbers and outdoor enthusiasts to connect, share experiences, and learn from each other.
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="faqHeading2">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                Question 2: How can I join ClimbingCommunity?
+            </button>
+        </h3>
+        <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+                Answer 2: You can join ClimbingCommunity by registering an account on our website. Simply click on the "Register" button and follow the instructions to create your account.
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="faqHeading3">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                Question 3: Can I connect with other climbers through ClimbingCommunity?
+            </button>
+        </h3>
+        <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+                Answer 3: Absolutely! ClimbingCommunity provides a platform for climbers to connect with each other. You can join discussions, participate in forums, and even find climbing partners in your area.
+            </div>
+        </div>
+    </div>
+
+    <!-- Add more FAQ items here -->
+
+</div>
