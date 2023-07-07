@@ -1,4 +1,5 @@
 using ClimbingCommunity.Data;
+using ClimbingCommunity.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 builder.Services.AddDbContext<ClimbingCommunityDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
 
@@ -23,6 +24,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
 
 })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ClimbingCommunityDbContext>();
 
 builder.Services.AddControllersWithViews();
