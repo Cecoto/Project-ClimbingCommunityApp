@@ -1,8 +1,9 @@
 ﻿namespace ClimbingCommunity.Data.Configurations
 {
-    using ClimbingCommunity.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using ClimbingCommunity.Data.Models;
 
     public class TripClimberEntittyConfiguration : IEntityTypeConfiguration<TripClimber>
     {

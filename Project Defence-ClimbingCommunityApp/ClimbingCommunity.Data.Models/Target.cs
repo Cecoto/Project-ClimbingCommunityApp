@@ -16,5 +16,8 @@
         [MaxLength(NameMaxLength)]
         [Comment("Show us the target of the training")]
         public string Name { get; set; } = null!;
+
+        //[Comment("Property for soft delete")]
+        //public bool IsActive { get; set; } 
     }
 }

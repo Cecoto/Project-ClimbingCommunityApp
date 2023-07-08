@@ -41,7 +41,7 @@
         public virtual Coach Coach { get; set; } = null!;
 
         [Comment("Property for soft delete action.")]
-        public bool isActive { get; set; } = true;
+        public bool isActive { get; set; }
 
     }
 }

@@ -1,7 +1,10 @@
 using ClimbingCommunity.Data;
 using ClimbingCommunity.Data.Models;
+using ClimbingCommunity.Web.Infrastructure.Extensions;
+using ClimbingCommunity.Web.Infrastructure.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebShopDemo.Core.Data.Common;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -27,9 +30,15 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ClimbingCommunityDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddApplicationServices(typeof(IRepository));
 
-var app = builder.Build();
+builder.Services.AddControllersWithViews()
+    .AddMvcOptions(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    });
+
+WebApplication app = builder.Build();
 
 
 if (app.Environment.IsDevelopment())

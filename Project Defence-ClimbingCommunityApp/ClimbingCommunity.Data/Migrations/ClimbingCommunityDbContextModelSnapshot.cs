@@ -127,10 +127,6 @@ namespace ClimbingCommunity.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit")
-                        .HasComment("Property for soft delete");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -140,6 +136,33 @@ namespace ClimbingCommunity.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ClimberSpecialities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Boulderer"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Rope climber"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Free solo climber"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Speed climber"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "All rounder"
+                        });
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.ClimbingTrip", b =>
@@ -160,7 +183,9 @@ namespace ClimbingCommunity.Data.Migrations
                         .HasComment("Duration of the trip in days.");
 
                     b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasComment("Property for soft delete.");
 
                     b.Property<string>("OrganizatorId")
@@ -194,10 +219,6 @@ namespace ClimbingCommunity.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit")
-                        .HasComment("Property for soft delete");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(25)
@@ -207,6 +228,28 @@ namespace ClimbingCommunity.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Levels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Begginer"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Intermediate"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Advanced"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Pro"
+                        });
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.Target", b =>
@@ -227,6 +270,33 @@ namespace ClimbingCommunity.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Target");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Endurence"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Strenght"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Power-Endurance"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Conditioning"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "General fitness"
+                        });
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.Training", b =>
@@ -265,7 +335,9 @@ namespace ClimbingCommunity.Data.Migrations
                         .HasComment("Title of the training.");
 
                     b.Property<bool>("isActive")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(true)
                         .HasComment("Property for soft delete action.");
 
                     b.HasKey("Id");
@@ -310,6 +382,23 @@ namespace ClimbingCommunity.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TripTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Bouldering"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Deep water soloing"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Rope-climbing"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ClimbingCommunity.Data.Migrations
 {
-    public partial class InitializeDbAndAddEntities : Migration
+    public partial class InitializeDbAndSeedDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,8 +28,7 @@ namespace ClimbingCommunity.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Entity identifier")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "Speciality type"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, comment: "Property for soft delete")
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "Speciality type")
                 },
                 constraints: table =>
                 {
@@ -43,8 +41,7 @@ namespace ClimbingCommunity.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Entity identifier")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false, comment: "Name/Title of the level."),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, comment: "Property for soft delete")
+                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false, comment: "Name/Title of the level.")
                 },
                 constraints: table =>
                 {
@@ -240,7 +237,7 @@ namespace ClimbingCommunity.Data.Migrations
                     TripTypeId = table.Column<int>(type: "int", nullable: false),
                     OrganizatorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false, comment: "Duration of the trip in days."),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, comment: "Property for soft delete.")
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true, comment: "Property for soft delete.")
                 },
                 constraints: table =>
                 {
@@ -270,7 +267,7 @@ namespace ClimbingCommunity.Data.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false, comment: "Price for the training"),
                     TargetId = table.Column<int>(type: "int", nullable: false),
                     CoachId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    isActive = table.Column<bool>(type: "bit", nullable: false, comment: "Property for soft delete action.")
+                    isActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true, comment: "Property for soft delete action.")
                 },
                 constraints: table =>
                 {
@@ -311,6 +308,51 @@ namespace ClimbingCommunity.Data.Migrations
                         principalTable: "ClimbingTrips",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ClimberSpecialities",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Boulderer" },
+                    { 2, "Rope climber" },
+                    { 3, "Free solo climber" },
+                    { 4, "Speed climber" },
+                    { 5, "All rounder" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Levels",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Begginer" },
+                    { 2, "Intermediate" },
+                    { 3, "Advanced" },
+                    { 4, "Pro" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Target",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Endurence" },
+                    { 2, "Strenght" },
+                    { 3, "Power-Endurance" },
+                    { 4, "Conditioning" },
+                    { 5, "General fitness" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TripTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Bouldering" },
+                    { 2, "Deep water soloing" },
+                    { 3, "Rope-climbing" }
                 });
 
             migrationBuilder.CreateIndex(

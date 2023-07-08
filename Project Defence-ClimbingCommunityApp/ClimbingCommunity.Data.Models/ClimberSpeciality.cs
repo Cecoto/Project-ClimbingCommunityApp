@@ -17,7 +17,7 @@
         [MaxLength(ClimberSpecialityNameMaxLength)]
         public string Name { get; set; } = null!;
 
-        [Comment("Property for soft delete")]
-        public bool IsActive { get; set; } = true;
+        //[Comment("Property for soft delete")]
+        //public bool IsActive { get; set; } 
     }
 }
