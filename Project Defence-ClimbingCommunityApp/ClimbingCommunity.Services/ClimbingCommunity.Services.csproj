@@ -13,4 +13,8 @@
     <ProjectReference Include="..\ClimbingCommunity.Web.ViewModels\ClimbingCommunity.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+  </ItemGroup>
+
 </Project>
