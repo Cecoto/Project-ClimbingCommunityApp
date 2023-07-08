@@ -32,6 +32,13 @@
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult UserTypePopup()
+        {
+            return PartialView("_UserTypePopupPartial");
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

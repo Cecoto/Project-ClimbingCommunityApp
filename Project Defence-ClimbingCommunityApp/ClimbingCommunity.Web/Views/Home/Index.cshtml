@@ -14,12 +14,17 @@
 
         <p>Join our community and start your journey with us!</p>
 
-        <a class="cta-button" asp-area="" asp-controller="Account" asp-action="Register">Join Now</a>
+        <a class="cta-button" id="join-button" @*asp-area="" asp-controller="Account" asp-action="Register"*@>Join Now</a>
+         <div id="popup-placeholder"></div>
+
 
         <p>
-            <a asp-area="" asp-controller="Account" asp-action="Register">Already a member of our community? Click here to login.</a>
+            <a asp-area="" asp-controller="User" asp-action="Login">Already a member of our community? Click here to login.</a>
         </p>
 
     </div>
 </body>
 </html>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/popupJquery.js"></script>
