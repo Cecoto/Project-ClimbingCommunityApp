@@ -61,8 +61,8 @@
         [AllowAnonymous]
         public IActionResult RegisterClimber()
         {
-
-            return View();
+            RegisterClimberViewModel model = new RegisterClimberViewModel();
+            return View(model);
         }
     }
 }

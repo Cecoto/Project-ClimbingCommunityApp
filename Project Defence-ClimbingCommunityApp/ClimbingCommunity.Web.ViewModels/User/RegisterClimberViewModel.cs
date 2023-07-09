@@ -1,13 +1,19 @@
 ﻿namespace ClimbingCommunity.Web.ViewModels.User
 {
+    using ClimbingCommunity.Data.Models;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.ApplicationUser;
-    using static Common.EntityValidationConstants.Coach;
+    using static Common.EntityValidationConstants.Climber;
 
 
-    public class RegisterCoachViewModel
+    public class RegisterClimberViewModel
     {
+        public RegisterClimberViewModel()
+        {
+            this.ClimberSpecialities = new HashSet<ClimberSpeciality>();
+            this.Levels = new HashSet<Level>();
+        }
         [Required]
         [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
         public string FirstName { get; set; } = null!;
@@ -41,9 +47,15 @@
 
         public string Gender { get; set; } = null!;
 
-        [Range(CoachingExperienceMinValue, CoachingExperienceMaxValue)]
-        public int CoachingExperience { get; set; }
+        [Range(ClimbingExperienceMinValue, ClimbingExperienceMaxValue)]
+        public int ClimbingExperience { get; set; }
 
+        public int LevelId { get; set; }
+
+        public int ClimberSpecialityId { get; set; }
+
+        public IEnumerable<Level> Levels { get; set; }
+        public IEnumerable<ClimberSpeciality> ClimberSpecialities { get; set; }
 
 
     }
