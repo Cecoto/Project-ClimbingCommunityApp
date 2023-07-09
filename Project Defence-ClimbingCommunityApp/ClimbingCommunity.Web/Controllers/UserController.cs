@@ -1,12 +1,14 @@
 ﻿namespace ClimbingCommunity.Web.Controllers
 {
     using Microsoft.AspNetCore.Identity;
-
-    using ClimbingCommunity.Data.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using ClimbingCommunity.Data.Models;
+    using ClimbingCommunity.Web.ViewModels;
     using static Common.RoleConstants;
+    using ClimbingCommunity.Web.ViewModels.User;
+
     /// <summary>
     /// Controller about user managment - login, register and logout.
     /// </summary>
@@ -41,14 +43,15 @@
             return RedirectToAction("Index", "Home");
         }
         /// <summary>
-        /// Method for loading the view for register of a coach
+        /// Method for loading the form for register of a coach.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult RegisterCoach()
         {
-            return View();
+            RegisterCoachViewModel model = new RegisterCoachViewModel();
+            return View(model);
         }
         /// <summary>
         /// Method for loading the view for register of a climber
@@ -58,7 +61,7 @@
         [AllowAnonymous]
         public IActionResult RegisterClimber()
         {
-            
+
             return View();
         }
     }

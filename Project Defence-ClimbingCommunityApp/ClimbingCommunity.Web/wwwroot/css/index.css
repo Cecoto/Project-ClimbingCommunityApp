@@ -2,10 +2,9 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
-    margin: 0;
+    margin: auto;
     padding: 0;
-    overflow: auto;
-    box-sizing: border-box;
+    
 }
 
 .indexContainer {
@@ -57,24 +56,21 @@ a {
 .footer {
     background-color: #fff;
     color: #fff;
-    text-align: left;
+    text-align: left; 
 }
-
-.footer-section {
-    padding-left: 6px;
-}
-
-    .footer-section .FAQ {
+    .footer .FAQ {
         width: 150px;
         font-size: 14px;
     }
 
-        .footer-section .FAQ a:hover {
+        .footer .FAQ a:hover {
             text-decoration: underline;
             background-color: #92d29b;
             border-radius: 8px;
         }
-        .footer-section .FAQ a {
+        .footer .FAQ a {
             padding-top: 0px;
         }
-    
+
+
+

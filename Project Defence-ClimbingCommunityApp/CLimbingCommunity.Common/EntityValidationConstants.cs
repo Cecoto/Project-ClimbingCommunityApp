@@ -18,6 +18,12 @@
             public const int PhoneNumberMinLength = 10;
             public const int PhoneNumberMaxLength = 20;
 
+            public const int EmailMinLength = 10;
+            public const int EmailMaxLength = 20;
+
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLength = 25;
+
         }
         public static class Climber
         {
@@ -46,6 +52,7 @@
         {
             public const int CoachingExperienceMinValue = 0;
             public const int CoachingExperienceMaxValue = 50;
+
         }
         public static class Level
         {

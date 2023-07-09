@@ -1,0 +1,46 @@
+﻿.register-form {
+    margin-top: 30px;
+    margin-bottom: 300px;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-register {
+    background: #92d29b;
+    width: 35%;
+}
+
+    .btn-register:hover {
+        background-color: darkgreen;
+    }
+
+.gender-label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.gender-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+    .gender-radio label {
+        margin-left: 10px;
+    }
+
+@media (max-width: 768px) {
+    .col-md-5 {
+        margin-bottom: 20px;
+    }
+}
