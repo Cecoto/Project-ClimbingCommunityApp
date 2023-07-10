@@ -58,6 +58,11 @@
             RegisterCoachViewModel model = new RegisterCoachViewModel();
             return View(model);
         }
+        /// <summary>
+        /// Post method for registration of the coach.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Redirection to login page</returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterCoach(RegisterCoachViewModel model)
@@ -118,6 +123,11 @@
             };
             return View(model);
         }
+        /// <summary>
+        /// Post method for registration of the climber
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Redirection to login page</returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterClimber(RegisterClimberViewModel model)
@@ -163,6 +173,43 @@
             }
 
             return View(model);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            LoginViewModel model = new LoginViewModel();
+            return View(model);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            ApplicationUser user = await userManager.FindByEmailAsync(model.EmailAddress);
+
+            if (user != null)
+            {
+                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            ModelState.AddModelError(string.Empty,"Invalid login! Please try again.");
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -1,0 +1,39 @@
+﻿@model LoginViewModel
+
+<link rel="stylesheet" href="~/css/LoginView.css" asp-append-version="true" />
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<div class="container">
+    <form asp-action="Login" method="post" class="login-form">
+        <div class="form-group">
+            <label asp-for="EmailAddress" class="form-label"></label>
+            <input asp-for="EmailAddress" class="form-control" placeholder="Enter your email address" />
+            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" placeholder="Enter your password" type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-login">
+                Login
+            </button>
+        </div>
+    </form>
+   
+</div>
+<div>
+    <a>Don't have an account? Click <a class="link-primary" id="register-link">here</a> to register.</a>
+</div>
+<div id="popup-placeholder"> </div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/lib/jquery/dist/popupJquery.js"></script>

@@ -30,10 +30,11 @@
                         <ul class="navbar-nav flex-grow-1">
                         </ul>
                         @if (!ViewContext.RouteData.Values["action"].ToString().Equals("RegisterCoach", StringComparison.OrdinalIgnoreCase) &&
-                        !ViewContext.RouteData.Values["action"].ToString().Equals("RegisterClimber", StringComparison.OrdinalIgnoreCase))
-                        {
-                        <partial name="_LoginPartial" />
-                            
+                        !ViewContext.RouteData.Values["action"].ToString().Equals("RegisterClimber", StringComparison.OrdinalIgnoreCase) &&
+                                    !ViewContext.RouteData.Values["action"].ToString().Equals("Login", StringComparison.OrdinalIgnoreCase))
+                                    {
+                            <partial name="_LoginPartial" />
+
                         }
                     </div>
                 </div>

@@ -2,7 +2,6 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<link rel="stylesheet" href="~/css/loginPartialButton.css" asp-append-version="true" />
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
@@ -19,7 +18,7 @@
 else
 {
     <li class="nav-item">
-            <a class="nav-link text-dark" id="register-link">Register</a>
+            <a class="nav-link text-dark " id="register-link" id="join-button">Register</a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark " asp-area="" asp-controller="User" asp-action="Login">Login</a>
