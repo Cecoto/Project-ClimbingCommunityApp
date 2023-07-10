@@ -6,9 +6,11 @@
 
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Web.ViewModels;
-    using static Common.RoleConstants;
     using ClimbingCommunity.Web.ViewModels.User;
+    using ClimbingCommunity.Services.Contracts;
+    using ClimbingCommunity.Data.Models.Enums;
 
+    using static Common.RoleConstants;
     /// <summary>
     /// Controller about user managment - login, register and logout.
     /// </summary>
@@ -17,15 +19,18 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IUserService userService;
 
         public UserController(
             UserManager<ApplicationUser> _userManager,
             SignInManager<ApplicationUser> _signInManager,
-            RoleManager<IdentityRole> _roleManager)
+            RoleManager<IdentityRole> _roleManager,
+            IUserService _userService)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             roleManager = _roleManager;
+            userService = _userService;
         }
 
         /// <summary>
@@ -53,15 +58,110 @@
             RegisterCoachViewModel model = new RegisterCoachViewModel();
             return View(model);
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterCoach(RegisterCoachViewModel model)
+        {
+            bool genderIsValid = Enum.TryParse<Gender>(model.Gender, out Gender gender);
+
+            if (!genderIsValid)
+            {
+                ModelState.AddModelError(model.Gender, "Invalid gender, please select it again!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            Coach newCoach = new Coach()
+            {
+                UserName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                CoachingExperience = model.CoachingExperience,
+                Gender = gender,
+                ProfilePictureUrl = "/images/ProfilePictures/male.png"                
+            };
+
+            //await userManager.AddToRoleAsync(newCoach,Common.RoleConstants.Coach);
+            
+            var result = await userManager.CreateAsync(newCoach,model.Password);
+            if (result.Succeeded)
+            {
+                return Ok();
+                //return RedirectToAction("Login", "User");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty,error.Description);
+            }
+
+            return View(model);
+
+        }
         /// <summary>
         /// Method for loading the view for register of a climber
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult RegisterClimber()
+        public async Task<IActionResult> RegisterClimber()
         {
-            RegisterClimberViewModel model = new RegisterClimberViewModel();
+            RegisterClimberViewModel model = new RegisterClimberViewModel()
+            {
+                Levels = await userService.GetLevelsForRegister(),
+                ClimberSpecialities = await userService.GetClimberSpecialitiesForRegister()
+
+            };
+            return View(model);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterClimber(RegisterClimberViewModel model)
+        {
+
+            bool genderIsValid = Enum.TryParse<Gender>(model.Gender, out Gender gender);
+
+            if (!genderIsValid)
+            {
+                ModelState.AddModelError(model.Gender, "Invalid gender, please select it again!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            Climber climber = new Climber()
+            {
+                UserName = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                ClimbingExperience = model.ClimbingExperience,
+                Gender = gender,
+                ProfilePictureUrl = "/images/ProfilePictures/male.png",
+                LevelId = model.LevelId,
+                ClimberSpecialityId = model.ClimberSpecialityId
+            };
+
+            //await userManager.AddToRoleAsync(newCoach,Common.RoleConstants.Coach);
+
+            var result = await userManager.CreateAsync(climber, model.Password);
+            if (result.Succeeded)
+            {
+                return Ok();
+                //return RedirectToAction("Login", "User");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
             return View(model);
         }
     }

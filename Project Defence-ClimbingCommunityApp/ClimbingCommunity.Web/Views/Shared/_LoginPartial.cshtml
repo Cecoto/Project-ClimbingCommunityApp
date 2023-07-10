@@ -2,12 +2,13 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+<link rel="stylesheet" href="~/css/loginPartialButton.css" asp-append-version="true" />
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @User.Identity?.Name!</a>
+        <a  class="nav-link text-dark green" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello, @User.Identity?.Name!</a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -21,7 +22,9 @@ else
             <a class="nav-link text-dark" id="register-link">Register</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+        <a class="nav-link text-dark " asp-area="" asp-controller="User" asp-action="Login">Login</a>
     </li>
 }
 </ul>
+
+

@@ -1,6 +1,7 @@
 ﻿namespace ClimbingCommunity.Web.ViewModels.User
 {
     using ClimbingCommunity.Data.Models;
+    using ClimbingCommunity.Web.ViewModels.User.Climber;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.ApplicationUser;
@@ -11,15 +12,15 @@
     {
         public RegisterClimberViewModel()
         {
-            this.ClimberSpecialities = new HashSet<ClimberSpeciality>();
-            this.Levels = new HashSet<Level>();
+            this.ClimberSpecialities = new HashSet<ClimberSpecialityViewModel>();
+            this.Levels = new HashSet<ClimberLevelViewModel>();
         }
         [Required]
         [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [StringLength(LastNameMaxLength, MinimumLength = LastNameMaxLength)]
+        [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
         public string LastName { get; set; } = null!;
 
         [Required]
@@ -54,8 +55,8 @@
 
         public int ClimberSpecialityId { get; set; }
 
-        public IEnumerable<Level> Levels { get; set; }
-        public IEnumerable<ClimberSpeciality> ClimberSpecialities { get; set; }
+        public IEnumerable<ClimberLevelViewModel> Levels { get; set; }
+        public IEnumerable<ClimberSpecialityViewModel> ClimberSpecialities { get; set; }
 
 
     }

@@ -1,5 +1,6 @@
 using ClimbingCommunity.Data;
 using ClimbingCommunity.Data.Models;
+using ClimbingCommunity.Services.Contracts;
 using ClimbingCommunity.Web.Infrastructure.Extensions;
 using ClimbingCommunity.Web.Infrastructure.ModelBinders;
 using Microsoft.AspNetCore.Identity;
@@ -30,7 +31,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ClimbingCommunityDbContext>();
 
-builder.Services.AddApplicationServices(typeof(IRepository));
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddApplicationServices(typeof(IUserService));
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
