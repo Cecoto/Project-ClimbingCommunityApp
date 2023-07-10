@@ -9,6 +9,7 @@
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.User.Climber;
     using WebShopDemo.Core.Data.Common;
+    using ClimbingCommunity.Web.ViewModels.Profile;
 
     public class UserService : IUserService
     {
@@ -17,6 +18,25 @@
         public UserService(IRepository repo)
         {
             this.repo = repo;
+        }
+
+        public async Task<ClimberProfileViewModel> GetClimberInfo(string userId)
+        {
+            Climber user = await repo.GetByIdAsync<Climber>(userId);
+
+            
+            return new ClimberProfileViewModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                ProfilePicture = user.ProfilePictureUrl!,
+                Gender = user.Gender.ToString(),
+                Id = user.Id,
+                Speciality = user.ClimberSpeciality.Name,
+                ClimbingExperience = user.ClimbingExperience,
+                TypeOfUser = "Climber"     
+            };
         }
 
         public async Task<IEnumerable<ClimberSpecialityViewModel>> GetClimberSpecialitiesForRegister()

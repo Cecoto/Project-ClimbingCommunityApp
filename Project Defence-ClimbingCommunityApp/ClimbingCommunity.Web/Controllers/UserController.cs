@@ -11,6 +11,8 @@
     using ClimbingCommunity.Data.Models.Enums;
 
     using static Common.RoleConstants;
+    using ClimbingCommunity.Common;
+
     /// <summary>
     /// Controller about user managment - login, register and logout.
     /// </summary>
@@ -22,15 +24,36 @@
         private readonly IUserService userService;
 
         public UserController(
-            UserManager<ApplicationUser> _userManager,
+            
             SignInManager<ApplicationUser> _signInManager,
             RoleManager<IdentityRole> _roleManager,
-            IUserService _userService)
+            IUserService _userService,
+            UserManager<ApplicationUser> _userManager)
+            
         {
             userManager = _userManager;
             signInManager = _signInManager;
             roleManager = _roleManager;
             userService = _userService;
+        }
+        /// <summary>
+        /// Method that will set to concrete user a role.Will be in the administratorController.
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public async Task<IActionResult> AddUsersToRoles()
+        {
+            string email1 = "pesho@abv.bg";
+            string email2 = "ceco97@asd.bg";
+
+            var pesho = await userManager.FindByEmailAsync(email1);
+
+            var user2 = await userManager.FindByEmailAsync(email2);
+
+            await userManager.AddToRoleAsync(pesho, RoleConstants.Coach);
+            await userManager.AddToRoleAsync(user2, RoleConstants.Climber);
+
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
@@ -47,6 +70,7 @@
 
             return RedirectToAction("Index", "Home");
         }
+
         /// <summary>
         /// Method for loading the form for register of a coach.
         /// </summary>

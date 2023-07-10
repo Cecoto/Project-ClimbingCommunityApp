@@ -18,6 +18,7 @@
         [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;
 
+
         [Required]
         [Comment("User lastname")]
         [MaxLength(LastNameMaxLength)]
