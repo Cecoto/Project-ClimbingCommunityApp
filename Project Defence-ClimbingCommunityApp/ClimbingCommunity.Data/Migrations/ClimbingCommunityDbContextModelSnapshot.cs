@@ -38,10 +38,6 @@ namespace ClimbingCommunity.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -103,6 +99,12 @@ namespace ClimbingCommunity.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)")
+                        .HasComment("Here we save the userRole in the application.");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -115,7 +117,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
+                    b.HasDiscriminator<string>("UserType").HasValue("Administrator");
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.ClimberSpeciality", b =>
@@ -135,7 +137,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClimberSpecialities", (string)null);
+                    b.ToTable("ClimberSpecialities");
 
                     b.HasData(
                         new
@@ -172,6 +174,12 @@ namespace ClimbingCommunity.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Globaly unique identifier");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()")
+                        .HasComment("Date and time user creted the entity");
+
                     b.Property<string>("Destination")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -207,7 +215,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasIndex("TripTypeId");
 
-                    b.ToTable("ClimbingTrips", (string)null);
+                    b.ToTable("ClimbingTrips");
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.Level", b =>
@@ -227,7 +235,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Levels", (string)null);
+                    b.ToTable("Levels");
 
                     b.HasData(
                         new
@@ -269,7 +277,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Target", (string)null);
+                    b.ToTable("Target");
 
                     b.HasData(
                         new
@@ -310,6 +318,12 @@ namespace ClimbingCommunity.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()")
+                        .HasComment("Date and time user creted the entity");
+
                     b.Property<int>("Duration")
                         .HasColumnType("int")
                         .HasComment("Duration of the training in hours.");
@@ -346,7 +360,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("Trainings", (string)null);
+                    b.ToTable("Trainings");
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.TripClimber", b =>
@@ -361,7 +375,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasIndex("ClimberId");
 
-                    b.ToTable("TripsClimbers", (string)null);
+                    b.ToTable("TripsClimbers");
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.TripType", b =>
@@ -381,7 +395,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TripTypes", (string)null);
+                    b.ToTable("TripTypes");
 
                     b.HasData(
                         new

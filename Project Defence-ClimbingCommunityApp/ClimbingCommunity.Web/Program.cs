@@ -37,6 +37,7 @@ builder.Services.AddApplicationServices(typeof(IUserService));
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/User/Login";
+    
 
 });
 

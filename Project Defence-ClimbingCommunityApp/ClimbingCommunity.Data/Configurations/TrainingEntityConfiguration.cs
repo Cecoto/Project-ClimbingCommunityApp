@@ -9,7 +9,12 @@
     {
         public void Configure(EntityTypeBuilder<Training> builder)
         {
-            builder.Property(t => t.isActive)
+            builder
+               .Property(ct => ct.CreatedOn)
+               .HasDefaultValueSql("GETDATE()");
+
+            builder
+                .Property(t => t.isActive)
                 .HasDefaultValue(true);
 
         }

@@ -18,7 +18,6 @@
         [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; } = null!;
 
-
         [Required]
         [Comment("User lastname")]
         [MaxLength(LastNameMaxLength)]
@@ -34,7 +33,10 @@
         [MaxLength(ImageUrlMaxLength)]
         public string? ProfilePictureUrl { get; set; }
 
-
+        [Required]
+        [Comment("Here we save the userRole in the application.")]
+        [MaxLength(UserRoleMaxLength)]
+        public string UserType { get; set; } = null!;
 
     }
 }

@@ -24,6 +24,10 @@
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 25;
 
+            public const int UserRoleMinLength = 6;
+            public const int UserRoleMaxLength = 25;
+
+
         }
         public static class Climber
         {

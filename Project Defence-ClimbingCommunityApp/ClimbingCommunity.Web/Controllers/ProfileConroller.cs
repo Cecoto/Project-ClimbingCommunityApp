@@ -12,10 +12,10 @@
         {
             userService = _userService;
         }
-        [HttpGet]
+
+        
         public async Task<IActionResult> MyProfile()
         {
-
             ClimberProfileViewModel model = await userService.GetClimberInfo(GetUserId()!);
 
             return View(model);

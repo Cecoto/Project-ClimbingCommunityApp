@@ -8,7 +8,11 @@
     {
         public void Configure(EntityTypeBuilder<ClimbingTrip> builder)
         {
-            builder.Property(ct => ct.IsActive)
+            builder
+                .Property(ct => ct.CreatedOn)
+                .HasDefaultValueSql("GETDATE()");
+            builder
+                .Property(ct => ct.IsActive)
                 .HasDefaultValue(true);
         }
     }

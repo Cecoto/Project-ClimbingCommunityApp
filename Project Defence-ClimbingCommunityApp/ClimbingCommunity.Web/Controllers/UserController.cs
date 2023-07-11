@@ -24,12 +24,12 @@
         private readonly IUserService userService;
 
         public UserController(
-            
+
             SignInManager<ApplicationUser> _signInManager,
             RoleManager<IdentityRole> _roleManager,
             IUserService _userService,
             UserManager<ApplicationUser> _userManager)
-            
+
         {
             userManager = _userManager;
             signInManager = _signInManager;
@@ -37,7 +37,7 @@
             userService = _userService;
         }
         /// <summary>
-        /// Method that will set to concrete user a role.Will be in the administratorController.
+        /// Method that will manualy set to concrete user a role.Will be in the administratorController.
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
@@ -112,20 +112,22 @@
                 PhoneNumber = model.PhoneNumber,
                 CoachingExperience = model.CoachingExperience,
                 Gender = gender,
-                ProfilePictureUrl = "/images/ProfilePictures/male.png"                
+                ProfilePictureUrl = "/images/ProfilePictures/male.png",
+                UserType = "Coach"
+
             };
 
-            //await userManager.AddToRoleAsync(newCoach,Common.RoleConstants.Coach);
-            
-            var result = await userManager.CreateAsync(newCoach,model.Password);
+
+            var result = await userManager.CreateAsync(newCoach, model.Password);
             if (result.Succeeded)
             {
-                return Ok();
-                //return RedirectToAction("Login", "User");
+                await userManager.AddToRoleAsync(newCoach, RoleConstants.Coach);
+                return RedirectToAction("Login", "User");
             }
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(string.Empty,error.Description);
+
+                ModelState.AddModelError(string.Empty, error.Description);
             }
 
             return View(model);
@@ -180,16 +182,18 @@
                 Gender = gender,
                 ProfilePictureUrl = "/images/ProfilePictures/male.png",
                 LevelId = model.LevelId,
-                ClimberSpecialityId = model.ClimberSpecialityId
+                ClimberSpecialityId = model.ClimberSpecialityId,
+                UserType = "Climber"
+
             };
 
-            //await userManager.AddToRoleAsync(newCoach,Common.RoleConstants.Coach);
 
             var result = await userManager.CreateAsync(climber, model.Password);
             if (result.Succeeded)
             {
-                return Ok();
-                //return RedirectToAction("Login", "User");
+                await userManager.AddToRoleAsync(climber, RoleConstants.Coach);
+
+                return RedirectToAction("Login", "User");
             }
             foreach (var error in result.Errors)
             {
@@ -224,7 +228,7 @@
                     return RedirectToAction("Index", "Home");
                 }
             }
-            ModelState.AddModelError(string.Empty,"Invalid login! Please try again.");
+            ModelState.AddModelError(string.Empty, "Invalid login! Please try again.");
 
             return View(model);
         }

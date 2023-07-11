@@ -43,5 +43,8 @@
         [Comment("Property for soft delete action.")]
         public bool isActive { get; set; }
 
+        [Comment("Date and time user creted the entity")]
+        public DateTime CreatedOn { get; set; }
+
     }
 }

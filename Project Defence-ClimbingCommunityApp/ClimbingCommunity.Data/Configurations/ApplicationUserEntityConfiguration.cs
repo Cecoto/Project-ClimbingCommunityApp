@@ -15,8 +15,15 @@
         {
             builder.Property(au => au.Email)
                 .HasMaxLength(60);
+
             builder.Property(au => au.UserName)
                .HasMaxLength(60);
+
+            builder.HasDiscriminator<string>("UserType")
+                .HasValue<Climber>("Climber")
+                .HasValue<Coach>("Coach")
+                .HasValue("Administrator");
+;
         }
     }
 }
