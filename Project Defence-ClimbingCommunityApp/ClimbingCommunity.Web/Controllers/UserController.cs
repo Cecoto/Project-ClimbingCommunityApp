@@ -23,6 +23,13 @@
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IUserService userService;
 
+        /// <summary>
+        /// Constructor of the userController where we inject needed services for the controler.
+        /// </summary>
+        /// <param name="_signInManager"></param>
+        /// <param name="_roleManager"></param>
+        /// <param name="_userService"></param>
+        /// <param name="_userManager"></param>
         public UserController(
 
             SignInManager<ApplicationUser> _signInManager,
@@ -83,7 +90,7 @@
             return View(model);
         }
         /// <summary>
-        /// Post method for registration of the coach.
+        /// Post method for registration of the Coach and setting him a role.
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Redirection to login page</returns>
@@ -122,6 +129,7 @@
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(newCoach, RoleConstants.Coach);
+
                 return RedirectToAction("Login", "User");
             }
             foreach (var error in result.Errors)
@@ -143,14 +151,14 @@
         {
             RegisterClimberViewModel model = new RegisterClimberViewModel()
             {
-                Levels = await userService.GetLevelsForRegister(),
-                ClimberSpecialities = await userService.GetClimberSpecialitiesForRegister()
+                Levels = await userService.GetLevelsForFormAsync(),
+                ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync()
 
             };
             return View(model);
         }
         /// <summary>
-        /// Post method for registration of the climber
+        /// Post method for registration of the Climber and setting him a role.
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Redirection to login page</returns>
@@ -189,9 +197,11 @@
 
 
             var result = await userManager.CreateAsync(climber, model.Password);
+
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(climber, RoleConstants.Coach);
+
+                await userManager.AddToRoleAsync(climber, RoleConstants.Climber);
 
                 return RedirectToAction("Login", "User");
             }
@@ -202,6 +212,10 @@
 
             return View(model);
         }
+        /// <summary>
+        /// Get method for loading the login page.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -209,6 +223,11 @@
             LoginViewModel model = new LoginViewModel();
             return View(model);
         }
+        /// <summary>
+        /// Post method for login of the user.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -233,6 +252,10 @@
             return View(model);
         }
 
+        /// <summary>
+        /// Method for logout of the user.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();

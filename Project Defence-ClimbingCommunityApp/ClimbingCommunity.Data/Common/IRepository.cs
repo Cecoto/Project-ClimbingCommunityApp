@@ -40,6 +40,14 @@ namespace WebShopDemo.Core.Data.Common
         Task<T> GetByIdAsync<T>(object id) where T : class;
 
         Task<T> GetByIdsAsync<T>(object[] id) where T : class;
+        /// <summary>
+        /// Get specific record from database by id , and can inclue other entities
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="includeProperties"></param>
+        /// <returns></returns>
+        Task<T> GetByIdIncludingAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class;
 
         /// <summary>
         /// Adds entity to the database

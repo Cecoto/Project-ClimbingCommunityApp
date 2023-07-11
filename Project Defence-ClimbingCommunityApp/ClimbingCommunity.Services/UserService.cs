@@ -20,12 +20,13 @@
             this.repo = repo;
         }
 
-        public async Task<ClimberProfileViewModel> GetClimberInfo(string userId)
+        public async Task<ClimberProfileViewModel> GetClimberInfoAsync(string userId)
         {
-            Climber user = await repo.GetByIdAsync<Climber>(userId);
+            Climber user = await repo.GetByIdIncludingAsync<Climber>(c => c.Id == userId, c => c.ClimberSpeciality,c => c.Level);
 
-            
-            return new ClimberProfileViewModel()
+
+
+            ClimberProfileViewModel climber = new ClimberProfileViewModel()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -35,11 +36,15 @@
                 Id = user.Id,
                 Speciality = user.ClimberSpeciality.Name,
                 ClimbingExperience = user.ClimbingExperience,
-                TypeOfUser = "Climber"     
+                TypeOfUser = "Climber",
+                Level = user.Level.Name,
+                Photos = { "/images/ProfilePictures/male.png", "/images/Photos/92.5_fontainebleau.jpg" }
             };
+
+            return climber;
         }
 
-        public async Task<IEnumerable<ClimberSpecialityViewModel>> GetClimberSpecialitiesForRegister()
+        public async Task<IEnumerable<ClimberSpecialityViewModel>> GetClimberSpecialitiesForFormAsync()
         {
             return await repo.AllReadonly<ClimberSpeciality>()
                 .Select(cs=> new ClimberSpecialityViewModel()
@@ -50,7 +55,25 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ClimberLevelViewModel>> GetLevelsForRegister()
+        public async Task<CoachProfileViewModel> GetCoachInfoAsync(string userId)
+        {
+            Coach user = await repo.GetByIdAsync<Coach>(userId);
+
+            CoachProfileViewModel coach = new CoachProfileViewModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                ProfilePicture = user.ProfilePictureUrl!,
+                Gender = user.Gender.ToString(),
+                Id = user.Id,
+                CoachingExperience = user.CoachingExperience,
+                Photos = { "/images/Photos/training241.1-1024x684.webp", "/images/Photos/coaching.webp" }
+            };
+            return coach;
+        }
+
+        public async Task<IEnumerable<ClimberLevelViewModel>> GetLevelsForFormAsync()
         {
             return await repo.AllReadonly<Level>()
                 .Select(cs => new ClimberLevelViewModel()

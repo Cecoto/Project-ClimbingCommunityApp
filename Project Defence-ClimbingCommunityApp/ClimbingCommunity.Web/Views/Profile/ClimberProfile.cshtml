@@ -1,0 +1,78 @@
+﻿@model ClimberProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile Page";
+}
+<link rel="stylesheet" href="~/css/ProfileInfio.css" asp-append-version="true" />
+
+<div class="profile-container">
+    <div class="profile-info-container">
+        <div class="profile-details">
+            <h2 class="profile-name">@Model.FirstName @Model.LastName</h2>
+            <div class="profile-info">
+                <div>
+                    <strong>Gender:</strong>
+                    <span>@Model.Gender</span>
+                </div>
+                <div>
+                    <strong>Type of User:</strong>
+                    <span>@Model.TypeOfUser</span>
+                </div>
+                <div>
+                    <strong>Speciality:</strong>
+                    <span>@Model.Speciality</span>
+                </div>
+                <div>
+                    <strong>Level:</strong>
+                    <span>@Model.Level </span>
+                </div>
+                <div>
+                    <strong>Climbing Experience:</strong>
+                    <span>@Model.ClimbingExperience years</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a class="btn btn-primary" asp-action="ManageProfile" asp-route-id="@Model.Id">Manage Profile</a>
+        </div>
+    </div>
+
+    <div class="profile-photos">
+        <h3>Photos</h3>
+        @if (Model.Photos.Any())
+        {
+            <div id="user-carousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach (var (photo, index) in Model.Photos.Select((photo, index) => (photo, index)))
+                    {
+                        <div class="carousel-item @(index == 0 ? "active" : "")">
+                            <img src="@photo" class="d-block w-50" alt="User Photo" />
+                        </div>
+                    }
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#user-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#user-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        }
+        else
+        {
+            <p>No photos found. Add your first photo.</p>
+        }
+
+        <div class="add-photos">
+            <h5>Add Photo</h5>
+            <form asp-action="UploadPhotos" method="post" enctype="multipart/form-data">
+                <input type="file"  name="photos" multiple />
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+    </div>
+</div>

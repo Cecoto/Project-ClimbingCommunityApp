@@ -6,11 +6,11 @@
     public interface IUserService
     {
 
-        Task<IEnumerable<ClimberLevelViewModel>> GetLevelsForRegister();
+        Task<IEnumerable<ClimberLevelViewModel>> GetLevelsForFormAsync();
 
-        Task<IEnumerable<ClimberSpecialityViewModel>> GetClimberSpecialitiesForRegister();
+        Task<IEnumerable<ClimberSpecialityViewModel>> GetClimberSpecialitiesForFormAsync();
 
-        Task<ClimberProfileViewModel> GetClimberInfo(string userId);
-
+        Task<ClimberProfileViewModel> GetClimberInfoAsync(string userId);
+        Task<CoachProfileViewModel> GetCoachInfoAsync(string userId);
     }
 }

@@ -96,6 +96,8 @@ namespace WebShopDemo.Core.Data.Common
             Delete<T>(entity);
         }
 
+
+
         /// <summary>
         /// Deletes a record from database
         /// </summary>
@@ -147,6 +149,19 @@ namespace WebShopDemo.Core.Data.Common
         {
             return await DbSet<T>().FindAsync(id);
         }
+
+        public async Task<T> GetByIdIncludingAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class
+        {
+            var query = this.Context.Set<T>().AsQueryable();
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.FirstOrDefaultAsync(predicate);
+        }
+
 
         /// <summary>
         /// Saves all made changes in trasaction

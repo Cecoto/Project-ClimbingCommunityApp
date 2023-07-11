@@ -12,7 +12,7 @@
     /// </summary>
     public class ApplicationUser : IdentityUser
     {
-
+      
         [Required]
         [Comment("User firstname")]
         [MaxLength(FirstNameMaxLength)]
