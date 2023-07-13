@@ -110,6 +110,20 @@
                 return View(model);
             }
 
+            if (String.IsNullOrWhiteSpace(model.ProfilePicture))
+            {
+                if (model.Gender == "Male")
+                {
+                    model.ProfilePicture = "/images/ProfilePictures/male.png";
+                }
+                else
+                {
+                    model.ProfilePicture = "/images/ProfilePictures/Female.png";
+                }
+
+            }
+
+
             Coach newCoach = new Coach()
             {
                 UserName = model.Email,
@@ -119,7 +133,7 @@
                 PhoneNumber = model.PhoneNumber,
                 CoachingExperience = model.CoachingExperience,
                 Gender = gender,
-                ProfilePictureUrl = "/images/ProfilePictures/male.png",
+                ProfilePictureUrl = model.ProfilePicture,
                 UserType = "Coach"
 
             };
@@ -152,7 +166,7 @@
             RegisterClimberViewModel model = new RegisterClimberViewModel()
             {
                 Levels = await userService.GetLevelsForFormAsync(),
-                ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync()
+                ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync ()
 
             };
             return View(model);
@@ -178,6 +192,18 @@
             {
                 return View(model);
             }
+            if (String.IsNullOrWhiteSpace(model.ProfilePicture))
+            {
+                if (model.Gender=="Male")
+                {
+                    model.ProfilePicture = "/images/ProfilePictures/male.png";
+                }
+                else
+                {
+                    model.ProfilePicture = "/images/ProfilePictures/Female.png";
+                }
+
+            }
 
             Climber climber = new Climber()
             {
@@ -188,7 +214,7 @@
                 PhoneNumber = model.PhoneNumber,
                 ClimbingExperience = model.ClimbingExperience,
                 Gender = gender,
-                ProfilePictureUrl = "/images/ProfilePictures/male.png",
+                ProfilePictureUrl = model.ProfilePicture,
                 LevelId = model.LevelId,
                 ClimberSpecialityId = model.ClimberSpecialityId,
                 UserType = "Climber"

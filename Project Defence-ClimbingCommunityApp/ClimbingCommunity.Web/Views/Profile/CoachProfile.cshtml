@@ -3,13 +3,21 @@
 @{
     ViewData["Title"] = "Profile Page";
 }
-<link rel="stylesheet" href="~/css/ProfileInfio.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/ProfileInfo.css" asp-append-version="true" />
 
+<h1 class="profile-heading">Profile</h1>
 <div class="profile-container">
     <div class="profile-info-container">
         <div class="profile-details">
+            <div class="profile-picture">
+                <img src="@Model.ProfilePicture" alt="Profile Picture" />
+            </div>
             <h2 class="profile-name">@Model.FirstName @Model.LastName</h2>
             <div class="profile-info">
+                <div>
+                    <strong>Role in the community:</strong>
+                    <span>@Model.TypeOfUser</span>
+                </div>
                 <div>
                     <strong>Gender:</strong>
                     <span>@Model.Gender</span>
@@ -26,7 +34,7 @@
         </div>
 
         <div class="profile-actions">
-            <a class="btn btn-primary" asp-action="ManageProfile" asp-route-id="@Model.Id">Manage Profile</a>
+            <a class="btn btn-login" asp-action="ManageProfile" asp-route-id="@Model.Id">Manage Profile</a>
         </div>
     </div>
 
@@ -63,7 +71,7 @@
             <h5>Add Photo</h5>
             <form asp-action="UploadPhotos" method="post" enctype="multipart/form-data">
                 <input type="file" name="photos" multiple />
-                <button type="submit" class="btn btn-primary">Upload</button>
+                <button type="submit" class="btn btn-login">Upload</button>
             </form>
         </div>
     </div>

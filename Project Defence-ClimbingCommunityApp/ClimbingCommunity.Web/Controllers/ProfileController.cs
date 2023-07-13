@@ -12,13 +12,20 @@
     public class ProfileController : BaseController
     {
         private readonly IUserService userService;
+        private readonly IImageService imageService;
+
         /// <summary>
         /// Constructor of the controller for injecting needed services.
         /// </summary>
         /// <param name="_userService"></param>
-        public ProfileController(IUserService _userService)
+        /// <param name="_imageService"></param>
+        public ProfileController(
+            IUserService _userService,
+            IImageService _imageService)
         {
             userService = _userService;
+            this.imageService = _imageService;
+
         }
 
         /// <summary>
@@ -44,12 +51,59 @@
 
         }
 
+        /// <summary>
+        /// Get Method for reaching Manage profile page where user can change his profile information.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> ManageProfile(string id)
+        public async Task<IActionResult> UpdateClimberProfile(string id)
+        {
+
+            UpdateClimberProfileViewModel model = await userService.GetClimberInfoForUpdateAsync(id);
+
+            model.ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync();
+
+            model.Levels = await userService.GetLevelsForFormAsync();
+
+
+            return View(model);
+        }
+
+       /// <summary>
+       /// Post method that updates climbers info.
+       /// </summary>
+       /// <param name="id"></param>
+       /// <param name="model"></param>
+       /// <param name="profilePicture"></param>
+       /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> UpdateClimberProfile(string id,UpdateClimberProfileViewModel model, IFormFile profilePicture)
         {
 
 
-            return View();
+            if (!ModelState.IsValid)
+            {
+
+                model.ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync();
+
+                model.Levels = await userService.GetLevelsForFormAsync();
+
+                return View(model);
+            }
+
+            if (profilePicture !=null)
+            {
+                string proofilePictureUrl = await imageService.SaveProfilePictureAsync(profilePicture);
+
+                model.ProfilePictureUrl = proofilePictureUrl;
+            }
+          
+
+            await userService.UpdateClimberInfoAsync(GetUserId()!,model);
+
+            return RedirectToAction(nameof(MyProfile));
+
         }
     }
 }

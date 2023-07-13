@@ -15,5 +15,6 @@
         public int CoachingExperience { get; set; }
         public string PhoneNumber { get; set; } = null!;
         public ICollection<string> Photos { get; set; }
+        public string TypeOfUser { get; set; } = null!;
     }
 }

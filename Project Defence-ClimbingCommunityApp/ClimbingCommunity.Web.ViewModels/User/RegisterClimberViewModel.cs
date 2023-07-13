@@ -1,6 +1,5 @@
 ﻿namespace ClimbingCommunity.Web.ViewModels.User
 {
-    using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Web.ViewModels.User.Climber;
     using System.ComponentModel.DataAnnotations;
 

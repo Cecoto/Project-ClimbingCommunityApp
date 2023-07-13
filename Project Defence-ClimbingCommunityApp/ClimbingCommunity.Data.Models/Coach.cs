@@ -12,7 +12,7 @@
             this.Trainings = new HashSet<Training>();
         }
         [Comment("Year of coaching experience that coach have.")]
-
+         
         public int CoachingExperience { get; set; }
 
         [Comment("All the training that have created and open to be joined by climbers.")]

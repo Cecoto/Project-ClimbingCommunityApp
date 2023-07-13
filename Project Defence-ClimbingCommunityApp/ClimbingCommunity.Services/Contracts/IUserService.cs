@@ -12,5 +12,7 @@
 
         Task<ClimberProfileViewModel> GetClimberInfoAsync(string userId);
         Task<CoachProfileViewModel> GetCoachInfoAsync(string userId);
+        Task<UpdateClimberProfileViewModel> GetClimberInfoForUpdateAsync(string userId);
+        Task UpdateClimberInfoAsync(string userId, UpdateClimberProfileViewModel model);
     }
 }
