@@ -94,6 +94,21 @@
             return coach;
         }
 
+        public async Task<UpdateCoachProfileViewModel> GetCoachInfoForUpdateAsync(string id)
+        {
+            Coach coach = await repo.GetByIdAsync<Coach>(id);
+
+            return new UpdateCoachProfileViewModel()
+            {
+                ProfilePictureUrl = coach.ProfilePictureUrl!,
+                FirstName = coach.FirstName,
+                LastName = coach.LastName,
+                PhoneNumber = coach.PhoneNumber,
+                Email = coach.Email,
+                CoachingExperience = coach.CoachingExperience
+            };
+        }
+
         public async Task<IEnumerable<ClimberLevelViewModel>> GetLevelsForFormAsync()
         {
             return await repo.AllReadonly<Level>()
@@ -122,5 +137,18 @@
             await repo.SaveChangesAsync();
         }
 
+        public async Task UpdateCoachInfoAsync(string userId, UpdateCoachProfileViewModel model)
+        {
+            Coach coach = await repo.GetByIdAsync<Coach>(userId);
+
+            coach.FirstName = model.FirstName;
+            coach.LastName = model.LastName;
+            coach.PhoneNumber = model.PhoneNumber;
+            coach.ProfilePictureUrl= model.ProfilePictureUrl;
+            coach.Email = model.Email;
+            coach.CoachingExperience = model.CoachingExperience;
+
+            await repo.SaveChangesAsync();
+        }
     }
 }

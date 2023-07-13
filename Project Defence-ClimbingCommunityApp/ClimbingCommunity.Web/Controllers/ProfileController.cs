@@ -52,7 +52,7 @@
         }
 
         /// <summary>
-        /// Get Method for reaching Manage profile page where user can change his profile information.
+        /// Get Method for reaching Manage climber profile page where user can change his profile information.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -73,14 +73,11 @@
        /// <summary>
        /// Post method that updates climbers info.
        /// </summary>
-       /// <param name="id"></param>
        /// <param name="model"></param>
-       /// <param name="profilePicture"></param>
        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> UpdateClimberProfile(string id,UpdateClimberProfileViewModel model, IFormFile profilePicture)
+        public async Task<IActionResult> UpdateClimberProfile(UpdateClimberProfileViewModel model)
         {
-
 
             if (!ModelState.IsValid)
             {
@@ -92,18 +89,47 @@
                 return View(model);
             }
 
-            if (profilePicture !=null)
-            {
-                string proofilePictureUrl = await imageService.SaveProfilePictureAsync(profilePicture);
+            //if (profilePicture !=null)
+            //{
+            //    string proofilePictureUrl = await imageService.SaveProfilePictureAsync(profilePicture);
 
-                model.ProfilePictureUrl = proofilePictureUrl;
-            }
+            //    model.ProfilePictureUrl = proofilePictureUrl;
+            //}
           
 
             await userService.UpdateClimberInfoAsync(GetUserId()!,model);
 
             return RedirectToAction(nameof(MyProfile));
 
+        }
+        /// <summary>
+        /// Get Method for reaching Manage coach profile page where user can change his profile information.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> UpdateCoachProfile(string id)
+        {
+
+            UpdateCoachProfileViewModel model = await userService.GetCoachInfoForUpdateAsync(id);
+            return View(model);
+        }
+        /// <summary>
+        /// Post method that updates climbers info.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> UpdateCoachProfile(UpdateCoachProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await userService.UpdateCoachInfoAsync(GetUserId()!, model);
+
+            return RedirectToAction(nameof(MyProfile));
         }
     }
 }

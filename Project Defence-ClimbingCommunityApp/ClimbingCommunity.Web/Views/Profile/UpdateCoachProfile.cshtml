@@ -1,0 +1,59 @@
+﻿@model UpdateCoachProfileViewModel
+
+@{
+    ViewData["Title"] = "Update Coach Profile";
+}
+<link rel="stylesheet" href="~/css/udapteProfileForm.css" asp-append-version="true" />
+
+<h2>@ViewData["Title"]</h2>
+
+<h1 class="profile-heading">Manage Profile</h1>
+
+<form asp-action="UpdateCoachProfile" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture</label>
+        <div class="profile-picture">
+            <img src="@Model.ProfilePictureUrl" alt="" />
+        </div>
+        <span>Change profile picture</span>
+        <input type="file" name="ProfilePictureUrl" class="form-control" />
+        <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FirstName" class="form-label">First Name</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName" class="form-label">Last Name</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CoachingExperience" class="form-label">Coaching Experience (years)</label>
+        <input asp-for="CoachingExperience" class="form-control" />
+        <span asp-validation-for="CoachingExperience" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-updateProfile" asp-controller="Profile" asp-action="UpdateCoachProfile">Update Profile</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}
