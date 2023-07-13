@@ -15,7 +15,7 @@ namespace WebShopDemo.Core.Data.Common
     /// </summary>
     /// <typeparam name="T">Type of the data table to which 
     /// current reposity is attached</typeparam>
-    public  class Repository : IRepository
+    public class Repository : IRepository
     {
         /// <summary>
         /// Entity framework DB context holding connection information and properties
@@ -32,7 +32,7 @@ namespace WebShopDemo.Core.Data.Common
         }
         public Repository(ClimbingCommunityDbContext context)
         {
-           this.Context = context;
+            this.Context = context;
         }
 
         /// <summary>
@@ -83,6 +83,23 @@ namespace WebShopDemo.Core.Data.Common
                 .Where(search)
                 .AsQueryable()
                 .AsNoTracking();
+        }
+        public IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search,params Expression<Func<T, object>>[] includes) where T : class
+        {
+            IQueryable<T> query = DbSet<T>()
+                .Where(search)
+                .AsQueryable()
+                .AsNoTracking();
+
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            return query;
         }
 
         /// <summary>

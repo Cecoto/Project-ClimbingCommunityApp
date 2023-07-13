@@ -33,6 +33,15 @@ namespace WebShopDemo.Core.Data.Common
         IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class;
 
         /// <summary>
+        /// The result collection won't be tracked by the context with included tables.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="search"></param>
+        /// <param name="includes"></param>
+        /// <returns>Expression tree</returns>
+        IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search,params Expression<Func<T, object>>[] includes) where T : class;
+
+        /// <summary>
         /// Gets specific record from database by primary key
         /// </summary>
         /// <param name="id">record identificator</param>

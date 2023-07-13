@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ClimbingTripViewModel>
+
+<link rel="stylesheet" href="~/css/lastThree.css" asp-append-version="true" />
+
+
+<div class="climbing-trips-container">
+    <h2 class="centered-heading">Last Three Climbing Trips</h2>
+
+    @foreach (var trip in Model)
+    {
+        <div class="climbing-trip-card">
+            <h3>@trip.Title</h3>
+            <img src="@trip.PhotoUrl" alt="Climbing Trip Photo" />
+            <p><strong>Destination:</strong> @trip.Destination</p>
+            <p><strong>Trip Type:</strong> @trip.TripType</p>
+            <p><strong>Duration:</strong> @trip.Duration days</p>
+            <a href="#" class="cta-button">Join Trip</a>
+        </div>
+    }
+</div>
+
+
+
+
+
+
