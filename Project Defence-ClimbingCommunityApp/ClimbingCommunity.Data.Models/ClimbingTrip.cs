@@ -41,7 +41,7 @@
         public int Duration { get; set; }
 
         [Comment("Property for soft delete.")]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
 
         [Comment("Date and time user creted the entity")]
         public DateTime CreatedOn { get; set; }
@@ -49,6 +49,10 @@
 
         [Comment("Collection of the climber who joined that trip.")]
         public virtual ICollection<TripClimber> Climbers { get; set; }
+
+        [Required]
+        [Comment("Photo of the climbing trip place")]
+        public string PhotoUrl { get; set; } = null!;
 
     }
 }

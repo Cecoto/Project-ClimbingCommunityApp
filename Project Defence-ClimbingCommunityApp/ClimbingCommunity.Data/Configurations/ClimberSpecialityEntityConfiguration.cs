@@ -25,7 +25,7 @@
             climberSpecialities.Add(new ClimberSpeciality
             {
                 Id = 2,
-                Name = "Rope climber",    
+                Name = "Rope climber",
             });
             climberSpecialities.Add(new ClimberSpeciality
             {

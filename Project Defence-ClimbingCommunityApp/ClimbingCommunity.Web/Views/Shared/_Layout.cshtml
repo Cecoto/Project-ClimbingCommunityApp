@@ -16,12 +16,43 @@
 <body>
     <div class="wrapper">
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-2">
                 <div class="container-fluid">
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        @if (User.IsInRole("Climber"))
+                        {
+                            <a class="navbar-brand" asp-area="" asp-controller="ClimbingTrip" asp-action="LastThreeClimbingTrips">
+                                <img src="~/logo.png" alt="logo" class="logo" />
+                            </a>
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="ClimbingTrip" asp-action="All">All Trips</a>
 
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/logo.png" alt="logo" class="logo" />
-                    </a>
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="ClimbingTrip" asp-action="Add">Create Trip</a>
+
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="Training" asp-action="All">Find Training</a>
+
+                        }
+                        else if (User.Identity?.IsAuthenticated ?? false && User.IsInRole(nameof(Coach)))
+                        {
+                            <a class="navbar-brand" asp-area="" asp-controller="Training" asp-action="LastThreeTrainings">
+                                <img src="~/logo.png" alt="logo" class="logo" />
+                            </a>
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="Training" asp-action="All">All Trainings</a>
+
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="Training" asp-action="Add">Create Training</a>
+
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="ClimbingTrip" asp-action="All">Climbing Trips</a>
+
+                        }
+                    }
+
+                    else
+                    {
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="~/logo.png" alt="logo" class="logo" />
+                        </a>
+
+                    }
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -29,13 +60,15 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1">
                         </ul>
+
                         @if (!ViewContext.RouteData.Values["action"].ToString().Equals("RegisterCoach", StringComparison.OrdinalIgnoreCase) &&
                         !ViewContext.RouteData.Values["action"].ToString().Equals("RegisterClimber", StringComparison.OrdinalIgnoreCase) &&
-                                    !ViewContext.RouteData.Values["action"].ToString().Equals("Login", StringComparison.OrdinalIgnoreCase))
-                                    {
+                        !ViewContext.RouteData.Values["action"].ToString().Equals("Login", StringComparison.OrdinalIgnoreCase))
+                        {
                             <partial name="_LoginPartial" />
 
                         }
+
                     </div>
                 </div>
             </nav>
@@ -55,6 +88,7 @@
     {
         @Html.Raw($" - {DateTime.UtcNow.Year}")
         ;
+
     }
     <div class="FAQ">
 

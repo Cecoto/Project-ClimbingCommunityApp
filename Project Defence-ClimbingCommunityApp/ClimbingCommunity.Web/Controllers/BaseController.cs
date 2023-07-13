@@ -9,6 +9,7 @@
     /// Base constroller for global autorizaton of the controllers and implementing common methods.
     /// </summary>
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class BaseController : Controller
     {
         /// <summary>

@@ -25,20 +25,21 @@ p {
     margin-bottom: 20px;
 }
 
-.cta-button {
+.nav-button {
     display: inline-block;
-    background-color: #92d29b;
+    background-color: #fff;
     color: #fff;
-    padding: 10px 20px;
-    font-size: 25px;
+    padding: 10px 10px;
+    font-size: 20px;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 7px;
     transition: background-color 0.3s ease;
-    margin-bottom: 20px
+    margin-bottom: 2px
+    
 }
 
-    .cta-button:hover {
-        background-color: darkgreen;
+    .nav-button:hover {
+        background-color: #92d29b;
         text-decoration: double;
         color: white;
     }

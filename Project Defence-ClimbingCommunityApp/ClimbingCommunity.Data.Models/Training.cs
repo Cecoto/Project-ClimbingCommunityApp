@@ -41,10 +41,14 @@
         public virtual Coach Coach { get; set; } = null!;
 
         [Comment("Property for soft delete action.")]
-        public bool isActive { get; set; }
+        public bool? isActive { get; set; }
 
         [Comment("Date and time user creted the entity")]
         public DateTime CreatedOn { get; set; }
+
+        [Required]
+        [Comment("Photo of the climbing training willbe/Gym picture")]
+        public string PhotoUrl { get; set; } = null!;
 
     }
 }

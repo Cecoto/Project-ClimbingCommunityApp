@@ -137,7 +137,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClimberSpecialities");
+                    b.ToTable("ClimberSpecialities", (string)null);
 
                     b.HasData(
                         new
@@ -215,7 +215,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasIndex("TripTypeId");
 
-                    b.ToTable("ClimbingTrips");
+                    b.ToTable("ClimbingTrips", (string)null);
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.Level", b =>
@@ -235,7 +235,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Levels");
+                    b.ToTable("Levels", (string)null);
 
                     b.HasData(
                         new
@@ -277,7 +277,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Target");
+                    b.ToTable("Target", (string)null);
 
                     b.HasData(
                         new
@@ -360,7 +360,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("Trainings");
+                    b.ToTable("Trainings", (string)null);
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.TripClimber", b =>
@@ -375,7 +375,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasIndex("ClimberId");
 
-                    b.ToTable("TripsClimbers");
+                    b.ToTable("TripsClimbers", (string)null);
                 });
 
             modelBuilder.Entity("ClimbingCommunity.Data.Models.TripType", b =>
@@ -395,7 +395,7 @@ namespace ClimbingCommunity.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TripTypes");
+                    b.ToTable("TripTypes", (string)null);
 
                     b.HasData(
                         new
