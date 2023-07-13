@@ -30,7 +30,7 @@
                 Title = "First training",
                 Duration = 2,
                 Location = "Bulgaria, Sofia",
-                CoachId = "AQAAAAEAACcQAAAAEPJ3MOC1N0mC9gvNDNnRmAh6EEN3d1NjmdSpmzi+TpdhhRma9QLOkUkXxD5alPG2bw==",
+                CoachId ="3c0bd0ac-9f64-4444-ab43-a31a1886462b",
                 Price = 25.00m,
                 TargetId = 2,
                 PhotoUrl = "~/images/Traingings/Sofia.jpg"
@@ -41,7 +41,7 @@
                 Title = "Second training",
                 Duration = 3,
                 Location = "Austria, Innsbruck",
-                CoachId = "AQAAAAEAACcQAAAAEE9kvvwnGQ2nW0jYJ1M3YpXcYlZ8mqsFku1H6isPMJolY/20r3fniGVRflPouoJEmw==",
+                CoachId = "3c0bd0ac-9f64-4444-ab43-a31a1886462b",
                 Price = 25.00m,
                 TargetId = 2,
                 PhotoUrl = "~/images/Traingings/Innsbruck.jpg"
@@ -52,7 +52,7 @@
                 Title = "Third training",
                 Duration = 1,
                 Location = "Spain, Madrid",
-                CoachId = "AQAAAAEAACcQAAAAEPJ3MOC1N0mC9gvNDNnRmAh6EEN3d1NjmdSpmzi+TpdhhRma9QLOkUkXxD5alPG2bw==",
+                CoachId = "749a78a0-ce39-4a27-b9f7-e83ec7642768",
                 Price = 25.00m,
                 TargetId = 2,
                 PhotoUrl = "~/images/Traingings/Madrid.jpg"

@@ -12,6 +12,7 @@
     {
         public ClimbingTrip()
         {
+            this.Id = Guid.NewGuid();
             this.Climbers = new HashSet<TripClimber>();
         }
         [Comment("Globaly unique identifier")]

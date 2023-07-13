@@ -10,6 +10,11 @@
     /// </summary>
     public class Training
     {
+        public Training()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
         [Comment("Globaly unique identifier")]
         public Guid Id { get; set; }
 

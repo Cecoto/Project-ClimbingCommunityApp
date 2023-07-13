@@ -4,7 +4,7 @@
 
     public class TripClimber
     {
-      
+
         public string ClimberId { get; set; } = null!;
         public virtual Climber Climber { get; set; } = null!;
  

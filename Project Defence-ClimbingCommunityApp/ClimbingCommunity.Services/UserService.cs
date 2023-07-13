@@ -34,7 +34,7 @@
                 PhoneNumber = user.PhoneNumber,
                 ProfilePicture = user.ProfilePictureUrl!,
                 Gender = user.Gender.ToString(),
-                Id = user.Id,
+                Id = user.Id.ToString(),
                 Speciality = user.ClimberSpeciality.Name,
                 ClimbingExperience = user.ClimbingExperience,
                 TypeOfUser = "Climber",
@@ -86,7 +86,7 @@
                 PhoneNumber = user.PhoneNumber,
                 ProfilePicture = user.ProfilePictureUrl!,
                 Gender = user.Gender.ToString(),
-                Id = user.Id,
+                Id = user.Id.ToString(),
                 CoachingExperience = user.CoachingExperience,
                 TypeOfUser = user.UserType,
                 Photos = { "/images/Photos/training241.1-1024x684.webp", "/images/Photos/coaching.webp" }
