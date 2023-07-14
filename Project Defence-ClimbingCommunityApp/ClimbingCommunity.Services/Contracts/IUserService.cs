@@ -18,5 +18,7 @@
 
         Task<UpdateCoachProfileViewModel> GetCoachInfoForUpdateAsync(string id);
         Task UpdateCoachInfoAsync(string userId, UpdateCoachProfileViewModel model);
+
+
     }
 }

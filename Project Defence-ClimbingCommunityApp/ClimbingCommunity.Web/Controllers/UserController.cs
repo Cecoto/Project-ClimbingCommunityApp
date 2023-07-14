@@ -166,7 +166,7 @@
             RegisterClimberViewModel model = new RegisterClimberViewModel()
             {
                 Levels = await userService.GetLevelsForFormAsync(),
-                ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync ()
+                ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync()
 
             };
             return View(model);
@@ -194,7 +194,7 @@
             }
             if (String.IsNullOrWhiteSpace(model.ProfilePicture))
             {
-                if (model.Gender=="Male")
+                if (model.Gender == "Male")
                 {
                     model.ProfilePicture = "/images/ProfilePictures/male.png";
                 }
@@ -270,7 +270,17 @@
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+
+                    if (user.UserType == "Climber")
+                    {
+                        return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
+
+                    }
+                    if (user.UserType == "Coach")
+                    {
+                        return RedirectToAction("LastThreeTrainings", "Training");
+
+                    }
                 }
             }
             ModelState.AddModelError(string.Empty, "Invalid login! Please try again.");

@@ -1,7 +1,7 @@
 ﻿
 body {
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
+    background-color: #fff;
     margin-bottom: 300px;
     padding: 0;
 }
@@ -54,7 +54,7 @@ a {
     }
 
 .footer {
-    background-color: #fff;
+    background-color: #f7f7f7;
     color: #fff;
     text-align: left; 
 }
@@ -73,6 +73,7 @@ a {
         }
 
 .cta-button {
+
     display: inline;
     background-color: #92d29b;
     color: #fff;
@@ -83,7 +84,7 @@ a {
     transition: background-color 0.3s ease;
     margin-bottom: 20px;
     margin-top:auto;
-    margin-left:auto;
+    
 
 }
 

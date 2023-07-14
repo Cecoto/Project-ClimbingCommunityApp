@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ClimbingTripViewModel>
+
+@{
+    ViewData["Title"] = "All Trips";
+}
+<link rel="stylesheet" href="~/css/cardFlip.css" asp-append-version="true" />
+
+<h2 class="centered-heading">All Trips</h2>
+
+
+<div class="container card-container">
+    <!-- Filters and Search Bar -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-5">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort By
+                </button>
+                <div class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <a class="dropdown-item" href="#">Newest</a>
+                    <a class="dropdown-item" href="#">Oldest</a>
+                    <a class="dropdown-item" href="#">A-Z</a>
+                    <a class="dropdown-item" href="#">By Trip Type</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trips -->
+    <div class="row">
+        @foreach (var trip in Model)
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">@trip.Title</h4>
+                            <img src="@trip.PhotoUrl" alt="Climbing Trip Photo" class="card-img-top" />
+                        </div>
+                        <div class="card-back">
+                            <p><strong>Destination:</strong> @trip.Destination</p>
+                            <p><strong>Trip Type:</strong> @trip.TripType</p>
+                            <p><strong>Duration:</strong> @trip.Duration days</p>
+                            <div class="button-container">
+                                @if (trip.isOrganizator)
+                                {
+                                    <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
+                                    <a asp-area="" asp-controller="ClimbingTrip" asp-action="Delete" asp-route-id="@trip.Id" class="delete-button">Delete</a>
+                                }
+                                else
+                                {
+                                    <a asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button">Join Trip</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

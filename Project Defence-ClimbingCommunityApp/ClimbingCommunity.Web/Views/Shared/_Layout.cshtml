@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Climbing Community</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ClimbingCommunity.Web.styles.css" asp-append-version="true" />
@@ -32,6 +32,8 @@
 
                             <a class="navbar-brand nav-button" asp-area="" asp-controller="Training" asp-action="All">Find Training</a>
 
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="Profile" asp-action="Activities">Joined Activities</a>
+
                         }
                         else if (User.Identity?.IsAuthenticated ?? false && User.IsInRole(nameof(Coach)))
                         {
@@ -44,6 +46,7 @@
 
                             <a class="navbar-brand nav-button" asp-area="" asp-controller="ClimbingTrip" asp-action="All">Climbing Trips</a>
 
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="Profile" asp-action="MyTrainings">My Trainings</a>
                         }
                     }
 
@@ -67,7 +70,6 @@
                         !ViewContext.RouteData.Values["action"].ToString().Equals("Login", StringComparison.OrdinalIgnoreCase))
                         {
                             <partial name="_LoginPartial" />
-
                         }
 
                     </div>
@@ -100,6 +102,9 @@
 
 
 </footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)

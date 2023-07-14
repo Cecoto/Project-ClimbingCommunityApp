@@ -2,6 +2,7 @@
 {
     public class ClimbingTripViewModel
     {
+      
         public string Id { get; set; } = null!;
 
         public string Title { get; set; } = null!;
@@ -19,6 +20,9 @@
         public string PhotoUrl { get; set; } = null!;
 
         public int Duration { get; set; }
+
+        public bool isOrganizator { get; set; }
+
 
     }
 }

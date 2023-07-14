@@ -16,9 +16,31 @@
         {
             repo = _repo;
         }
-        public IEnumerable<ClimbingTripViewModel> GetLastThreeClimbingTrips()
+
+        public IEnumerable<ClimbingTripViewModel> GetAllClimbingTrips()
         {
             var models = repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
+                 .OrderByDescending(ct => ct.CreatedOn)  
+                 .Select(ct => new ClimbingTripViewModel()
+                 {
+                     Id = ct.Id.ToString(),
+                     Title = ct.Title,
+                     PhotoUrl = ct.PhotoUrl,
+                     Destination = ct.Destination,
+                     OrganizatorId = ct.OrganizatorId,
+                     Duration = ct.Duration,
+                     TripType = ct.TripType.Name,
+                     isOrganizator = false
+
+                 });
+
+            return models;
+        }
+
+        public IEnumerable<ClimbingTripViewModel> GetLastThreeClimbingTrips()
+        {
+            var models =  repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct=>ct.CreatedOn)
                 .Take(3)
                 .Select(ct => new ClimbingTripViewModel()
                 {
@@ -28,23 +50,11 @@
                     Destination = ct.Destination,
                     OrganizatorId = ct.OrganizatorId,
                     Duration = ct.Duration,
-                    TripType = ct.TripType.Name
+                    TripType = ct.TripType.Name,
+                    isOrganizator = false
+                    
                 });
 
-            //IEnumerable<ClimbingTripViewModel> models = repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == false || ct.IsActive == null, ct => ct.TripType)
-            //    .OrderByDescending(ct=>ct.CreatedOn)
-            //    .Take(3)
-            //    .Select(ct=>new ClimbingTripViewModel()
-            //    {
-            //        Id = ct.Id.ToString(),
-            //        Title = ct.Title,
-            //        PhotoUrl = ct.PhotoUrl,
-            //        Destination = ct.Destination,
-            //        OrganizatorId = ct.OrganizatorId,
-            //        Duration = ct.Duration,
-            //        TripType = ct.TripType.Name
-            //    });
-           
             return models;
             
         }

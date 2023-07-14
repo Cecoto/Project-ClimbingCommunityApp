@@ -7,5 +7,7 @@
     public interface IClimbingTripService
     {
         IEnumerable<ClimbingTripViewModel> GetLastThreeClimbingTrips();
+
+        IEnumerable<ClimbingTripViewModel> GetAllClimbingTrips();
     }
 }

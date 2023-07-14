@@ -19,7 +19,7 @@
         protected string? GetUserId()
        => User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
-
+ 
         //protected string? GetUserRole()
         //{
         //    var user = userManager.GetUserAsync(User).Result;
