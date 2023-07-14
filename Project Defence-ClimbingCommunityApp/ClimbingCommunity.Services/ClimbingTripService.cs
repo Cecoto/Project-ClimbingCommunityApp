@@ -19,7 +19,7 @@
 
         public async Task CreateAsync(string organizatorId, ClimbingTripFormViewModel model)
         {
-            if (model.PhotoUrl==null)
+            if (model.PhotoUrl == null)
             {
                 model.PhotoUrl = "/images/ClimbingTrips/Ceuse.jpg";
             }
@@ -36,6 +36,21 @@
             await repo.AddAsync(trip);
 
             await repo.SaveChangesAsync();
+        }
+
+        public async Task EditClimbingTripById(string id, ClimbingTripFormViewModel model)
+        {
+            ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(id));
+
+            if (model.PhotoUrl==null)
+            {
+                model.PhotoUrl = "/images/ClimbingTrips/Ceuse.jpg";
+            }
+
+            trip.Title = model.Title;
+            trip.Duration = model.Duration;
+            trip.Destination = model.Destination;
+            trip.PhotoUrl = model.PhotoUrl!;
         }
 
         public async Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingTripsAsync()
@@ -57,7 +72,7 @@
             return models;
         }
 
-        public async Task<IEnumerable<TripTypeViewModel>> GetAllClimbingTripTypesAsync()
+        public async Task<IEnumerable<TripTypeViewModel>> GetAllTripTypesAsync()
         {
             return await repo.AllReadonly<TripType>()
                 .Select(ct => new TripTypeViewModel()
@@ -66,6 +81,24 @@
                     Name = ct.Name
                 }).ToListAsync();
 
+        }
+
+        public async Task<ClimbingTripFormViewModel> GetClimbingTripForEditAsync(string tripId)
+        {
+            ClimbingTrip trip =  await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(tripId));
+
+            return new ClimbingTripFormViewModel()
+            {
+
+                Title = trip.Title,
+                PhotoUrl = trip.PhotoUrl,
+                Destination = trip.Destination,
+                Duration = trip.Duration,
+                TripTypeId = trip.TripTypeId,
+                OrganizatorId = trip.OrganizatorId,
+                IsEditModel = true
+            };
+                
         }
 
         public async Task<IEnumerable<ClimbingTripViewModel>> GetLastThreeClimbingTripsAsync()
@@ -88,6 +121,31 @@
 
             return models;
 
+        }
+
+        public async Task<bool> IsClimbingTripExistsByIdAsync(string id)
+        {
+            ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(id));
+            if (trip!= null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> IsTripTypeExistsByIdAsync(int tripTypeId)
+        {
+            return await repo.GetByIdAsync<TripType>(tripTypeId) != null;
+        }
+
+        public async Task<bool> isUserOrganizatorOfTripById(string userId, string tripId)
+        {
+            ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(tripId));
+            if (trip.OrganizatorId == userId)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

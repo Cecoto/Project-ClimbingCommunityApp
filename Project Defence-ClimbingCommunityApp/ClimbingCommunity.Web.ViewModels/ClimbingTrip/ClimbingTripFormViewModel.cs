@@ -8,6 +8,7 @@
         public ClimbingTripFormViewModel()
         {
             this.TripTypes = new HashSet<TripTypeViewModel>();
+            this.IsEditModel = false;
         }
         [Required]
         [StringLength(TitleMaxLength,MinimumLength =TitleMinLength)]
@@ -29,5 +30,7 @@
  
         [StringLength(PhotoUrlMaxLength)]
         public string? PhotoUrl { get; set; }
+
+        public bool IsEditModel { get; set; }
     }
 }

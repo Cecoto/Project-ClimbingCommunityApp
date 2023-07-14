@@ -18,15 +18,15 @@
             @if (trip.isOrganizator == true)
             {
                 <div class="d-inline mt-3">
-                    <a asp-area="" asp-controller="CimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
+                    <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
 
-                    <a asp-area="" asp-controller="CimbingTrip" asp-action="Delete" asp-route-id="@trip.Id" class="delete-button">Delete</a>
+                    <a asp-area="" asp-controller="ClimbingTrip" asp-action="Delete" asp-route-id="@trip.Id" class="delete-button">Delete</a>
 
                 </div>
             }
             else
             {
-                <a asp-area="" asp-controller="CimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button ">Join Trip</a>
+                <a asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button ">Join Trip</a>
             }
         </div>
 
