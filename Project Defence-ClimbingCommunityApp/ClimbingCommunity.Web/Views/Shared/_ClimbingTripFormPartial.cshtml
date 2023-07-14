@@ -1,0 +1,41 @@
+﻿@model ClimbingTripFormViewModel
+
+@{
+    IEnumerable<TripTypeViewModel> tripTypes = ViewData["TripTypes"] as List<TripTypeViewModel>;
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" required>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Destination"></label>
+        <input asp-for="Destination" class="form-control" required>
+        <span asp-validation-for="Destination" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TripTypeId"></label>
+        <select asp-for="TripTypeId" asp-items="@(new SelectList(Model.TripTypes, "Id", "Name"))" class="form-control" required>
+            <option value="">Select Trip Type</option>
+        </select>
+        <span asp-validation-for="TripTypeId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Duration"></label>
+        <input asp-for="Duration" class="form-control" required>
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PhotoUrl"></label>
+        <input asp-for="PhotoUrl" type="file" class="form-control-file" accept="image/*">
+        <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+    </div>
+
+    <button asp-area="" asp-controller="ClimbingTrip" asp-action="Add" type="submit" class="btn btn-primary">Add Trip</button>
+</form>

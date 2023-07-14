@@ -1,0 +1,14 @@
+﻿@model ClimbingTripFormViewModel;
+@{
+    ViewData["Title"] = "Add Climbing Trip";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<partial name="_ClimbingTripFormPartial" model="@Model" />
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

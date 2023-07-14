@@ -17,10 +17,31 @@
             repo = _repo;
         }
 
-        public IEnumerable<ClimbingTripViewModel> GetAllClimbingTrips()
+        public async Task CreateAsync(string organizatorId, ClimbingTripFormViewModel model)
         {
-            var models = repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
-                 .OrderByDescending(ct => ct.CreatedOn)  
+            if (model.PhotoUrl==null)
+            {
+                model.PhotoUrl = "/images/ClimbingTrips/Ceuse.jpg";
+            }
+            ClimbingTrip trip = new ClimbingTrip()
+            {
+                Title = model.Title,
+                PhotoUrl = model.PhotoUrl,
+                Destination = model.Destination,
+                OrganizatorId = organizatorId,
+                Duration = model.Duration,
+                TripTypeId = model.TripTypeId,
+            };
+
+            await repo.AddAsync(trip);
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingTripsAsync()
+        {
+            var models = await repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
+                 .OrderByDescending(ct => ct.CreatedOn)
                  .Select(ct => new ClimbingTripViewModel()
                  {
                      Id = ct.Id.ToString(),
@@ -31,16 +52,26 @@
                      Duration = ct.Duration,
                      TripType = ct.TripType.Name,
                      isOrganizator = false
-
-                 });
+                 }).ToListAsync();
 
             return models;
         }
 
-        public IEnumerable<ClimbingTripViewModel> GetLastThreeClimbingTrips()
+        public async Task<IEnumerable<TripTypeViewModel>> GetAllClimbingTripTypesAsync()
         {
-            var models =  repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
-                .OrderByDescending(ct=>ct.CreatedOn)
+            return await repo.AllReadonly<TripType>()
+                .Select(ct => new TripTypeViewModel()
+                {
+                    Id = ct.Id,
+                    Name = ct.Name
+                }).ToListAsync();
+
+        }
+
+        public async Task<IEnumerable<ClimbingTripViewModel>> GetLastThreeClimbingTripsAsync()
+        {
+            var models = await repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
                 .Take(3)
                 .Select(ct => new ClimbingTripViewModel()
                 {
@@ -52,11 +83,11 @@
                     Duration = ct.Duration,
                     TripType = ct.TripType.Name,
                     isOrganizator = false
-                    
-                });
+
+                }).ToListAsync();
 
             return models;
-            
+
         }
     }
 }

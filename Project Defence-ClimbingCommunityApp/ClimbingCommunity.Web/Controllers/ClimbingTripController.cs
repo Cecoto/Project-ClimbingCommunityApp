@@ -27,9 +27,9 @@
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult LastThreeClimbingTrips()
+        public async Task<IActionResult> LastThreeClimbingTrips()
         {
-            List<ClimbingTripViewModel> models = climbingTripService.GetLastThreeClimbingTrips().ToList();
+            IEnumerable<ClimbingTripViewModel> models = await climbingTripService.GetLastThreeClimbingTripsAsync();
 
             string userId = GetUserId()!;
 
@@ -47,9 +47,9 @@
         /// </summary>
         /// <returns>Collection of trips</returns>
         [HttpGet]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            List<ClimbingTripViewModel> models = climbingTripService.GetAllClimbingTrips().ToList();
+            IEnumerable<ClimbingTripViewModel> models = await climbingTripService.GetAllClimbingTripsAsync();
 
             string userId = GetUserId()!;
 
@@ -62,6 +62,38 @@
             }
 
             return View(models);
+        }
+        /// <summary>
+        /// Get method for reaching add page.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            ClimbingTripFormViewModel model = new ClimbingTripFormViewModel
+            {
+                TripTypes = await climbingTripService.GetAllClimbingTripTypesAsync()
+            };
+
+            return View(model);
+        }
+        /// <summary>
+        /// Method for created to the database new CLimbing Trip
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult>Add(ClimbingTripFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.TripTypes = await climbingTripService.GetAllClimbingTripTypesAsync();
+                return View(model);
+            }
+
+            await climbingTripService.CreateAsync(GetUserId()!,model);
+
+            return RedirectToAction(nameof(LastThreeClimbingTrips));
         }
     }
 }

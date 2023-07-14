@@ -6,8 +6,11 @@
 
     public interface IClimbingTripService
     {
-        IEnumerable<ClimbingTripViewModel> GetLastThreeClimbingTrips();
+        Task<IEnumerable<ClimbingTripViewModel>> GetLastThreeClimbingTripsAsync();
 
-        IEnumerable<ClimbingTripViewModel> GetAllClimbingTrips();
+        Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingTripsAsync();
+
+        Task<IEnumerable<TripTypeViewModel>> GetAllClimbingTripTypesAsync();
+        Task CreateAsync(string organizatorId, ClimbingTripFormViewModel model);
     }
 }

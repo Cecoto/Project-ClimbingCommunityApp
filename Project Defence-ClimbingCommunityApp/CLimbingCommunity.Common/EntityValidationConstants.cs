@@ -51,6 +51,8 @@
             public const int DurationMinValue = 1;
             public const int DurationMaxValue = 30;
 
+            public const int PhotoUrlMaxLength = 2048;
+
         }
         public static class Coach
         {
