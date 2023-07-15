@@ -38,5 +38,6 @@
         [MaxLength(UserRoleMaxLength)]
         public string UserType { get; set; } = null!;
 
+
     }
 }

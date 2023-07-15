@@ -11,13 +11,13 @@
 
 <form asp-action="UpdateCoachProfile" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture</label>
+        <label asp-for="PhotoFile" class="form-label">Profile Picture</label>
         <div class="profile-picture">
             <img src="@Model.ProfilePictureUrl" alt="" />
         </div>
         <span>Change profile picture</span>
-        <input type="file" name="ProfilePictureUrl" class="form-control" />
-        <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+        <input type="file" name="PhotoFile" class="form-control" />
+        <span asp-validation-for="PhotoFile" class="text-danger"></span>
     </div>
 
     <div class="form-group">

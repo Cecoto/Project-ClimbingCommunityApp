@@ -1,6 +1,7 @@
 ﻿namespace ClimbingCommunity.Web.ViewModels.Profile
 {
     using ClimbingCommunity.Web.ViewModels.User.Climber;
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.ApplicationUser;
@@ -30,6 +31,8 @@
 
         [StringLength(ImageUrlMaxLength)]
         public string? ProfilePictureUrl { get; set; }
+
+        public IFormFile? PhotoFile { get; set; }
 
         [Range(CoachingExperienceMinValue, CoachingExperienceMaxValue)]
         public int CoachingExperience { get; set; }

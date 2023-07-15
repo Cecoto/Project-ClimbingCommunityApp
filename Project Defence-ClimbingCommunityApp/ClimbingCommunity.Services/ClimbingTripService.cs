@@ -11,27 +11,32 @@
     public class ClimbingTripService : IClimbingTripService
     {
         private readonly IRepository repo;
-
-        public ClimbingTripService(IRepository _repo)
+        private readonly IImageService imageService;
+        public ClimbingTripService(IRepository _repo, IImageService _imageService)
         {
             repo = _repo;
+            imageService = _imageService;
         }
 
         public async Task CreateAsync(string organizatorId, ClimbingTripFormViewModel model)
         {
-            if (model.PhotoUrl == null)
+            
+            if (model.PhotoFile != null)
             {
-                model.PhotoUrl = "/images/ClimbingTrips/Ceuse.jpg";
+              
+                model.PhotoUrl = await imageService.SavePictureAsync(model.PhotoFile, "ClimbingTrips");
             }
+
             ClimbingTrip trip = new ClimbingTrip()
             {
                 Title = model.Title,
-                PhotoUrl = model.PhotoUrl,
+                PhotoUrl = model.PhotoUrl!,
                 Destination = model.Destination,
                 OrganizatorId = organizatorId,
                 Duration = model.Duration,
                 TripTypeId = model.TripTypeId,
             };
+
 
             await repo.AddAsync(trip);
 
@@ -42,15 +47,24 @@
         {
             ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(id));
 
-            if (model.PhotoUrl==null)
+            string photo = trip.PhotoUrl;
+
+            if (model.PhotoFile != null)
             {
-                model.PhotoUrl = "/images/ClimbingTrips/Ceuse.jpg";
+                if (!string.IsNullOrEmpty(photo))
+                {
+                    imageService.DeletePicture(photo);
+                }
+
+                photo = await imageService.SavePictureAsync(model.PhotoFile, "ClimbingTrips");
             }
 
             trip.Title = model.Title;
             trip.Duration = model.Duration;
             trip.Destination = model.Destination;
-            trip.PhotoUrl = model.PhotoUrl!;
+            trip.PhotoUrl = photo;
+
+            await repo.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingTripsAsync()
@@ -85,7 +99,7 @@
 
         public async Task<ClimbingTripFormViewModel> GetClimbingTripForEditAsync(string tripId)
         {
-            ClimbingTrip trip =  await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(tripId));
+            ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(tripId));
 
             return new ClimbingTripFormViewModel()
             {
@@ -98,7 +112,7 @@
                 OrganizatorId = trip.OrganizatorId,
                 IsEditModel = true
             };
-                
+
         }
 
         public async Task<IEnumerable<ClimbingTripViewModel>> GetLastThreeClimbingTripsAsync()
@@ -126,7 +140,7 @@
         public async Task<bool> IsClimbingTripExistsByIdAsync(string id)
         {
             ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(id));
-            if (trip!= null)
+            if (trip != null)
             {
                 return true;
             }

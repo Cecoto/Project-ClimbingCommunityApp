@@ -11,19 +11,23 @@
     using WebShopDemo.Core.Data.Common;
     using ClimbingCommunity.Web.ViewModels.Profile;
     using Microsoft.AspNetCore.Http;
+   
 
     public class UserService : IUserService
     {
         private readonly IRepository repo;
+        private readonly IImageService imageService;
 
-        public UserService(IRepository repo)
+        public UserService(IRepository repo, IImageService imageService)
         {
+
             this.repo = repo;
+            this.imageService = imageService;
         }
 
         public async Task<ClimberProfileViewModel> GetClimberInfoAsync(string userId)
         {
-            Climber user = await repo.GetByIdIncludingAsync<Climber>(c => c.Id == userId, c => c.ClimberSpeciality,c => c.Level);
+            Climber user = await repo.GetByIdIncludingAsync<Climber>(c => c.Id == userId, c => c.ClimberSpeciality, c => c.Level);
 
 
 
@@ -60,14 +64,14 @@
                 LevelId = user.Level.Id,
                 ClimbingExperience = user.ClimbingExperience
             };
-            
+
         }
-      
+
 
         public async Task<IEnumerable<ClimberSpecialityViewModel>> GetClimberSpecialitiesForFormAsync()
         {
             return await repo.AllReadonly<ClimberSpeciality>()
-                .Select(cs=> new ClimberSpecialityViewModel()
+                .Select(cs => new ClimberSpecialityViewModel()
                 {
                     Id = cs.Id,
                     Name = cs.Name,
@@ -124,16 +128,27 @@
         {
             Climber climber = await repo.GetByIdIncludingAsync<Climber>(c => c.Id == userId, c => c.ClimberSpeciality, c => c.Level);
 
+            string photo = climber.ProfilePictureUrl;
+
+            if (model.PhotoFile != null)
+            {
+                if (!string.IsNullOrEmpty(photo))
+                {
+                    imageService.DeletePicture(photo);
+                }
+                photo = await imageService.SavePictureAsync(model.PhotoFile, "ProfilePictures");
+            }
+
             climber.FirstName = model.FirstName;
             climber.LastName = model.LastName;
             climber.PhoneNumber = model.PhoneNumber;
-            climber.ProfilePictureUrl = model.ProfilePictureUrl;
+            climber.ProfilePictureUrl = photo;
             climber.Email = model.Email;
             climber.LevelId = model.LevelId;
             climber.ClimberSpecialityId = model.ClimberSpecialityId;
             climber.ClimbingExperience = model.ClimbingExperience;
-        
-            
+
+
             await repo.SaveChangesAsync();
         }
 
@@ -141,10 +156,21 @@
         {
             Coach coach = await repo.GetByIdAsync<Coach>(userId);
 
+            string photo = coach.ProfilePictureUrl;
+
+            if (model.PhotoFile != null)
+            {
+                if (!string.IsNullOrEmpty(photo))
+                {
+                    imageService.DeletePicture(photo);
+                }
+                photo = await imageService.SavePictureAsync(model.PhotoFile, "ProfilePictures");
+            }
+
             coach.FirstName = model.FirstName;
             coach.LastName = model.LastName;
             coach.PhoneNumber = model.PhoneNumber;
-            coach.ProfilePictureUrl= model.ProfilePictureUrl;
+            coach.ProfilePictureUrl = photo;
             coach.Email = model.Email;
             coach.CoachingExperience = model.CoachingExperience;
 

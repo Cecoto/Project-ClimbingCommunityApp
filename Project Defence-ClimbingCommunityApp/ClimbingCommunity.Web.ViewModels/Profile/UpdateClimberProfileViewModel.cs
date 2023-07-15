@@ -2,6 +2,7 @@
 {
 
     using ClimbingCommunity.Web.ViewModels.User.Climber;
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.ApplicationUser;
@@ -34,7 +35,9 @@
         public string PhoneNumber { get; set; } = null!;
 
         [StringLength(ImageUrlMaxLength)]
-        public string ProfilePictureUrl { get; set; } = null!; 
+        public string? ProfilePictureUrl { get; set; } = null!;
+
+        public IFormFile? PhotoFile { get; set; }
 
         [Range(ClimbingExperienceMinValue, ClimbingExperienceMaxValue)]
         public int ClimbingExperience { get; set; }

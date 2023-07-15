@@ -2,20 +2,20 @@
 {
     using ClimbingCommunity.Services.Contracts;
     using Microsoft.AspNetCore.Http;
+
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     public class ImageService : IImageService
     {
-        public async Task<string> SaveProfilePictureAsync(IFormFile profilePicture)
+
+        public async Task<string> SavePictureAsync(IFormFile profilePicture, string dirName)
         {
+
 
             string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(profilePicture.FileName);
 
-            string profilePicturesDirectory = Path.Combine(Directory.GetCurrentDirectory(), "images/ProfilePictures");
+            string profilePicturesDirectory = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{dirName}");
 
             if (!Directory.Exists(profilePicturesDirectory))
             {
@@ -29,7 +29,20 @@
                 await profilePicture.CopyToAsync(stream);
             }
 
-            return "ProfilePictures/" + uniqueFileName;
+            return $"/images/{dirName}/" + uniqueFileName;
+        }
+
+        public void DeletePicture(string imagePath)
+        {
+            string wwwrootPath = Directory.GetCurrentDirectory();
+
+            string fullPath = Path.Combine(wwwrootPath,"wwwroot" + imagePath);
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+
         }
     }
 }

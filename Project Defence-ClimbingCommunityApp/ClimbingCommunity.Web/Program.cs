@@ -6,6 +6,8 @@ using ClimbingCommunity.Web.Infrastructure.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebShopDemo.Core.Data.Common;
+using Microsoft.Extensions.Hosting;
+
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -34,11 +36,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddApplicationServices(typeof(IUserService));
 
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/User/Login";
     
-
 });
 
 builder.Services.AddControllersWithViews()

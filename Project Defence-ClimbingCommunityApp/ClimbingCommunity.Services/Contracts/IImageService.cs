@@ -6,6 +6,8 @@
     public interface IImageService
     {
 
-        public Task<string> SaveProfilePictureAsync(IFormFile profilePicture);
+        Task<string> SavePictureAsync(IFormFile profilePicture, string dirName);
+
+        void DeletePicture(string imagePath);
     }
 }

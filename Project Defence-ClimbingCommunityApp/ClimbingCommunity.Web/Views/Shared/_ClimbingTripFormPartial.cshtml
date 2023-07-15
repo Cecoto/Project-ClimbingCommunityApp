@@ -32,9 +32,10 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="PhotoUrl"></label>
-        <input asp-for="PhotoUrl" type="file" class="form-control-file" accept="image/*">
-        <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+        <label asp-for="PhotoFile"></label>
+        <img class="" src="@Model.PhotoUrl" />
+        <input asp-for="PhotoFile" type="file" class="form-control-file" accept="image/*">
+        <span asp-validation-for="PhotoFile" class="text-danger"></span>
     </div>
 
     @if (Model.IsEditModel)

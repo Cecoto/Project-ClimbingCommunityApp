@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Web.ViewModels.ClimbingTrip
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.ClimbingTrip;
@@ -27,9 +28,11 @@
         [Required]
         [Range(DurationMinValue,DurationMaxValue)]
         public int Duration { get; set; }
- 
+
         [StringLength(PhotoUrlMaxLength)]
         public string? PhotoUrl { get; set; }
+
+        public IFormFile? PhotoFile { get; set; }
 
         public bool IsEditModel { get; set; }
     }

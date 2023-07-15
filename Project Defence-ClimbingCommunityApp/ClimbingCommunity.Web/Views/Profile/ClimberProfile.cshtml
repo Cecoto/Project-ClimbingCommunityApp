@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="~/css/ProfileInfo.css" asp-append-version="true" />
 
 <h1 class="profile-heading">Profile</h1>
-<hr/>
+<hr />
 <div class="profile-container">
     <div class="profile-info-container">
         <div class="profile-picture">
@@ -42,10 +42,11 @@
             </div>
         </div>
 
-        <div class="profile-actions">
-            <button class="btn btn-updateProfile" asp-controller="Profile" asp-action="UpdateClimberProfile" asp-route-id="@Model.Id">Manage Profile</button>
-        </div>
+        <form>
+            <button class="btn btn-updateProfile" asp-area="" asp-controller="Profile" asp-action="UpdateClimberProfile" asp-route-id="@Model.Id">Manage Profile</button>
+        </form>
     </div>
+
 
     <div class="profile-photos">
         <h3>Photos</h3>
@@ -78,9 +79,9 @@
 
         <div class="add-photos">
             <h5>Add Photo</h5>
-            <form asp-action="UploadPhotos" method="post" enctype="multipart/form-data">
-                <input type="file"  name="photos" multiple />
-                <button type="submit" class="btn btn-updateProfile">Upload</button>
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="photos" multiple />
+                <button asp-area="" asp-controller="Profile" asp-action="UploadPhotos" type="submit" class="btn btn-updateProfile">Upload</button>
             </form>
         </div>
     </div>

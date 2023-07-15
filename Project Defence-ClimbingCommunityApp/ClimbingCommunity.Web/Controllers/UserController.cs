@@ -67,6 +67,8 @@
         /// Methods that creates roles
         /// </summary>
         /// <returns></returns>
+        /// 
+
         [AllowAnonymous]
         //TO DO: Only will add this method to administratorController where only admin is allow to manage roles
         public async Task<IActionResult> CreateRoles()
@@ -176,6 +178,7 @@
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Redirection to login page</returns>
+        
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterClimber(RegisterClimberViewModel model)
@@ -249,6 +252,7 @@
             LoginViewModel model = new LoginViewModel();
             return View(model);
         }
+
         /// <summary>
         /// Post method for login of the user.
         /// </summary>
