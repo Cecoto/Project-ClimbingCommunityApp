@@ -11,6 +11,7 @@
     using ClimbingCommunity.Data.Models.Enums;
 
     using static Common.RoleConstants;
+    using static Common.NotificationMessageConstants;
     using ClimbingCommunity.Common;
 
     /// <summary>
@@ -104,7 +105,7 @@
 
             if (!genderIsValid)
             {
-                ModelState.AddModelError(model.Gender, "Invalid gender, please select it again!");
+                ModelState.AddModelError(nameof(model.Gender), "Invalid gender, please select it again!");
             }
 
             if (!ModelState.IsValid)
@@ -146,8 +147,11 @@
             {
                 await userManager.AddToRoleAsync(newCoach, RoleConstants.Coach);
 
+                this.TempData[SuccessMessage] = "You successfully joined our community !";
+
                 return RedirectToAction("Login", "User");
             }
+
             foreach (var error in result.Errors)
             {
 
@@ -188,7 +192,21 @@
 
             if (!genderIsValid)
             {
-                ModelState.AddModelError(model.Gender, "Invalid gender, please select it again!");
+                ModelState.AddModelError(nameof(model.Gender), "Invalid gender, please select it again!");
+            }
+
+            bool isLevelValid = await userService.IsLevelIdValidByIdAsync(model.LevelId);
+
+            if (!isLevelValid)
+            {
+                ModelState.AddModelError(nameof(model.LevelId), "Invalid level id, please select it again!");
+            }
+
+            bool isClimbingSpecialityValid = await userService.IsClimbingSpecialityIdValidByIdAsync(model.ClimberSpecialityId);
+
+            if (!isClimbingSpecialityValid)
+            {
+                ModelState.AddModelError(nameof(model.ClimberSpecialityId), "Invalid speciality id, please select it again!");
             }
 
             if (!ModelState.IsValid)
@@ -231,6 +249,8 @@
             {
 
                 await userManager.AddToRoleAsync(climber, RoleConstants.Climber);
+
+                this.TempData[SuccessMessage] = "You successfully joined our community!";
 
                 return RedirectToAction("Login", "User");
             }

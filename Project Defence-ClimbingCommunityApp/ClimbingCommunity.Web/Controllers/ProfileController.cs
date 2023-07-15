@@ -1,11 +1,11 @@
 ﻿namespace ClimbingCommunity.Web.Controllers
 {
-    using ClimbingCommunity.Data.Models;
-    using ClimbingCommunity.Services.Contracts;
-    using ClimbingCommunity.Web.ViewModels.Profile;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using ClimbingCommunity.Services.Contracts;
+    using ClimbingCommunity.Web.ViewModels.Profile;
+
+    using static Common.NotificationMessageConstants;
     /// <summary>
     /// A controller where we will manage account of the user.
     /// </summary>
@@ -36,17 +36,24 @@
         [HttpGet]
         public async Task<IActionResult> MyProfile()
         {
+            if (!User.Identity?.IsAuthenticated ?? false)
+            {
+                TempData["ErrorMessage"] = "You need to be a member of the community to reach that page!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
             if (User.IsInRole("Climber"))
             {
                 ClimberProfileViewModel model = await userService.GetClimberInfoAsync(GetUserId()!);
 
-                return View("ClimberProfile",model);
+                return View("ClimberProfile", model);
             }
             else
             {
                 //if (User.IsInRole("Coach"))
-                    CoachProfileViewModel model = await userService.GetCoachInfoAsync(GetUserId()!);
-                return View("CoachProfile",model);
+                CoachProfileViewModel model = await userService.GetCoachInfoAsync(GetUserId()!);
+                return View("CoachProfile", model);
             }
 
         }
@@ -70,11 +77,11 @@
             return View(model);
         }
 
-       /// <summary>
-       /// Post method that updates climbers info.
-       /// </summary>
-       /// <param name="model"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// Post method that updates climbers info.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> UpdateClimberProfile(UpdateClimberProfileViewModel model)
         {
@@ -89,17 +96,20 @@
                 return View(model);
             }
 
-            //if (profilePicture !=null)
-            //{
-            //    string proofilePictureUrl = await imageService.SaveProfilePictureAsync(profilePicture);
+            try
+            {
+                await userService.UpdateClimberInfoAsync(GetUserId()!, model);
 
-            //    model.ProfilePictureUrl = proofilePictureUrl;
-            //}
-          
+                this.TempData[SuccessMessage] = "Your profile was successfully edited!";
 
-            await userService.UpdateClimberInfoAsync(GetUserId()!,model);
+                return RedirectToAction(nameof(MyProfile));
 
-            return RedirectToAction(nameof(MyProfile));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
 
         }
         /// <summary>
@@ -127,8 +137,24 @@
                 return View(model);
             }
 
-            await userService.UpdateCoachInfoAsync(GetUserId()!, model);
+            try
+            {
+                await userService.UpdateCoachInfoAsync(GetUserId()!, model);
 
+                this.TempData[SuccessMessage] = "Your profile was successfully edited!";
+
+                return RedirectToAction(nameof(MyProfile));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+           
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadPhotos()
+        {
             return RedirectToAction(nameof(MyProfile));
         }
     }

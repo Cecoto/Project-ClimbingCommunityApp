@@ -1,10 +1,13 @@
 ﻿namespace ClimbingCommunity.Web.Controllers
 {
-    using ClimbingCommunity.Data.Models;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
+    using static Common.NotificationMessageConstants;
+
+
     /// <summary>
     /// Base constroller for global autorizaton of the controllers and implementing common methods.
     /// </summary>
@@ -19,17 +22,28 @@
         protected string? GetUserId()
        => User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
- 
-        //protected string? GetUserRole()
-        //{
-        //    var user = userManager.GetUserAsync(User).Result;
+        /// <summary>
+        /// General Error
+        /// </summary>
+        /// <returns></returns>
+        protected IActionResult GeneralError()
+        {
+            this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administrator.";
 
-        //    var roles = userManager.GetRolesAsync(user).Result;
+            if (User.IsInRole("Climber"))
+            {
+                return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
 
-        //    return roles.FirstOrDefault() ?? string.Empty;
-        //}
-        
-        
+            }
+            if (User.IsInRole("Coach"))
+            {
+                return RedirectToAction("LastThreeTrainings", "Training");
+
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+
 
     }
 }

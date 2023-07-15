@@ -12,7 +12,10 @@
     /// </summary>
     public class ApplicationUser : IdentityUser
     {
-        
+        public ApplicationUser()
+        {
+            this.Photos = new HashSet<Photo>();
+        }
         [Required]
         [Comment("User firstname")]
         [MaxLength(FirstNameMaxLength)]
@@ -37,6 +40,8 @@
         [Comment("Here we save the userRole in the application.")]
         [MaxLength(UserRoleMaxLength)]
         public string UserType { get; set; } = null!;
+
+        public ICollection<Photo> Photos { get; set; }
 
 
     }

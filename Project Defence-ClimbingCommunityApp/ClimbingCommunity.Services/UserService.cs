@@ -11,7 +11,7 @@
     using WebShopDemo.Core.Data.Common;
     using ClimbingCommunity.Web.ViewModels.Profile;
     using Microsoft.AspNetCore.Http;
-   
+
 
     public class UserService : IUserService
     {
@@ -122,6 +122,16 @@
                     Name = cs.Name,
                 })
                 .ToListAsync();
+        }
+
+        public async Task<bool> IsClimbingSpecialityIdValidByIdAsync(int climberSpecialityId)
+        {
+            return await repo.GetByIdAsync<ClimberSpeciality>(climberSpecialityId) != null;
+        }
+
+        public async Task<bool> IsLevelIdValidByIdAsync(int levelId)
+        {
+            return await repo.GetByIdAsync<Level>(levelId) != null;
         }
 
         public async Task UpdateClimberInfoAsync(string userId, UpdateClimberProfileViewModel model)

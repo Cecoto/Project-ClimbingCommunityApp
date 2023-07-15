@@ -79,9 +79,9 @@
 
         <div class="add-photos">
             <h5>Add Photo</h5>
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="UploadPhotos">
                 <input type="file" name="photos" multiple />
-                <button asp-area="" asp-controller="Profile" asp-action="UploadPhotos" type="submit" class="btn btn-updateProfile">Upload</button>
+                <button type="submit" class="btn btn-updateProfile">Upload</button>
             </form>
         </div>
     </div>

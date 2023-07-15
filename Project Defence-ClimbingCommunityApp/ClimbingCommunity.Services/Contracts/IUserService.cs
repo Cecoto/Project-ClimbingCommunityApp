@@ -18,7 +18,7 @@
 
         Task<UpdateCoachProfileViewModel> GetCoachInfoForUpdateAsync(string id);
         Task UpdateCoachInfoAsync(string userId, UpdateCoachProfileViewModel model);
-
-
+        Task<bool> IsLevelIdValidByIdAsync(int levelId);
+        Task<bool> IsClimbingSpecialityIdValidByIdAsync(int climberSpecialityId);
     }
 }

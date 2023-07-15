@@ -155,7 +155,7 @@
 
                 await climbingTripService.CreateAsync(GetUserId()!, model);
 
-                this.TempData[SuccessMessage] = "House was added successfully!";
+                this.TempData[SuccessMessage] = "Climbing trip was added successfully!";
 
                 return RedirectToAction(nameof(LastThreeClimbingTrips));
             }
@@ -271,12 +271,7 @@
             }
         }
 
-        private IActionResult GeneralError()
-        {
-            this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administrator.";
-
-            return RedirectToAction("Index", "Home");
-        }
+    
 
     }
 }
