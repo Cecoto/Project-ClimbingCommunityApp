@@ -169,10 +169,20 @@
 
             List<string> savedPhotoPaths = await imageService.SavePhotosAsync(photos);
 
-            await userService.SavePhotosToUserByIdAsync(GetUserId()!, savedPhotoPaths);
+            try
+            {
+                await userService.SavePhotosToUserByIdAsync(GetUserId()!, savedPhotoPaths);
 
+                this.TempData[SuccessMessage] = "Successfully imported!";
 
-            return RedirectToAction(nameof(MyProfile));
+                return RedirectToAction(nameof(MyProfile));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+            
         }
     }
 }

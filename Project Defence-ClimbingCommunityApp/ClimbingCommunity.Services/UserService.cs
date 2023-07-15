@@ -154,6 +154,8 @@
             });
 
             await repo.AddRangeAsync<Photo>(photos);
+
+            await repo.SaveChangesAsync();
         }
 
         public async Task UpdateClimberInfoAsync(string userId, UpdateClimberProfileViewModel model)

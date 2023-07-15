@@ -53,16 +53,23 @@
             {
                 if (photo.Length > 0)
                 {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                    string fileName = $"{Guid.NewGuid().ToString()}{Path.GetExtension(photo.FileName)}";
+                    string webRoot = Directory.GetCurrentDirectory();
+                    string uploadPath = Path.Combine(webRoot, "wwwroot/images", "Photos", fileName);
 
-                    string photoPath = "wwwroot/images/Photos" + fileName; 
+                    using (var stream = new FileStream(uploadPath, FileMode.Create))
+                    {
+                        await photo.CopyToAsync(stream);
+                    }
 
+                    string photoPath = "/images/Photos/" + fileName;
                     savedPhotoPaths.Add(photoPath);
                 }
             }
 
             return savedPhotoPaths;
         }
+
 
     }
 }
