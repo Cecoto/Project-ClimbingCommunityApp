@@ -42,8 +42,7 @@
                 Speciality = user.ClimberSpeciality.Name,
                 ClimbingExperience = user.ClimbingExperience,
                 TypeOfUser = "Climber",
-                Level = user.Level.Name,
-                Photos = { "/images/ProfilePictures/male.png", "/images/Photos/92.5_fontainebleau.jpg" }
+                Level = user.Level.Name
             };
 
             return climber;
@@ -92,8 +91,8 @@
                 Gender = user.Gender.ToString(),
                 Id = user.Id.ToString(),
                 CoachingExperience = user.CoachingExperience,
-                TypeOfUser = user.UserType,
-                Photos = { "/images/Photos/training241.1-1024x684.webp", "/images/Photos/coaching.webp" }
+                TypeOfUser = user.UserType
+
             };
             return coach;
         }
@@ -124,6 +123,18 @@
                 .ToListAsync();
         }
 
+        public async Task<ICollection<PhotoViewModel>> GetPhotosForUserAsync(string userId)
+        {
+            return await repo.AllReadonly<Photo>()
+                 .Where(p => p.UserId == userId)
+                 .Select(p => new PhotoViewModel()
+                 {
+                     Id = p.Id,
+                     ImageUrl = p.ImageUrl,
+                 })
+                 .ToListAsync();
+        }
+
         public async Task<bool> IsClimbingSpecialityIdValidByIdAsync(int climberSpecialityId)
         {
             return await repo.GetByIdAsync<ClimberSpeciality>(climberSpecialityId) != null;
@@ -132,6 +143,17 @@
         public async Task<bool> IsLevelIdValidByIdAsync(int levelId)
         {
             return await repo.GetByIdAsync<Level>(levelId) != null;
+        }
+
+        public async Task SavePhotosToUserByIdAsync(string userId, List<string> savedPhotoPaths)
+        {
+            var photos = savedPhotoPaths.Select(savedPhotoPath => new Photo
+            {
+                ImageUrl = savedPhotoPath,
+                UserId = userId
+            });
+
+            await repo.AddRangeAsync<Photo>(photos);
         }
 
         public async Task UpdateClimberInfoAsync(string userId, UpdateClimberProfileViewModel model)

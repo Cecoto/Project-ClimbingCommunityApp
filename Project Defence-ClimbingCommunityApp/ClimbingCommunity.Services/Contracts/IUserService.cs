@@ -20,5 +20,7 @@
         Task UpdateCoachInfoAsync(string userId, UpdateCoachProfileViewModel model);
         Task<bool> IsLevelIdValidByIdAsync(int levelId);
         Task<bool> IsClimbingSpecialityIdValidByIdAsync(int climberSpecialityId);
+        Task<ICollection<PhotoViewModel>> GetPhotosForUserAsync(string userId);
+        Task SavePhotosToUserByIdAsync(string userId, List<string> savedPhotoPaths);
     }
 }

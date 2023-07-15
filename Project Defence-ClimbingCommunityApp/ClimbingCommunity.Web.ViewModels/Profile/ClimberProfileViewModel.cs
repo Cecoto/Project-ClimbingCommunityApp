@@ -4,7 +4,7 @@
     {
         public ClimberProfileViewModel()
         {
-            this.Photos = new HashSet<string>();
+            this.Photos = new HashSet<PhotoViewModel>();
         }
 
         public string Id { get; set; } = null!;
@@ -17,7 +17,7 @@
         public int ClimbingExperience { get; set; }
         public string PhoneNumber { get; set; } = null!;
         public string Level { get; set; } = null!;
-        public ICollection<string> Photos { get; set; }
+        public ICollection<PhotoViewModel> Photos { get; set; }
 
     }
 }

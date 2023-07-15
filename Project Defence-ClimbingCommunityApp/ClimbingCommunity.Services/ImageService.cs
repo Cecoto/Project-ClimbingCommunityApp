@@ -44,5 +44,25 @@
             }
 
         }
+
+        public async Task<List<string>> SavePhotosAsync(List<IFormFile> photos)
+        {
+            List<string> savedPhotoPaths = new List<string>();
+
+            foreach (var photo in photos)
+            {
+                if (photo.Length > 0)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+
+                    string photoPath = "wwwroot/images/Photos" + fileName; 
+
+                    savedPhotoPaths.Add(photoPath);
+                }
+            }
+
+            return savedPhotoPaths;
+        }
+
     }
 }

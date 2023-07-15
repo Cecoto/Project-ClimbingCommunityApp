@@ -9,5 +9,7 @@
         Task<string> SavePictureAsync(IFormFile profilePicture, string dirName);
 
         void DeletePicture(string imagePath);
+
+        Task<List<string>> SavePhotosAsync(List<IFormFile> photos);
     }
 }

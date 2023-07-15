@@ -43,16 +43,21 @@
                 return RedirectToAction("Index", "Home");
             }
 
+            string userid = GetUserId()!;
             if (User.IsInRole("Climber"))
             {
-                ClimberProfileViewModel model = await userService.GetClimberInfoAsync(GetUserId()!);
+                ClimberProfileViewModel model = await userService.GetClimberInfoAsync(userid);
+
+                model.Photos = await userService.GetPhotosForUserAsync(userid);
 
                 return View("ClimberProfile", model);
             }
             else
             {
                 //if (User.IsInRole("Coach"))
-                CoachProfileViewModel model = await userService.GetCoachInfoAsync(GetUserId()!);
+                CoachProfileViewModel model = await userService.GetCoachInfoAsync(userid);
+
+                model.Photos = await userService.GetPhotosForUserAsync(userid);
                 return View("CoachProfile", model);
             }
 
@@ -150,11 +155,23 @@
 
                 return GeneralError();
             }
-           
+
         }
         [HttpPost]
-        public async Task<IActionResult> UploadPhotos()
+        public async Task<IActionResult> UploadPhotos(List<IFormFile> photos)
         {
+            if (photos == null || !photos.Any())
+            {
+                ModelState.AddModelError(string.Empty, "No photos selected.");
+
+                return RedirectToAction(nameof(MyProfile));
+            }
+
+            List<string> savedPhotoPaths = await imageService.SavePhotosAsync(photos);
+
+            await userService.SavePhotosToUserByIdAsync(GetUserId()!, savedPhotoPaths);
+
+
             return RedirectToAction(nameof(MyProfile));
         }
     }

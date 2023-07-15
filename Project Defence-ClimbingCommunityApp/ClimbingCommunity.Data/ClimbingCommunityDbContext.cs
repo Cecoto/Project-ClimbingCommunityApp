@@ -30,6 +30,10 @@
 
         public DbSet<TripClimber> TripsClimbers { get; set; } = null!;
 
+        public DbSet<Photo> Photos { get; set; } = null!;
+
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
