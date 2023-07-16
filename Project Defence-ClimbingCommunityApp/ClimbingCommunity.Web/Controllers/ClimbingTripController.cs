@@ -223,7 +223,7 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, ClimbingTripFormViewModel model)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 model.TripTypes = await climbingTripService.GetAllTripTypesAsync();
@@ -270,8 +270,48 @@
                 return View(model);
             }
         }
+        /// <summary>
+        /// Method for soft delete of a climbing trip.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
-    
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool isTripExist = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
+            if (!isTripExist)
+            {
+                this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist! Please try again.";
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+            if (User.IsInRole("Climber"))
+            {
+                this.TempData[ErrorMessage] = "You must be climber in order to delete climbing trips!";
+                return RedirectToAction("MyProfile", "Profile");
+            }
+            bool isClimberOrganizator = await climbingTripService.isUserOrganizatorOfTripById(GetUserId()!, id);
+            if (!isClimberOrganizator)
+            {
+                this.TempData[ErrorMessage] = "You must be the the organizator of the trip you want to edit!";
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+            try
+            {
+                await climbingTripService.DeleteTripByIdAsync(id);
+
+                this.TempData[SuccessMessage] = "You successfully deleted that trip";
+
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+        }
+
 
     }
 }

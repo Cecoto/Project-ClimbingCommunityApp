@@ -32,7 +32,6 @@
     <Folder Include="wwwroot\images\ClimbingTrips\" />
     <Folder Include="wwwroot\images\Trainings\" />
     <Folder Include="wwwroot\images\Photos\" />
-    <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
     <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />

@@ -17,5 +17,6 @@
         Task<bool> IsClimbingTripExistsByIdAsync(string id);
         Task<ClimbingTripFormViewModel> GetClimbingTripForEditAsync(string tripId);
         Task EditClimbingTripById(string id, ClimbingTripFormViewModel model);
+        Task DeleteTripByIdAsync(string tripId);
     }
 }

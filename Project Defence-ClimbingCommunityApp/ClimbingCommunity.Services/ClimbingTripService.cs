@@ -20,10 +20,10 @@
 
         public async Task CreateAsync(string organizatorId, ClimbingTripFormViewModel model)
         {
-            
+
             if (model.PhotoFile != null)
             {
-              
+
                 model.PhotoUrl = await imageService.SavePictureAsync(model.PhotoFile, "ClimbingTrips");
             }
 
@@ -39,6 +39,15 @@
 
 
             await repo.AddAsync(trip);
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task DeleteTripByIdAsync(string tripId)
+        {
+            ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(tripId));
+
+            trip.IsActive = false;
 
             await repo.SaveChangesAsync();
         }

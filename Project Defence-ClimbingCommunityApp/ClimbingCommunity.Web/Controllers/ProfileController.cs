@@ -58,6 +58,7 @@
                 CoachProfileViewModel model = await userService.GetCoachInfoAsync(userid);
 
                 model.Photos = await userService.GetPhotosForUserAsync(userid);
+
                 return View("CoachProfile", model);
             }
 
@@ -157,12 +158,17 @@
             }
 
         }
+        /// <summary>
+        /// Method for uploading photos to the users collection.
+        /// </summary>
+        /// <param name="photos"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> UploadPhotos(List<IFormFile> photos)
         {
             if (photos == null || !photos.Any())
             {
-                ModelState.AddModelError(string.Empty, "No photos selected.");
+                this.TempData[ErrorMessage] = "No photos selected.";
 
                 return RedirectToAction(nameof(MyProfile));
             }

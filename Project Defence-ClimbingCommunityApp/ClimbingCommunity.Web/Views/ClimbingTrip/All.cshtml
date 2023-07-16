@@ -5,6 +5,7 @@
 }
 <link rel="stylesheet" href="~/css/cardFlip.css" asp-append-version="true" />
 
+<script src="~/js/OnDeleteAjax.js"></script>
 <h2 class="centered-heading">All Trips</h2>
 
 
@@ -54,8 +55,10 @@
                             <div class="button-container">
                                 @if (trip.isOrganizator)
                                 {
+                                    @*onclick="deleteTrip('@trip.Id')"*@
                                     <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
-                                    <a asp-area="" asp-controller="ClimbingTrip" asp-action="Delete" asp-route-id="@trip.Id" class="delete-button">Delete</a>
+                                    <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
+                                    <a class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</a>
                                 }
                                 else
                                 {
@@ -70,3 +73,7 @@
     </div>
 
 </div>
+@section Scripts {
+    <script src="~/js/OnDeleteAjax.js"></script>
+}
+
