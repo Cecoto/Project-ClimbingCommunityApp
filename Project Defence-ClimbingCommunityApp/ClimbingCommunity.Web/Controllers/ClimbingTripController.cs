@@ -285,7 +285,7 @@
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
-            if (User.IsInRole("Climber"))
+            if (!User.IsInRole("Climber"))
             {
                 this.TempData[ErrorMessage] = "You must be climber in order to delete climbing trips!";
                 return RedirectToAction("MyProfile", "Profile");
@@ -301,7 +301,7 @@
             {
                 await climbingTripService.DeleteTripByIdAsync(id);
 
-                this.TempData[SuccessMessage] = "You successfully deleted that trip";
+                this.TempData[SuccessMessage] = "Climbing trip was successfully deleted!";
 
                 return RedirectToAction(nameof(All));
             }

@@ -9,14 +9,21 @@
     }).then((result) => {
         if (result.isConfirmed) {
             var baseUrl = document.getElementById('baseUrl').value;
-            var url = baseUrl +"/"+ tripId;
+            var url = baseUrl + "/" + tripId;
             $.ajax({
                 url: url,
                 type: 'POST',
                 headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
                 success: function () {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success',
+                        1500
+                    )
+                    location.reload();
                     // Refresh the page or perform any additional actions
-                    window.location.reload();
+
                 },
                 error: function () {
                     // Handle the error case            
