@@ -33,10 +33,13 @@
                 </div>
             </div>
         </div>
+        @if (Model.IsOwner)
+        {
 
-        <form>
-            <button class="btn-updateProfile" asp-area="" asp-controller="Profile" asp-action="UpdateCoachProfile" asp-route-id="@Model.Id">Manage Profile</button>
-        </form>
+            <form>
+                <button class="btn-updateProfile" asp-area="" asp-controller="Profile" asp-action="UpdateCoachProfile" asp-route-id="@Model.Id">Manage Profile</button>
+            </form>
+        }
     </div>
 
     <div class="profile-photos">
@@ -65,15 +68,26 @@
         }
         else
         {
-            <p>No photos found. Add your first photo.</p>
-        }
+            @if (Model.IsOwner)
+            {
+                <p>No photos found. Add your first photo.</p>
 
-        <div class="add-photos">
-            <h5>Add Photo</h5>
-            <form method="post" enctype="multipart/form-data">
-                <input type="file" name="photos" multiple />
-                <button asp-area="" asp-controller="Profile" asp-action="UploadPhotos" type="submit" class="btn btn-updateProfile">Upload</button>
-            </form>
-        </div>
+            }
+            else
+            {
+                <p>@Model.FirstName still don't have photos.</p>
+            }
+
+        }
+        @if (Model.IsOwner)
+        {
+            <div class="add-photos">
+                <h5>Add Photo</h5>
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" name="photos" multiple />
+                    <button asp-area="" asp-controller="Profile" asp-action="UploadPhotos" type="submit" class="btn btn-updateProfile">Upload</button>
+                </form>
+            </div>
+        }
     </div>
 </div>

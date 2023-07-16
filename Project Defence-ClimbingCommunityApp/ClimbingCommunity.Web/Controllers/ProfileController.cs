@@ -6,6 +6,8 @@
     using ClimbingCommunity.Web.ViewModels.Profile;
 
     using static Common.NotificationMessageConstants;
+    using ClimbingCommunity.Data.Models;
+
     /// <summary>
     /// A controller where we will manage account of the user.
     /// </summary>
@@ -32,7 +34,6 @@
         /// Method for reaching profile page of the user
         /// </summary>
         /// <returns></returns>
-        /// 
         [HttpGet]
         public async Task<IActionResult> MyProfile()
         {
@@ -49,7 +50,7 @@
                 ClimberProfileViewModel model = await userService.GetClimberInfoAsync(userid);
 
                 model.Photos = await userService.GetPhotosForUserAsync(userid);
-
+                model.IsOwner = true;
                 return View("ClimberProfile", model);
             }
             else
@@ -58,10 +59,56 @@
                 CoachProfileViewModel model = await userService.GetCoachInfoAsync(userid);
 
                 model.Photos = await userService.GetPhotosForUserAsync(userid);
-
+                model.IsOwner = true;
                 return View("CoachProfile", model);
             }
 
+        }
+        /// <summary>
+        /// Gets user profile by id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> UserProfile(string id)
+        {
+            
+            ApplicationUser user = await userService.GetUserByIdAsync(id);
+
+            if (user.UserType == "Climber")
+            {
+                try
+                {
+                    ClimberProfileViewModel model = await userService.GetClimberInfoAsync(id);
+
+                    model.Photos = await userService.GetPhotosForUserAsync(id);
+
+                    if (GetUserId() == id)
+                    {
+                        model.IsOwner = true;
+                    }
+
+                    return View("ClimberProfile", model);
+                }
+                catch (Exception)
+                {
+
+                    return GeneralError();
+                }
+                
+            }
+            else
+            {
+                CoachProfileViewModel model = await userService.GetCoachInfoAsync(id);
+
+                model.Photos = await userService.GetPhotosForUserAsync(id);
+
+                if (GetUserId() == id)
+                {
+                    model.IsOwner = true;
+                }
+                return View("CoachProfile", model);
+            }
         }
 
         /// <summary>
@@ -179,7 +226,7 @@
             {
                 await userService.SavePhotosToUserByIdAsync(GetUserId()!, savedPhotoPaths);
 
-                this.TempData[SuccessMessage] = "Successfully imported!";
+                this.TempData[SuccessMessage] = "Successfully uploaded.";
 
                 return RedirectToAction(nameof(MyProfile));
             }
@@ -188,7 +235,7 @@
 
                 return GeneralError();
             }
-            
+
         }
     }
 }

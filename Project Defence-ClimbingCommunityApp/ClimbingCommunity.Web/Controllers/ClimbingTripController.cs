@@ -72,6 +72,7 @@
                 IEnumerable<ClimbingTripViewModel> models = await climbingTripService.GetAllClimbingTripsAsync();
 
                 string userId = GetUserId()!;
+
                 if (userId == null)
                 {
                     this.TempData["Error Message"] = "Invalid ID of a user!";

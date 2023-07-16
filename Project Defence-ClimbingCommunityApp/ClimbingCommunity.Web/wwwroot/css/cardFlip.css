@@ -156,3 +156,27 @@
 .form-control {
     width: 100%;
 }
+
+button.accordion-button {
+    padding: 10px 20px; 
+    font-size: 20px;
+    width: 135px;
+    margin-top: 20px;
+    background-color: #92d29b;
+    border-radius: 5px;
+    height: 50px;
+    color: #fff;
+}
+.accordion-button:hover {
+    background-color: darkgreen;
+    text-decoration: double;
+    color: white;
+}
+.collapse{
+    margin-top:20px;
+}
+.profile-pic{
+    width:60px;
+    height:60px;
+    border-radius:30px;
+}

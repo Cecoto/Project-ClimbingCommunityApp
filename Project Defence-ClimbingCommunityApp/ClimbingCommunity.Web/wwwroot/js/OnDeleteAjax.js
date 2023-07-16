@@ -15,18 +15,20 @@
                 type: 'POST',
                 headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
                 success: function () {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success',
-                        1500
-                    )
-                    location.reload();
-                    // Refresh the page or perform any additional actions
+                    
+                    swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your file has been deleted.',
+                        icon: 'success',
+                        showConfirmButton: false 
+                    });
+                   
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
 
                 },
-                error: function () {
-                    // Handle the error case            
+                error: function () {      
                     swal.fire('Error', 'Failed to delete the trip.', 'error');
                 }
             });

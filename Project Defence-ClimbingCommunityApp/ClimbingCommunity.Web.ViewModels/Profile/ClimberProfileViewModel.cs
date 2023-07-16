@@ -5,6 +5,7 @@
         public ClimberProfileViewModel()
         {
             this.Photos = new HashSet<PhotoViewModel>();
+            
         }
 
         public string Id { get; set; } = null!;
@@ -18,6 +19,8 @@
         public string PhoneNumber { get; set; } = null!;
         public string Level { get; set; } = null!;
         public ICollection<PhotoViewModel> Photos { get; set; }
+
+        public bool IsOwner { get; set; }
 
     }
 }

@@ -41,7 +41,7 @@
                 Id = user.Id.ToString(),
                 Speciality = user.ClimberSpeciality.Name,
                 ClimbingExperience = user.ClimbingExperience,
-                TypeOfUser = "Climber",
+                TypeOfUser = user.UserType,
                 Level = user.Level.Name
             };
 
@@ -133,6 +133,11 @@
                      ImageUrl = p.ImageUrl,
                  })
                  .ToListAsync();
+        }
+
+        public Task<ApplicationUser> GetUserByIdAsync(string id)
+        {
+            return repo.GetByIdAsync<ApplicationUser>(id);
         }
 
         public async Task<bool> IsClimbingSpecialityIdValidByIdAsync(int climberSpecialityId)

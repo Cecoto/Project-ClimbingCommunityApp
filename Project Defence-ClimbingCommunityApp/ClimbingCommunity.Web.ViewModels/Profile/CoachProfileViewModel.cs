@@ -16,6 +16,7 @@
         public string PhoneNumber { get; set; } = null!;
         public ICollection<PhotoViewModel> Photos { get; set; }
         public string TypeOfUser { get; set; } = null!;
+        public bool IsOwner { get; set; }
 
     }
 }

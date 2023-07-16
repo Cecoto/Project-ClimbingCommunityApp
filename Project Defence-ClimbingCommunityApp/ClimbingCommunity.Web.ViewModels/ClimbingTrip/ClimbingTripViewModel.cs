@@ -1,5 +1,7 @@
 ﻿namespace ClimbingCommunity.Web.ViewModels.ClimbingTrip
 {
+    using ClimbingCommunity.Data.Models;
+
     public class ClimbingTripViewModel
     {
       
@@ -12,6 +14,8 @@
         public string TripType { get; set; } = null!;
 
         public string OrganizatorId { get; set; } = null!;
+
+        public Climber Organizator { get; set; } = null!;
 
         public string PhotoUrl { get; set; } = null!;
 

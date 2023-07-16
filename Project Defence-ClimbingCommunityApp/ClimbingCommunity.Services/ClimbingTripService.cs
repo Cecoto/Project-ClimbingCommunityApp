@@ -89,7 +89,8 @@
                      OrganizatorId = ct.OrganizatorId,
                      Duration = ct.Duration,
                      TripType = ct.TripType.Name,
-                     isOrganizator = false
+                     isOrganizator = false,
+                     Organizator = ct.Organizator
                  }).ToListAsync();
 
             return models;

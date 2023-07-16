@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Services.Contracts
 {
+    using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Web.ViewModels.Profile;
     using ClimbingCommunity.Web.ViewModels.User.Climber;
 
@@ -22,5 +23,6 @@
         Task<bool> IsClimbingSpecialityIdValidByIdAsync(int climberSpecialityId);
         Task<ICollection<PhotoViewModel>> GetPhotosForUserAsync(string userId);
         Task SavePhotosToUserByIdAsync(string userId, List<string> savedPhotoPaths);
+        Task<ApplicationUser> GetUserByIdAsync(string id);
     }
 }
