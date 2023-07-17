@@ -12,7 +12,7 @@
     {
         private readonly IRepository repo;
         private readonly IImageService imageService;
-        
+
         public ClimbingTripService(
             IRepository _repo,
             IImageService _imageService
@@ -20,7 +20,7 @@
         {
             repo = _repo;
             imageService = _imageService;
-           
+
 
         }
 
@@ -58,7 +58,7 @@
             await repo.SaveChangesAsync();
         }
 
-        public async Task EditClimbingTripById(string id, ClimbingTripFormViewModel model)
+        public async Task EditClimbingTripByIdAsync(string id, ClimbingTripFormViewModel model)
         {
             ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(id));
 
@@ -100,6 +100,27 @@
                  }).ToListAsync();
 
             return models;
+        }
+
+        public async Task<IEnumerable<ClimbingTripViewModel>> GetAllJoinedClimbingTripsByUserIdAsync(string userId)
+        {
+            return await repo
+                  .AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
+                  .OrderByDescending(ct => ct.CreatedOn)
+                  .Where(ct => ct.Climbers.Any(c => c.ClimberId == userId))
+                  .Select(ct => new ClimbingTripViewModel()
+                  {
+                      Id = ct.Id.ToString(),
+                      Title = ct.Title,
+                      PhotoUrl = ct.PhotoUrl,
+                      Destination = ct.Destination,
+                      OrganizatorId = ct.OrganizatorId,
+                      Duration = ct.Duration,
+                      TripType = ct.TripType.Name,
+                      isOrganizator = false,
+                      Organizator = ct.Organizator,
+                  }).ToListAsync();
+
         }
 
         public async Task<IEnumerable<TripTypeViewModel>> GetAllTripTypesAsync()
@@ -168,7 +189,7 @@
             return await repo.GetByIdAsync<TripType>(tripTypeId) != null;
         }
 
-        public async Task<bool> isUserOrganizatorOfTripById(string userId, string tripId)
+        public async Task<bool> isUserOrganizatorOfTripByIdAsync(string userId, string tripId)
         {
             ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(tripId));
             if (trip.OrganizatorId == userId)
@@ -203,7 +224,6 @@
             {
                 await repo.DeleteAsync<TripClimber>(tcToDelete);
             }
-
         }
     }
 }

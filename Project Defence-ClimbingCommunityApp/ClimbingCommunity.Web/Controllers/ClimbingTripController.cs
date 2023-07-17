@@ -2,6 +2,7 @@
 {
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
+    using ClimbingCommunity.Web.ViewModels.Training;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -13,15 +14,20 @@
     public class ClimbingTripController : BaseController
     {
         private readonly IClimbingTripService climbingTripService;
+        private readonly ITrainingService trainingService;
 
 
         /// <summary>
         /// Constructor of the controller for injecting needed services.
         /// </summary>
         /// <param name="_climbingTripService"></param>
-        public ClimbingTripController(IClimbingTripService _climbingTripService)
+        /// <param name="_trainingService"></param>
+        public ClimbingTripController(
+            IClimbingTripService _climbingTripService,
+            ITrainingService _trainingService)
         {
             this.climbingTripService = _climbingTripService;
+            this.trainingService = _trainingService;
         }
 
 
@@ -101,6 +107,40 @@
 
                 return GeneralError();
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> JoinedActivites()
+        {
+            if (User.IsInRole("Climber"))
+            {
+                this.TempData["Error Message"] = "You must be a climber to see your joined activities";
+
+                return RedirectToAction(nameof(All));
+            }
+
+            try
+            {
+                string userId = GetUserId()!;
+
+                IEnumerable<ClimbingTripViewModel> joinedTrips = await climbingTripService.GetAllJoinedClimbingTripsByUserIdAsync(userId);
+
+                IEnumerable<TrainingViewModel> joinedTrainings = await trainingService.GetAllJoinedTrainingByUserIdAsync(userId);
+
+                JoinedActivitiesViewModel model = new JoinedActivitiesViewModel()
+                {
+                    JoinedClimbingTrips = joinedTrips,
+                    JoinedTrainings = joinedTrainings
+                };
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+           
+
         }
         /// <summary>
         /// Get method for reaching add page.
@@ -196,7 +236,7 @@
                 return RedirectToAction(nameof(All));
             }
 
-            bool isOrganizerOfTrip = await climbingTripService.isUserOrganizatorOfTripById(GetUserId()!, id);
+            bool isOrganizerOfTrip = await climbingTripService.isUserOrganizatorOfTripByIdAsync(GetUserId()!, id);
 
             if (!isOrganizerOfTrip)
             {
@@ -251,7 +291,7 @@
                 return RedirectToAction(nameof(All));
             }
 
-            bool isOrganizerOfTrip = await climbingTripService.isUserOrganizatorOfTripById(GetUserId()!, id);
+            bool isOrganizerOfTrip = await climbingTripService.isUserOrganizatorOfTripByIdAsync(GetUserId()!, id);
 
             if (!isOrganizerOfTrip)
             {
@@ -261,7 +301,7 @@
             }
             try
             {
-                await climbingTripService.EditClimbingTripById(id, model);
+                await climbingTripService.EditClimbingTripByIdAsync(id, model);
 
                 this.TempData[SuccessMessage] = "Climbing trip was successfully edited!";
 
@@ -296,7 +336,7 @@
                 this.TempData[ErrorMessage] = "You must be climber in order to delete climbing trips!";
                 return RedirectToAction("MyProfile", "Profile");
             }
-            bool isClimberOrganizator = await climbingTripService.isUserOrganizatorOfTripById(GetUserId()!, id);
+            bool isClimberOrganizator = await climbingTripService.isUserOrganizatorOfTripByIdAsync(GetUserId()!, id);
             if (!isClimberOrganizator)
             {
                 this.TempData[ErrorMessage] = "You must be the the organizator of the trip you want to edit!";
@@ -340,7 +380,7 @@
                 this.TempData[ErrorMessage] = "You must be climber in order to join this climbing trips!";
                 return RedirectToAction(nameof(All));
             }
-            bool isClimberOrganizator = await climbingTripService.isUserOrganizatorOfTripById(GetUserId()!, id);
+            bool isClimberOrganizator = await climbingTripService.isUserOrganizatorOfTripByIdAsync(GetUserId()!, id);
             if (isClimberOrganizator)
             {
                 this.TempData[ErrorMessage] = "You are the organizator of the trip!";
