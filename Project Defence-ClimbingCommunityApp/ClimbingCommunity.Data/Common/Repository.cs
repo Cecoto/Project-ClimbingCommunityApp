@@ -84,7 +84,7 @@ namespace WebShopDemo.Core.Data.Common
                 .AsQueryable()
                 .AsNoTracking();
         }
-        public IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search,params Expression<Func<T, object>>[] includes) where T : class
+        public IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search, params Expression<Func<T, object>>[] includes) where T : class
         {
             IQueryable<T> query = DbSet<T>()
                 .Where(search)
@@ -111,6 +111,19 @@ namespace WebShopDemo.Core.Data.Common
             T entity = await GetByIdAsync<T>(id);
 
             Delete<T>(entity);
+        }
+
+        /// <summary>
+        /// Delete a record from database
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity">Entity to be deleted</param>
+        /// <returns></returns>
+        public async Task DeleteAsync<T>(T entity) where T : class
+        {
+            Context.Set<T>().Remove(entity);
+
+            await Context.SaveChangesAsync();
         }
 
 

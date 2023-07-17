@@ -361,12 +361,37 @@
             }
 
         }
-
-        [HttpPost]
+       
         public async Task<IActionResult> Leave(string id)
         {
+            bool isTripExists = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
 
-            return RedirectToAction(nameof(All));
+            if (!isTripExists)
+            {
+                this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist! Please try again.";
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+            bool isUserParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(GetUserId()!, id);
+            if (!isUserParticipant)
+            {
+                this.TempData[ErrorMessage] = "You are not participant of the that trip!";
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+            try
+            {
+                await climbingTripService.LeaveClimbingTripByIdAsync(id,GetUserId());
+
+                this.TempData[SuccessMessage] = "Successfuly left that trip!";
+
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
         }
 
 

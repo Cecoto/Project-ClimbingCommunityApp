@@ -12,15 +12,15 @@
     {
         private readonly IRepository repo;
         private readonly IImageService imageService;
-        private readonly IUserService userService;
+        
         public ClimbingTripService(
             IRepository _repo,
-            IImageService _imageService,
-            IUserService _userService)
+            IImageService _imageService
+            )
         {
             repo = _repo;
             imageService = _imageService;
-            userService = _userService;
+           
 
         }
 
@@ -193,6 +193,17 @@
             });
 
             await repo.SaveChangesAsync();
+        }
+
+        public async Task LeaveClimbingTripByIdAsync(string tripId, string userId)
+        {
+            TripClimber tcToDelete = await repo.GetByIdsAsync<TripClimber>(new object[] { Guid.Parse(tripId), userId });
+
+            if (tcToDelete != null)
+            {
+                await repo.DeleteAsync<TripClimber>(tcToDelete);
+            }
+
         }
     }
 }

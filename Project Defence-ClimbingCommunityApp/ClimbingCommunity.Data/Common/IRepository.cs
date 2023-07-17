@@ -88,6 +88,8 @@ namespace WebShopDemo.Core.Data.Common
         /// <param name="id">Identificator of record to be deleted</param>
         Task DeleteAsync<T>(object id) where T : class;
 
+        Task DeleteAsync<T>(T entity) where T : class;
+
         /// <summary>
         /// Deletes a record from database
         /// </summary>
