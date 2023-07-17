@@ -32,6 +32,8 @@
 
         public DbSet<Photo> Photos { get; set; } = null!;
 
+        public DbSet<TrainingClimber> TrainingsClimbers { get; set; } = null!;
+
 
 
 

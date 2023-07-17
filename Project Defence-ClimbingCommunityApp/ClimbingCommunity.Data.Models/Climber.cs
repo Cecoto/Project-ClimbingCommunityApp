@@ -13,6 +13,7 @@
         public Climber()
         {
             this.ClimbingTrips = new HashSet<TripClimber>();
+            this.JoinedTrainings = new HashSet<TrainingClimber>();
         }
 
         [ForeignKey(nameof(ClimberSpeciality))]
@@ -30,6 +31,8 @@
 
         [Comment("Trips that climber is joined to.")]
         public virtual ICollection<TripClimber> ClimbingTrips { get; set; }
+
+        public virtual ICollection<TrainingClimber> JoinedTrainings { get; set; }
 
     }
 }

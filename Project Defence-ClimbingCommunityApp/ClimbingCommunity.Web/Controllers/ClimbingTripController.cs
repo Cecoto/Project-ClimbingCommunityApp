@@ -323,6 +323,7 @@
         /// <param name="id"></param>
         /// <returns></returns>
 
+        [HttpPost]
         public async Task<IActionResult> Join(string id)
         {
             bool isTripExists = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
@@ -361,7 +362,12 @@
             }
 
         }
-       
+        /// <summary>
+        /// Method for leaving a climbing trip
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
         public async Task<IActionResult> Leave(string id)
         {
             bool isTripExists = await climbingTripService.IsClimbingTripExistsByIdAsync(id);

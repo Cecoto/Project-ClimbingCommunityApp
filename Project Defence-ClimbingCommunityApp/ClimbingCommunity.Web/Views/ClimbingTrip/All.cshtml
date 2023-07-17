@@ -51,11 +51,11 @@
                             <p><strong>Destination:</strong> @trip.Destination</p>
                             <p><strong>Trip Type:</strong> @trip.TripType</p>
                             <p><strong>Duration:</strong> @trip.Duration days</p>
-                            
+
                             <div class="button-container">
                                 @if (trip.isOrganizator)
                                 {
-                                    
+
                                     <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
                                     <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
                                     <a class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</a>
@@ -64,27 +64,29 @@
                                 {
                                     if (trip.isParticipant)
                                     {
-                                      
-                                        <a asp-area="" asp-controller="ClimbingTrip" asp-action="Leave" asp-route-id="@trip.Id" class="button">Leave</a>
+                                        <form method="post" enctype="multipart/form-data">
+                                            <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Leave" asp-route-id="@trip.Id" class="join-button">Leave</button>
+                                        </form>
 
                                     }
                                     else
                                     {
-                                       
-                                        <a asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button">Join Trip</a>
-                                    }
-                                    @*<a asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button">Join Trip</a>*@
+                                        <form method="post" enctype="multipart/form-data">
+
+                                            <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="join-button">Join Trip</button>
+                                        </form>
+                                    }  
                                 }
                             </div>
                             <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
                                 Details
                             </button>
                             <div id="details-@trip.Id" class="collapse">
-                                
+
                                 <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
                                 <p><strong>Organizator:</strong>@trip.Organizator.FirstName @trip.Organizator.LastName</p>
                                 <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
-                                <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="button">View Profile</a>
+                                <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="buttoN">View Profile</a>
                             </div>
                         </div>
                     </div>
@@ -96,5 +98,6 @@
 </div>
 @section Scripts {
     <script src="~/js/OnDeleteAjax.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 }
 
