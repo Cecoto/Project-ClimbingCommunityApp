@@ -30,7 +30,6 @@
             Climber user = await repo.GetByIdIncludingAsync<Climber>(c => c.Id == userId, c => c.ClimberSpeciality, c => c.Level);
 
 
-
             ClimberProfileViewModel climber = new ClimberProfileViewModel()
             {
                 FirstName = user.FirstName,

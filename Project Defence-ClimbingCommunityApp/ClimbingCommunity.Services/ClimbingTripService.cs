@@ -12,10 +12,16 @@
     {
         private readonly IRepository repo;
         private readonly IImageService imageService;
-        public ClimbingTripService(IRepository _repo, IImageService _imageService)
+        private readonly IUserService userService;
+        public ClimbingTripService(
+            IRepository _repo,
+            IImageService _imageService,
+            IUserService _userService)
         {
             repo = _repo;
             imageService = _imageService;
+            userService = _userService;
+
         }
 
         public async Task CreateAsync(string organizatorId, ClimbingTripFormViewModel model)
@@ -170,6 +176,23 @@
                 return true;
             }
             return false;
+        }
+
+        public async Task<bool> IsUserParticipateInTripByIdAsync(string userId, string tripId)
+        {
+            return await repo.GetByIdsAsync<TripClimber>(new object[] { Guid.Parse(tripId), userId }) != null;
+        }
+
+        public async Task JoinClimbingTripAsync(string tripId, string userId)
+        {
+
+            await repo.AddAsync<TripClimber>(new TripClimber()
+            {
+                ClimberId = userId,
+                TripId = Guid.Parse(tripId)
+            });
+
+            await repo.SaveChangesAsync();
         }
     }
 }

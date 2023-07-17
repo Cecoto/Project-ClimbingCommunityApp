@@ -23,6 +23,7 @@
 
         public bool isOrganizator { get; set; }
 
+        public bool isParticipant { get; set; }
 
     }
 }

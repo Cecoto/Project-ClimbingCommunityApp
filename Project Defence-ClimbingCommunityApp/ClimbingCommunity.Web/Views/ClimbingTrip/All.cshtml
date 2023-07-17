@@ -55,14 +55,25 @@
                             <div class="button-container">
                                 @if (trip.isOrganizator)
                                 {
-                                    @*onclick="deleteTrip('@trip.Id')"*@
+                                    
                                     <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
                                     <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
                                     <a class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</a>
                                 }
                                 else
                                 {
-                                    <a asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button">Join Trip</a>
+                                    if (trip.isParticipant)
+                                    {
+                                      
+                                        <a asp-area="" asp-controller="ClimbingTrip" asp-action="Leave" asp-route-id="@trip.Id" class="button">Leave</a>
+
+                                    }
+                                    else
+                                    {
+                                       
+                                        <a asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button">Join Trip</a>
+                                    }
+                                    @*<a asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button">Join Trip</a>*@
                                 }
                             </div>
                             <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
@@ -70,7 +81,7 @@
                             </button>
                             <div id="details-@trip.Id" class="collapse">
                                 
-                                <img src="@trip.Organizator.ProfilePictureUrl" class="profile-picture">
+                                <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
                                 <p><strong>Organizator:</strong>@trip.Organizator.FirstName @trip.Organizator.LastName</p>
                                 <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
                                 <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="button">View Profile</a>

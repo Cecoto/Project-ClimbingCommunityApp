@@ -18,5 +18,7 @@
         Task<ClimbingTripFormViewModel> GetClimbingTripForEditAsync(string tripId);
         Task EditClimbingTripById(string id, ClimbingTripFormViewModel model);
         Task DeleteTripByIdAsync(string tripId);
+        Task JoinClimbingTripAsync(string tripId, string userId);
+        Task<bool> IsUserParticipateInTripByIdAsync(string userId, string tripId);
     }
 }

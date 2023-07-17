@@ -42,6 +42,7 @@
             {
                 IEnumerable<ClimbingTripViewModel> models = await climbingTripService.GetLastThreeClimbingTripsAsync();
 
+
                 string userId = GetUserId()!;
 
                 foreach (ClimbingTripViewModel model in models)
@@ -85,6 +86,10 @@
                     if (userId == model.OrganizatorId)
                     {
                         model.isOrganizator = true;
+                    }
+                    else
+                    {
+                        model.isParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(userId, model.Id);
                     }
                 }
 
@@ -311,6 +316,57 @@
 
                 return GeneralError();
             }
+        }
+        /// <summary>
+        /// Method for joining concrete climbing trip 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        public async Task<IActionResult> Join(string id)
+        {
+            bool isTripExists = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
+
+            if (!isTripExists)
+            {
+                this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist! Please try again.";
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+
+            if (!User.IsInRole("Climber"))
+            {
+                this.TempData[ErrorMessage] = "You must be climber in order to join this climbing trips!";
+                return RedirectToAction(nameof(All));
+            }
+            bool isClimberOrganizator = await climbingTripService.isUserOrganizatorOfTripById(GetUserId()!, id);
+            if (isClimberOrganizator)
+            {
+                this.TempData[ErrorMessage] = "You are the organizator of the trip!";
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+            try
+            {
+                await climbingTripService.JoinClimbingTripAsync(id, GetUserId()!);
+
+                this.TempData[SuccessMessage] = "Successfuly joined in that trip!";
+
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Leave(string id)
+        {
+
+            return RedirectToAction(nameof(All));
         }
 
 
