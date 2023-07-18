@@ -51,13 +51,18 @@
                             <p><strong>Trip Type:</strong> @trip.TripType</p>
                             <p><strong>Duration:</strong> @trip.Duration days</p>
 
-                           
+
                             <div class="button-container">
                                 @if (trip.isOrganizator)
                                 {
                                     <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
-                                    <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
-                                    <a class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</a>
+                                    
+                                    <form method="post" enctype="multipart/form-data">
+
+                                        <button type="button" class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</button>
+
+                                        <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
+                                    </form>
                                 }
                                 else
                                 {

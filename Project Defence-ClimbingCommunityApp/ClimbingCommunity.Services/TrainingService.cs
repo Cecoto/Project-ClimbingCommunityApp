@@ -44,6 +44,17 @@
 
         }
 
+        public async Task DeleteTrainingByIdAsync(string id)
+        {
+            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(id));
+
+            if (training != null)
+            {
+                training.isActive = false;
+            }
+            await repo.SaveChangesAsync();
+        }
+
         public async Task EditTrainingByIdAsync(string id, TrainingFormViewModel model)
         {
             Training training = await repo.GetByIdAsync<Training>(Guid.Parse(id));

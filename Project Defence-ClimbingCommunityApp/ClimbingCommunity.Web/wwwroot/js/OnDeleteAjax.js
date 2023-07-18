@@ -18,7 +18,7 @@
                     
                     swal.fire({
                         title: 'Deleted!',
-                        text: 'Your file has been deleted.',
+                        text: 'Your activity has been deleted.',
                         icon: 'success',
                         showConfirmButton: false 
                     });
@@ -29,7 +29,7 @@
 
                 },
                 error: function () {      
-                    swal.fire('Error', 'Failed to delete the trip.', 'error');
+                    swal.fire('Error', 'Failed to delete the activity.', 'error');
                 }
             });
         }

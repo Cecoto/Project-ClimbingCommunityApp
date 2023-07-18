@@ -331,7 +331,7 @@
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
+        [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             bool isTripExist = await climbingTripService.IsClimbingTripExistsByIdAsync(id);

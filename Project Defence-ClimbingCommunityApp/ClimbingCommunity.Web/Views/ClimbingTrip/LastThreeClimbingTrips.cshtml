@@ -19,9 +19,14 @@
             {
                 <div class="d-inline mt-3">
                     <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
-                    <a class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</a>
 
-                    <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
+                    <form method="post" enctype="multipart/form-data">
+
+                        <button type="button" class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</button>
+                        <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
+
+                    </form>
+
 
                 </div>
             }

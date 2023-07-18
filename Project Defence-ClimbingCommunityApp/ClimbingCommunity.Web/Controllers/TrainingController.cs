@@ -226,5 +226,42 @@
             }
 
         }
+        [HttpPost]
+        public async Task<IActionResult>Delete(string id)
+        {
+            if (!User.IsInRole("Coach"))
+            {
+                this.TempData[ErrorMessage] = "You must be a coach to delete trainings!";
+
+                return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
+            }
+
+            bool isTrainingExists = await trainingService.IsTrainingExistsByIdAsync(id);
+            if (!isTrainingExists)
+            {
+                this.TempData[ErrorMessage] = "Training with the provided id does not exist!";
+
+                return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
+            }
+            bool isUserOrganizator = await trainingService.IsUserOrganizatorOfTrainingByIdAsync(GetUserId()!, id);
+
+            if (!isUserOrganizator)
+            {
+                this.TempData[ErrorMessage] = "You must be an coach of the training in order to delete it!";
+
+                return RedirectToAction(nameof(Add));
+            }
+            try
+            {
+                await trainingService.DeleteTrainingByIdAsync(id);
+
+                return RedirectToAction(nameof(LastThreeTrainings));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+        }
     }
 }

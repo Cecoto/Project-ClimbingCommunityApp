@@ -18,11 +18,16 @@
             {
                 <div class="d-inline mt-3">
                     <a asp-area="" asp-controller="Training" asp-action="Edit" asp-route-id="@training.Id" class="edit-button">Edit</a>
-                    <a class="delete-button" onclick="deleteTraining('@training.Id')">Delete</a>
-                    <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "Training")" />
+
+                    <form method="post" enctype="multipart/form-data">
+
+                        <button type="button" class="delete-button" onclick="deleteTrip('@training.Id')">Delete</button>
+                        <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "Training")" />
+                    </form>
+
                 </div>
             }
-            
+
         </div>
     }
 </div>

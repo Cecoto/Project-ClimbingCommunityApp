@@ -18,5 +18,6 @@
         Task<bool> IsUserOrganizatorOfTrainingByIdAsync(string userId, string trainingId);
         Task<TrainingFormViewModel> GetTrainingForEditByIdAsync(string id);
         Task EditTrainingByIdAsync(string id, TrainingFormViewModel model);
+        Task DeleteTrainingByIdAsync(string id);
     }
 }
