@@ -111,7 +111,7 @@
         [HttpGet]
         public async Task<IActionResult> JoinedActivites()
         {
-            if (User.IsInRole("Climber"))
+            if (!User.IsInRole("Climber"))
             {
                 this.TempData["Error Message"] = "You must be a climber to see your joined activities";
 
@@ -431,7 +431,7 @@
 
                 this.TempData[SuccessMessage] = "Successfuly left that trip!";
 
-                return RedirectToAction(nameof(All));
+                return RedirectToAction(nameof(JoinedActivites));
             }
             catch (Exception)
             {

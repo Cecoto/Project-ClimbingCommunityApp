@@ -105,9 +105,8 @@
         public async Task<IEnumerable<ClimbingTripViewModel>> GetAllJoinedClimbingTripsByUserIdAsync(string userId)
         {
             return await repo
-                  .AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
+                  .AllReadonly<ClimbingTrip>(ct => (ct.IsActive == true || ct.IsActive == null) && ct.Climbers.Any(c=>c.ClimberId==userId))
                   .OrderByDescending(ct => ct.CreatedOn)
-                  .Where(ct => ct.Climbers.Any(c => c.ClimberId == userId))
                   .Select(ct => new ClimbingTripViewModel()
                   {
                       Id = ct.Id.ToString(),
@@ -117,8 +116,7 @@
                       OrganizatorId = ct.OrganizatorId,
                       Duration = ct.Duration,
                       TripType = ct.TripType.Name,
-                      isOrganizator = false,
-                      Organizator = ct.Organizator,
+                      Organizator = ct.Organizator
                   }).ToListAsync();
 
         }

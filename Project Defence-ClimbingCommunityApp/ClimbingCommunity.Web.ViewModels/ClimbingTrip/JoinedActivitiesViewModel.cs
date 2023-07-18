@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Web.ViewModels.ClimbingTrip
 {
+    using ClimbingCommunity.Web.ViewModels.Training;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,7 +13,6 @@
         {
             this.JoinedClimbingTrips = new HashSet<ClimbingTripViewModel>();
             this.JoinedTrainings = new HashSet<TrainingViewModel>();
-
         }
         public IEnumerable<ClimbingTripViewModel> JoinedClimbingTrips { get; set; }
 

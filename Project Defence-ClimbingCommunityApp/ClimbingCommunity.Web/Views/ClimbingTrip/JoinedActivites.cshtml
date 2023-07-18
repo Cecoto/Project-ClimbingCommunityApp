@@ -1,5 +1,108 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model JoinedActivitiesViewModel
+
 @{
+    ViewData["Title"] = "Joined Activities";
+}
+<link rel="stylesheet" href="~/css/cardFlip.css" asp-append-version="true" />
+
+<h2 class="centered-heading">Joined Activities</h2>
+
+
+<div class="container card-container">
+    <h3 class="section-heading">Climbing Trips</h3>
+    @if (!Model.JoinedClimbingTrips.Any())
+    {
+        <div>
+            <p>You still did not join any climbing trips.Find best trip for you !</p>
+
+            <a asp-area="" asp-controller="ClimbingTrip" asp-action="All" class="join-button">Find Climbing trip</a>
+        </div>
+    }
+    <div class="row">
+        @foreach (var trip in Model.JoinedClimbingTrips)
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">@trip.Title</h4>
+                            <img src="@trip.PhotoUrl" alt="Climbing Trip Photo" class="card-img-top" />
+                        </div>
+                        <div class="card-back">
+                            <p><strong>Destination:</strong> @trip.Destination</p>
+                            <p><strong>Trip Type:</strong> @trip.TripType</p>
+                            <p><strong>Duration:</strong> @trip.Duration days</p>
+
+                            <div class="button-container">
+
+                                <form method="post" enctype="multipart/form-data">
+                                    <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Leave" asp-route-id="@trip.Id" class="join-button">Leave</button>
+                                </form>
+
+                            </div>
+                            <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
+                                Details
+                            </button>
+                            <div id="details-@trip.Id" class="collapse">
+                                <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
+                                <p><strong>Organizator:</strong> @trip.Organizator.FirstName @trip.Organizator.LastName</p>
+                                <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
+                                <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="buttoN">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h3 class="section-heading mt-5">Trainings</h3>
+    @if (!Model.JoinedTrainings.Any())
+    {
+        <div>
+            <p>You still did not join any trainings.Find best training for you !</p>
+
+            <a asp-area="" asp-controller="Training" asp-action="All" class="join-button">Find Trainings</a>
+        </div>
+    }
+    <div class="row">
+        @foreach (var training in Model.JoinedTrainings)
+        {
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <h4 class="card-title">@training.Title</h4>
+                            <img src="@training.PhotoUrl" alt="Training Photo" class="card-img-top" />
+                        </div>
+                        <div class="card-back">
+                            <p><strong>Location:</strong> @training.Location</p>
+                            <p><strong>Target:</strong> @training.Target</p>
+                            <p><strong>Duration:</strong> @training.Duration days</p>
+
+                            <div class="button-container">
+
+                                <form method="post" enctype="multipart/form-data">
+                                    <button type="submit" asp-area="" asp-controller="Training" asp-action="Leave" asp-route-id="@training.Id" class="join-button">Leave</button>
+                                </form>
+
+                            </div>
+                            <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@training.Id">
+                                Details
+                            </button>
+                            <div id="details-@training.Id" class="collapse">
+                                <img src="@training.Organizator.ProfilePictureUrl" class="profile-pic">
+                                <p><strong>Organizer:</strong> @training.Organizator.FirstName @training.Organizator.LastName</p>
+                                <p><strong>Phone:</strong> @training.Organizator.PhoneNumber</p>
+                                <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@training.Organizator.Id" class="buttoN">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

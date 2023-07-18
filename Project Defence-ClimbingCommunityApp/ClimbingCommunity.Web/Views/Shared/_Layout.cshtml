@@ -35,7 +35,7 @@
 
                             <a class="navbar-brand nav-button" asp-area="" asp-controller="Training" asp-action="All">Find Training</a>
 
-                            <a class="navbar-brand nav-button" asp-area="" asp-controller="Profile" asp-action="Activities">Joined Activities</a>
+                            <a class="navbar-brand nav-button" asp-area="" asp-controller="ClimbingTrip" asp-action="JoinedActivites">Joined Activities</a>
 
                         }
                         else if (User.Identity?.IsAuthenticated ?? false && User.IsInRole(nameof(Coach)))
