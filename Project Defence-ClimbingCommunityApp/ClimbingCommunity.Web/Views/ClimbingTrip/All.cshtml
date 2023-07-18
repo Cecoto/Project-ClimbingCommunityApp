@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<ClimbingTripViewModel>
+﻿@model IEnumerable<ClimbingTripViewModel>
 
 @{
     ViewData["Title"] = "All Trips";
@@ -47,6 +46,32 @@
                         <div class="card-front">
                             <h4 class="card-title">@trip.Title</h4>
                             <img src="@trip.PhotoUrl" alt="Climbing Trip Photo" class="card-img-top" />
+                            <button class="btn btn-primary comments-button" data-bs-toggle="collapse" data-bs-target="#comments-@trip.Id">
+                                Comments
+                            </button>
+                   @*         <div id="comments-@trip.Id" class="collapse">
+                                @if (trip.Comments.Any())
+                                {
+                                    foreach (var comment in trip.Comments)
+                                    {
+                                        <div class="comment">
+                                            <p>@comment.Text</p>
+                                            <img src="@comment.AuthorProfilePicture"></img>
+                                            <p><strong></strong>@comment.FirstName @comment.LastName</p>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>There are no comments on this post. Be the first to write one.</p>
+                                }
+                                <form method="post">
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="3" placeholder="Write a comment"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>*@
                         </div>
                         <div class="card-back">
                             <p><strong>Destination:</strong> @trip.Destination</p>
@@ -56,7 +81,6 @@
                             <div class="button-container">
                                 @if (trip.isOrganizator)
                                 {
-
                                     <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
                                     <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
                                     <a class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</a>
@@ -73,19 +97,17 @@
                                     else
                                     {
                                         <form method="post" enctype="multipart/form-data">
-
                                             <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="join-button">Join Trip</button>
                                         </form>
-                                    }  
+                                    }
                                 }
                             </div>
                             <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
                                 Details
                             </button>
                             <div id="details-@trip.Id" class="collapse">
-
                                 <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
-                                <p><strong>Organizator:</strong>@trip.Organizator.FirstName @trip.Organizator.LastName</p>
+                                <p><strong>Organizer:</strong> @trip.Organizator.FirstName @trip.Organizator.LastName</p>
                                 <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
                                 <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="buttoN">View Profile</a>
                             </div>
@@ -95,10 +117,9 @@
             </div>
         }
     </div>
-
 </div>
+
 @section Scripts {
     <script src="~/js/OnDeleteAjax.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }
-

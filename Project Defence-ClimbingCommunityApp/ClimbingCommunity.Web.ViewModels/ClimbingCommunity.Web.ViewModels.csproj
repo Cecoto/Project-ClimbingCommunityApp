@@ -15,4 +15,8 @@
     <ProjectReference Include="..\ClimbingCommunity.Data.Models\ClimbingCommunity.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Comment\" />
+  </ItemGroup>
+
 </Project>

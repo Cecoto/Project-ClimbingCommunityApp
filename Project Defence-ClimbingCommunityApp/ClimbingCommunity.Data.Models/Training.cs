@@ -14,6 +14,7 @@
         {
             this.Id = Guid.NewGuid();
             this.JoinedClimbers = new HashSet<TrainingClimber>();
+            this.Comments = new HashSet<Comment>();
         }
 
         [Comment("Globaly unique identifier")]
@@ -56,7 +57,11 @@
         [Comment("Photo of the climbing training willbe/Gym picture")]
         public string PhotoUrl { get; set; } = null!;
 
+        [Comment("Collection of joined climbers")]
         public virtual ICollection<TrainingClimber> JoinedClimbers { get; set; }
+
+        [Comment("Collection of all comments posted for this training")]
+        public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }

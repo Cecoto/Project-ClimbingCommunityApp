@@ -15,6 +15,7 @@
         public ApplicationUser()
         {
             this.Photos = new HashSet<Photo>();
+            this.Comments = new HashSet<Comment>();
         }
         [Required]
         [Comment("User firstname")]
@@ -41,8 +42,11 @@
         [MaxLength(UserRoleMaxLength)]
         public string UserType { get; set; } = null!;
 
-        public ICollection<Photo> Photos { get; set; }
+        [Comment("Collection of photos that user has uploaded to his profile.")]
+        public virtual ICollection<Photo> Photos { get; set; }
 
+        [Comment("Collecton of comments that user have commented of posts")]
+        public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }

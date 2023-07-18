@@ -14,6 +14,7 @@
         {
             this.Id = Guid.NewGuid();
             this.Climbers = new HashSet<TripClimber>();
+            this.Comments = new HashSet<Comment>();
         }
         [Comment("Globaly unique identifier")]
         public Guid Id { get; set; }
@@ -53,6 +54,9 @@
         [Required]
         [Comment("Photo of the climbing trip place")]
         public string PhotoUrl { get; set; } = null!;
+
+        [Comment("Collection of comments posted on this climbing trip")]
+        public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }

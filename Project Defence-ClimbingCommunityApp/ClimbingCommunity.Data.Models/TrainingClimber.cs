@@ -6,6 +6,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Entity for the many to many relation between climbers and trainings.
+    /// </summary>
     public class TrainingClimber
     {
         public string ClimberId { get; set; } = null!;
