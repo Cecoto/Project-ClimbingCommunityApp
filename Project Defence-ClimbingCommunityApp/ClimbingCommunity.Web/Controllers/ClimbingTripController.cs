@@ -15,6 +15,7 @@
     {
         private readonly IClimbingTripService climbingTripService;
         private readonly ITrainingService trainingService;
+        private readonly ICommentService commentService;
 
 
         /// <summary>
@@ -24,10 +25,12 @@
         /// <param name="_trainingService"></param>
         public ClimbingTripController(
             IClimbingTripService _climbingTripService,
-            ITrainingService _trainingService)
+            ITrainingService _trainingService,
+            ICommentService _commentService)
         {
             this.climbingTripService = _climbingTripService;
             this.trainingService = _trainingService;
+            this.commentService = _commentService;
         }
 
 
@@ -96,6 +99,7 @@
                     else
                     {
                         model.isParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(userId, model.Id);
+                        model.Comments = await commentService.GetAllCommentsByTripId(model.Id);
                     }
                 }
 
@@ -108,6 +112,10 @@
                 return GeneralError();
             }
         }
+        /// <summary>
+        /// Method that gets all activities that climber has joined.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> JoinedActivites()
         {
@@ -122,9 +130,9 @@
             {
                 string userId = GetUserId()!;
 
-                IEnumerable<ClimbingTripViewModel> joinedTrips = await climbingTripService.GetAllJoinedClimbingTripsByUserIdAsync(userId);
+                IEnumerable<JoinedClimbingTripViewModel> joinedTrips = await climbingTripService.GetAllJoinedClimbingTripsByUserIdAsync(userId);
 
-                IEnumerable<TrainingViewModel> joinedTrainings = await trainingService.GetAllJoinedTrainingByUserIdAsync(userId);
+                IEnumerable<JoinedTrainingViewModel> joinedTrainings = await trainingService.GetAllJoinedTrainingByUserIdAsync(userId);
 
                 JoinedActivitiesViewModel model = new JoinedActivitiesViewModel()
                 {
@@ -440,6 +448,11 @@
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddComment(string id)
+        {
+            return RedirectToAction();
+        }
 
     }
 }

@@ -11,12 +11,12 @@
     {
         public JoinedActivitiesViewModel()
         {
-            this.JoinedClimbingTrips = new HashSet<ClimbingTripViewModel>();
-            this.JoinedTrainings = new HashSet<TrainingViewModel>();
+            this.JoinedClimbingTrips = new HashSet<JoinedClimbingTripViewModel>();
+            this.JoinedTrainings = new HashSet<JoinedTrainingViewModel>();
         }
-        public IEnumerable<ClimbingTripViewModel> JoinedClimbingTrips { get; set; }
+        public IEnumerable<JoinedClimbingTripViewModel> JoinedClimbingTrips { get; set; }
 
-        public IEnumerable<TrainingViewModel> JoinedTrainings { get; set; }
+        public IEnumerable<JoinedTrainingViewModel> JoinedTrainings { get; set; }
 
     }
 }

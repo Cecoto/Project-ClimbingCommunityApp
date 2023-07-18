@@ -16,13 +16,12 @@
         {
             repo = _repo;
         }
-        public async Task<IEnumerable<TrainingViewModel>> GetAllJoinedTrainingByUserIdAsync(string userId)
+        public async Task<IEnumerable<JoinedTrainingViewModel>> GetAllJoinedTrainingByUserIdAsync(string userId)
         {
             return await repo
-                     .AllReadonly<Training>(t => t.isActive == true || t.isActive == null)
+                     .AllReadonly<Training>(t => (t.isActive == true || t.isActive == null) && t.JoinedClimbers.Any(c=>c.ClimberId==userId))
                      .OrderByDescending(t => t.CreatedOn)
-                     .Where(c => c.JoinedClimbers.Any(c => c.ClimberId == userId))
-                     .Select(c => new TrainingViewModel()
+                     .Select(c => new JoinedTrainingViewModel()
                      {
                          Id = c.Id.ToString(),
                          Title = c.Title,
@@ -32,26 +31,9 @@
                          Organizator = c.Coach,
                          Duration = c.Duration,
                          Target = c.Target.Name,
-                         isOrganizator = false,
                          Price = c.Price
                      }).ToListAsync();
-
-            //return await repo
-            //       .AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
-            //       .OrderByDescending(ct => ct.CreatedOn)
-            //       .Where(ct => ct.Climbers.Any(c => c.ClimberId == userId))
-            //       .Select(ct => new ClimbingTripViewModel()
-            //       {
-            //           Id = ct.Id.ToString(),
-            //           Title = ct.Title,
-            //           PhotoUrl = ct.PhotoUrl,
-            //           Destination = ct.Destination,
-            //           OrganizatorId = ct.OrganizatorId,
-            //           Duration = ct.Duration,
-            //           TripType = ct.TripType.Name,
-            //           isOrganizator = false,
-            //           Organizator = ct.Organizator,
-            //       }).ToListAsync();
+           
         }
 
         public Task<IEnumerable<TrainingViewModel>> GetAllTrainingsAsync()

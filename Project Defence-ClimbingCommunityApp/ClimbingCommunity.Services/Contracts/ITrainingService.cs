@@ -9,7 +9,7 @@
     {
         Task<IEnumerable<TrainingViewModel>> GetLastThreeTrainingsAsync();
         Task<IEnumerable<TrainingViewModel>> GetAllTrainingsAsync();
-        Task<IEnumerable<TrainingViewModel>> GetAllJoinedTrainingByUserIdAsync(string userId);
+        Task<IEnumerable<JoinedTrainingViewModel>> GetAllJoinedTrainingByUserIdAsync(string userId);
 
     }
 }

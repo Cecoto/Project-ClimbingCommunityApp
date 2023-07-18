@@ -102,12 +102,12 @@
             return models;
         }
 
-        public async Task<IEnumerable<ClimbingTripViewModel>> GetAllJoinedClimbingTripsByUserIdAsync(string userId)
+        public async Task<IEnumerable<JoinedClimbingTripViewModel>> GetAllJoinedClimbingTripsByUserIdAsync(string userId)
         {
             return await repo
                   .AllReadonly<ClimbingTrip>(ct => (ct.IsActive == true || ct.IsActive == null) && ct.Climbers.Any(c=>c.ClimberId==userId))
                   .OrderByDescending(ct => ct.CreatedOn)
-                  .Select(ct => new ClimbingTripViewModel()
+                  .Select(ct => new JoinedClimbingTripViewModel()
                   {
                       Id = ct.Id.ToString(),
                       Title = ct.Title,

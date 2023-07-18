@@ -35,8 +35,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Trips -->
     <div class="row">
         @foreach (var trip in Model)
         {
@@ -46,32 +44,7 @@
                         <div class="card-front">
                             <h4 class="card-title">@trip.Title</h4>
                             <img src="@trip.PhotoUrl" alt="Climbing Trip Photo" class="card-img-top" />
-                            <button class="btn btn-primary comments-button" data-bs-toggle="collapse" data-bs-target="#comments-@trip.Id">
-                                Comments
-                            </button>
-                   @*         <div id="comments-@trip.Id" class="collapse">
-                                @if (trip.Comments.Any())
-                                {
-                                    foreach (var comment in trip.Comments)
-                                    {
-                                        <div class="comment">
-                                            <p>@comment.Text</p>
-                                            <img src="@comment.AuthorProfilePicture"></img>
-                                            <p><strong></strong>@comment.FirstName @comment.LastName</p>
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
-                                    <p>There are no comments on this post. Be the first to write one.</p>
-                                }
-                                <form method="post">
-                                    <div class="form-group">
-                                        <textarea class="form-control" rows="3" placeholder="Write a comment"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
-                            </div>*@
+
                         </div>
                         <div class="card-back">
                             <p><strong>Destination:</strong> @trip.Destination</p>
@@ -105,14 +78,42 @@
                             <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
                                 Details
                             </button>
+                            <button class="btn btn-primary comments-button" data-bs-toggle="collapse" data-bs-target="#comments-@trip.Id">
+                                Comments
+                            </button>
                             <div id="details-@trip.Id" class="collapse">
                                 <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
                                 <p><strong>Organizer:</strong> @trip.Organizator.FirstName @trip.Organizator.LastName</p>
                                 <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
                                 <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="buttoN">View Profile</a>
                             </div>
+
+                            <div id="comments-@trip.Id" class="comments-container collapse">
+                                @if (trip.Comments.Any())
+                                {
+                                    foreach (var comment in trip.Comments)
+                                    {
+                                        <div class="comment-item">
+                                            <img src="@comment.Author.ProfilePictureUrl"></img>
+                                            <p><strong></strong>@comment.Author.FirstName @comment.Author.LastName</p>
+                                            <p>@comment.Text</p>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>There are no comments on this post. Be the first to write one.</p>
+                                }
+                                <form id="comment-form-@trip.Id" class="comment-form" data-trip-id="@trip.Id">
+                                    <input type="text" name="comment" class="comment-input" placeholder="Enter your comment">
+                                    <button type="submit" class="btn btn-primary submit-comment">Submit</button>
+                                </form>
+
+                            </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         }
@@ -120,6 +121,7 @@
 </div>
 
 @section Scripts {
+    <script src="~/lib/jquery/"></script>
     <script src="~/js/OnDeleteAjax.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }

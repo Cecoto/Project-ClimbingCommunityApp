@@ -32,6 +32,6 @@
 
         Task LeaveClimbingTripByIdAsync(string tripId,string userId);
 
-        Task<IEnumerable<ClimbingTripViewModel>> GetAllJoinedClimbingTripsByUserIdAsync(string userId);
+        Task<IEnumerable<JoinedClimbingTripViewModel>> GetAllJoinedClimbingTripsByUserIdAsync(string userId);
     }
 }
