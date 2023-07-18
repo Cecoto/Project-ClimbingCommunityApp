@@ -15,7 +15,7 @@
             <p><strong>Destination:</strong> @trip.Destination</p>
             <p><strong>Trip Type:</strong> @trip.TripType</p>
             <p><strong>Duration:</strong> @trip.Duration days</p>
-            @if (trip.isOrganizator == true)
+            @if (trip.isOrganizator)
             {
                 <div class="d-inline mt-3">
                     <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
@@ -27,7 +27,19 @@
             }
             else
             {
-                <a asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button ">Join Trip</a>
+                if (trip.isParticipant)
+                {
+                    <form method="post" enctype="multipart/form-data">
+                        <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Leave" asp-route-id="@trip.Id" class="button">Leave</button>
+                    </form>
+
+                }
+                else
+                {
+                    <form method="post" enctype="multipart/form-data">
+                        <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="button">Join Trip</button>
+                    </form>
+                }
             }
         </div>
 

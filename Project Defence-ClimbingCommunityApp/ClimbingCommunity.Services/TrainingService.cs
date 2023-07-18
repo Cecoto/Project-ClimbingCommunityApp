@@ -41,9 +41,28 @@
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TrainingViewModel>> GetLastThreeTrainingsAsync()
+        public async Task<IEnumerable<TrainingViewModel>> GetLastThreeTrainingsAsync()
         {
-            throw new NotImplementedException();
+            return await repo.AllReadonly<Training>(t => t.isActive == true || t.isActive == null)
+               .OrderByDescending(ct => ct.CreatedOn)
+               .Take(3)
+               .Select(t => new TrainingViewModel()
+               {
+                   Id = t.Id.ToString(),
+                   Title = t.Title,
+                   PhotoUrl = t.PhotoUrl,
+                   Location = t.Location,
+                   OrganizatorId = t.CoachId,
+                   Duration = t.Duration,
+                   Target = t.Target.Name,
+                   isOrganizator = false
+                   
+               }).ToListAsync();
+        }
+
+        public async Task<bool> IsUserParticipateInTrainingByIdAsync(string userId, string trainingId)
+        {
+            return await repo.GetByIdsAsync<TrainingClimber>(new object[] { userId, Guid.Parse(trainingId)}) != null;
         }
     }
 }

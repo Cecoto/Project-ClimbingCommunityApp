@@ -10,6 +10,6 @@
         Task<IEnumerable<TrainingViewModel>> GetLastThreeTrainingsAsync();
         Task<IEnumerable<TrainingViewModel>> GetAllTrainingsAsync();
         Task<IEnumerable<JoinedTrainingViewModel>> GetAllJoinedTrainingByUserIdAsync(string userId);
-
+        Task<bool> IsUserParticipateInTrainingByIdAsync(string userId, string trainingId);
     }
 }

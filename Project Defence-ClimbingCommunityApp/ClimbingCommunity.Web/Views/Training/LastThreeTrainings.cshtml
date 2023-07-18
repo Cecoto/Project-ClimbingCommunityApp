@@ -1,0 +1,32 @@
+﻿@model IEnumerable<TrainingViewModel>
+
+<link rel="stylesheet" href="~/css/lastThree.css" asp-append-version="true" />
+
+<div class="trainings-container">
+    <h2 class="centered-heading">Last Three Trainings</h2>
+
+    <hr />
+    @foreach (var training in Model)
+    {
+        <div class="training-card">
+            <h3>@training.Title</h3>
+            <img src="@training.PhotoUrl" alt="Training Photo" />
+            <p><strong>Location:</strong> @training.Location</p>
+            <p><strong>Target:</strong> @training.Target</p>
+            <p><strong>Duration:</strong> @training.Duration days</p>
+            @if (training.isOrganizator)
+            {
+                <div class="d-inline mt-3">
+                    <a asp-area="" asp-controller="Training" asp-action="Edit" asp-route-id="@training.Id" class="edit-button">Edit</a>
+                    <a class="delete-button" onclick="deleteTraining('@training.Id')">Delete</a>
+                    <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "Training")" />
+                </div>
+            }
+            
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/OnDeleteAjax.js"></script>
+}

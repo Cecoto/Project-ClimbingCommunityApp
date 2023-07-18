@@ -51,6 +51,7 @@
     margin-bottom: 20px;
     margin-top: 10px;
     align-self: flex-start;
+    border:none;
 }
 
     .button:hover {

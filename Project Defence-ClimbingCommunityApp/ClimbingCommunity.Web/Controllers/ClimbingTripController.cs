@@ -39,13 +39,12 @@
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        //[Authorize(Roles = "Climber")]
         public async Task<IActionResult> LastThreeClimbingTrips()
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData["Error Message"] = "You must be a climber to add new climbing trips!";
-                return RedirectToAction("Index", "Home");
+                this.TempData["Error Message"] = "You must be a climber to have access to that page!";
+                return RedirectToAction("LastThreeTrainings", "Training");
             }
             try
             {
@@ -60,6 +59,7 @@
                     {
                         model.isOrganizator = true;
                     }
+                    model.isParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(userId, model.Id);
                 }
                 return View(models);
 
