@@ -27,7 +27,6 @@
         public string OrganizatorId { get; set; } = null!;
         public Coach Organizator { get; set; } = null!;
 
-
         public bool isOrganizator { get; set; }
 
         public bool isParticipant { get; set; }

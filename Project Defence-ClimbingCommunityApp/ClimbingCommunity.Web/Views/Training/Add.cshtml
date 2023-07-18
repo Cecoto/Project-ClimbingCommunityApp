@@ -1,0 +1,15 @@
+﻿@model TrainingFormViewModel;
+@{
+    ViewData["Title"] = "Add Training";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<partial name="_TrainingFormPartial" model="@Model" />
+
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

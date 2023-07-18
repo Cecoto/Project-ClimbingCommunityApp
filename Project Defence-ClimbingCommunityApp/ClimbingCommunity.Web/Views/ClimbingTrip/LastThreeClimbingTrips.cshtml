@@ -3,13 +3,13 @@
 <link rel="stylesheet" href="~/css/lastThree.css" asp-append-version="true" />
 
 
-<div class="climbing-trips-container">
+<div class="lastThree-container">
     <h2 class="centered-heading">Last Three Climbing Trips</h2>
 
     <hr />
     @foreach (var trip in Model)
     {
-        <div class="climbing-trip-card">
+        <div class="lastThree-card">
             <h3>@trip.Title</h3>
             <img src="@trip.PhotoUrl" alt="Climbing Trip Photo" />
             <p><strong>Destination:</strong> @trip.Destination</p>

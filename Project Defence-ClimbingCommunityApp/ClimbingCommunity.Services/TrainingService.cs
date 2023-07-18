@@ -12,14 +12,42 @@
     public class TrainingService : ITrainingService
     {
         private readonly IRepository repo;
-        public TrainingService(IRepository _repo)
+        private readonly IImageService imageService;
+        public TrainingService(IRepository _repo, IImageService _imageService)
         {
             repo = _repo;
+            imageService = _imageService;
+
         }
+
+        public async Task CreateAsync(string organizatorId, TrainingFormViewModel model)
+        {
+            if (model.PhotoFile != null)
+            {
+
+                model.PhotoUrl = await imageService.SavePictureAsync(model.PhotoFile, "Trainings");
+            }
+
+            Training training = new Training()
+            {
+                Title = model.Title,
+                Duration = model.Duration,
+                Price = model.Price,
+                CoachId = organizatorId,
+                Location = model.Location,
+                TargetId = model.TragetId,
+                PhotoUrl = model.PhotoUrl!
+            };
+
+            await repo.AddAsync(training);
+            await repo.SaveChangesAsync();
+
+        }
+
         public async Task<IEnumerable<JoinedTrainingViewModel>> GetAllJoinedTrainingByUserIdAsync(string userId)
         {
             return await repo
-                     .AllReadonly<Training>(t => (t.isActive == true || t.isActive == null) && t.JoinedClimbers.Any(c=>c.ClimberId==userId))
+                     .AllReadonly<Training>(t => (t.isActive == true || t.isActive == null) && t.JoinedClimbers.Any(c => c.ClimberId == userId))
                      .OrderByDescending(t => t.CreatedOn)
                      .Select(c => new JoinedTrainingViewModel()
                      {
@@ -33,7 +61,18 @@
                          Target = c.Target.Name,
                          Price = c.Price
                      }).ToListAsync();
-           
+
+        }
+
+        public async Task<IEnumerable<TargetViewModel>> GetAllTargetsAsync()
+        {
+            return await repo.AllReadonly<Target>()
+                .Select(t => new TargetViewModel()
+                {
+                    Id = t.Id,
+                    Name = t.Name
+                })
+                .ToListAsync();
         }
 
         public Task<IEnumerable<TrainingViewModel>> GetAllTrainingsAsync()
@@ -56,13 +95,18 @@
                    Duration = t.Duration,
                    Target = t.Target.Name,
                    isOrganizator = false
-                   
+
                }).ToListAsync();
+        }
+
+        public async Task<bool> IsTargetExistsByIdAsync(int tragetId)
+        {
+            return await repo.GetByIdAsync<Target>(tragetId) != null;
         }
 
         public async Task<bool> IsUserParticipateInTrainingByIdAsync(string userId, string trainingId)
         {
-            return await repo.GetByIdsAsync<TrainingClimber>(new object[] { userId, Guid.Parse(trainingId)}) != null;
+            return await repo.GetByIdsAsync<TrainingClimber>(new object[] { userId, Guid.Parse(trainingId) }) != null;
         }
     }
 }

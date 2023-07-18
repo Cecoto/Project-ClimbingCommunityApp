@@ -161,7 +161,7 @@
             {
                 this.TempData["Error Message"] = "You must be a climber to add new climbing trips!";
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("LastThreeTrainings", "Training");
             }
             try
             {
@@ -190,10 +190,11 @@
             if (!User.IsInRole("Climber"))
             {
                 this.TempData["Error Message"] = "You must be a climber to add new climbing trips!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("LastThreeTrainings", "Training");
             }
 
             bool tripTypeExists = await climbingTripService.IsTripTypeExistsByIdAsync(model.TripTypeId);
+
             if (!tripTypeExists)
             {
                 ModelState.AddModelError(nameof(model.TripTypeId), "Selected trip type does not exist!");

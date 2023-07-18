@@ -2,18 +2,18 @@
 
 <link rel="stylesheet" href="~/css/lastThree.css" asp-append-version="true" />
 
-<div class="trainings-container">
+<div class="lastThree-container">
     <h2 class="centered-heading">Last Three Trainings</h2>
 
     <hr />
     @foreach (var training in Model)
     {
-        <div class="training-card">
+        <div class="lastThree-card">
             <h3>@training.Title</h3>
             <img src="@training.PhotoUrl" alt="Training Photo" />
             <p><strong>Location:</strong> @training.Location</p>
             <p><strong>Target:</strong> @training.Target</p>
-            <p><strong>Duration:</strong> @training.Duration days</p>
+            <p><strong>Duration:</strong> @training.Duration hour/s</p>
             @if (training.isOrganizator)
             {
                 <div class="d-inline mt-3">
