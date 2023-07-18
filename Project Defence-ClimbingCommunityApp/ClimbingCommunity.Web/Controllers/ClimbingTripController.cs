@@ -23,6 +23,7 @@
         /// </summary>
         /// <param name="_climbingTripService"></param>
         /// <param name="_trainingService"></param>
+        /// <param name="_commentService"></param>
         public ClimbingTripController(
             IClimbingTripService _climbingTripService,
             ITrainingService _trainingService,
@@ -43,7 +44,7 @@
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData["Error Message"] = "You must be a climber to have access to that page!";
+                this.TempData[ErrorMessage] = "You must be a climber to have access to that page!";
                 return RedirectToAction("LastThreeTrainings", "Training");
             }
             try
@@ -85,7 +86,7 @@
 
                 if (userId == null)
                 {
-                    this.TempData["Error Message"] = "Invalid ID of a user!";
+                    this.TempData[ErrorMessage] = "Invalid ID of a user!";
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -121,7 +122,7 @@
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData["Error Message"] = "You must be a climber to see your joined activities";
+                this.TempData[ErrorMessage] = "You must be a climber to see your joined activities";
 
                 return RedirectToAction(nameof(All));
             }
@@ -159,7 +160,7 @@
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData["Error Message"] = "You must be a climber to add new climbing trips!";
+                this.TempData[ErrorMessage] = "You must be a climber to add new climbing trips!";
 
                 return RedirectToAction("LastThreeTrainings", "Training");
             }
@@ -189,7 +190,7 @@
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData["Error Message"] = "You must be a climber to add new climbing trips!";
+                this.TempData[ErrorMessage] = "You must be a climber to add new climbing trips!";
                 return RedirectToAction("LastThreeTrainings", "Training");
             }
 
@@ -232,7 +233,7 @@
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData["Error Message"] = "You must be a climber and organize of the trip in order to edit info of the climbing trip!";
+                this.TempData[ErrorMessage] = "You must be a climber and organize of the trip in order to edit info of the climbing trip!";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -287,7 +288,7 @@
             }
             if (!User.IsInRole("Climber"))
             {
-                this.TempData["Error Message"] = "You must be a climber and organize of the trip in order to edit info of the climbing trip!";
+                this.TempData[ErrorMessage] = "You must be a climber and organize of the trip in order to edit info of the climbing trip!";
                 return RedirectToAction("Index", "Home");
             }
 

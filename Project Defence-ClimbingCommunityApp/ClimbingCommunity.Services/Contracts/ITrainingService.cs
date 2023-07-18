@@ -14,5 +14,9 @@
         Task<bool> IsUserParticipateInTrainingByIdAsync(string userId, string trainingId);
         Task<bool> IsTargetExistsByIdAsync(int tragetId);
         Task CreateAsync(string organizatorId, TrainingFormViewModel model);
+        Task<bool> IsTrainingExistsByIdAsync(string trainingId);
+        Task<bool> IsUserOrganizatorOfTrainingByIdAsync(string userId, string trainingId);
+        Task<TrainingFormViewModel> GetTrainingForEditByIdAsync(string id);
+        Task EditTrainingByIdAsync(string id, TrainingFormViewModel model);
     }
 }

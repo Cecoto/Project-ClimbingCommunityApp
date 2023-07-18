@@ -2,12 +2,12 @@
 {
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
-    using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
     using ClimbingCommunity.Web.ViewModels.Training;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using WebShopDemo.Core.Data.Common;
+
 
     public class TrainingService : ITrainingService
     {
@@ -42,6 +42,30 @@
             await repo.AddAsync(training);
             await repo.SaveChangesAsync();
 
+        }
+
+        public async Task EditTrainingByIdAsync(string id, TrainingFormViewModel model)
+        {
+            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(id));
+
+            string photo = model.PhotoUrl;
+
+            if (model.PhotoFile != null)
+            {
+                if (!string.IsNullOrEmpty(photo))
+                {
+                    imageService.DeletePicture(photo);
+                }
+                photo = await imageService.SavePictureAsync(model.PhotoFile, "Trainings");
+            }
+            training.Title = model.Title;
+            training.Duration = model.Duration;
+            training.Price = model.Price;
+            training.Location = model.Location;
+            training.TargetId = model.TragetId;
+            training.PhotoUrl = photo;
+
+            await repo.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<JoinedTrainingViewModel>> GetAllJoinedTrainingByUserIdAsync(string userId)
@@ -99,9 +123,43 @@
                }).ToListAsync();
         }
 
+        public async Task<TrainingFormViewModel> GetTrainingForEditByIdAsync(string id)
+        {
+            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(id));
+
+            return new TrainingFormViewModel()
+            {
+                Title = training.Title,
+                PhotoUrl = training.PhotoUrl,
+                Location = training.Location,
+                IsEditModel = true,
+                Duration = training.Duration,
+                Price = training.Price,
+                OrganizatorId = training.CoachId,
+                TragetId = training.TargetId
+            };
+
+        }
+
         public async Task<bool> IsTargetExistsByIdAsync(int tragetId)
         {
             return await repo.GetByIdAsync<Target>(tragetId) != null;
+        }
+
+        public async Task<bool> IsTrainingExistsByIdAsync(string trainingId)
+        {
+            return await repo.GetByIdAsync<Training>(Guid.Parse(trainingId)) != null;
+        }
+
+        public async Task<bool> IsUserOrganizatorOfTrainingByIdAsync(string userId, string trainingId)
+        {
+            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(trainingId));
+
+            if (training.CoachId == userId)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> IsUserParticipateInTrainingByIdAsync(string userId, string trainingId)
