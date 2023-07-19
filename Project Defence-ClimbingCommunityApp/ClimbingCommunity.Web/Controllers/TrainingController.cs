@@ -62,7 +62,7 @@
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] string searchString)
         {
             if (!User.Identity?.IsAuthenticated ?? true)
             {
@@ -73,7 +73,16 @@
 
             try
             {
-                IEnumerable<TrainingViewModel> models = await trainingService.GetAllTrainingsAsync();
+                IEnumerable<TrainingViewModel> models;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    models = await trainingService.GetAllTrainingsByStringAsync(searchString);
+                }
+                else
+                {
+
+                    models = await trainingService.GetAllTrainingsAsync();
+                }
 
                 string userId = GetUserId()!;
                 foreach (TrainingViewModel model in models)

@@ -22,5 +22,6 @@
         Task<IEnumerable<TrainingViewModel>> GetMyTrainingsByIdAsync(string userId);
         Task JoinTrainingAsync(string trainingId, string userId);
         Task LeaveTrainingAsync(string trainingId, string userId);
+        Task<IEnumerable<TrainingViewModel>> GetAllTrainingsByStringAsync(string searchString);
     }
 }

@@ -76,8 +76,9 @@
         /// </summary>
         /// <returns>Collection of trips</returns>
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] string searchString)
         {
+
             if (!User.Identity?.IsAuthenticated ?? true)
             {
                 this.TempData[ErrorMessage] = "You must be logged in to reach that page!";
@@ -86,7 +87,16 @@
             }
             try
             {
-                IEnumerable<ClimbingTripViewModel> models = await climbingTripService.GetAllClimbingTripsAsync();
+                IEnumerable<ClimbingTripViewModel> models;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    models = await climbingTripService.GetAllClimbingByStringTripsAsync(searchString);
+                }
+                else
+                {
+                    models = await climbingTripService.GetAllClimbingTripsAsync();
+
+                }
 
                 string userId = GetUserId()!;
 
@@ -100,7 +110,7 @@
                     {
                         model.isParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(userId, model.Id);
                     }
-                  
+
                 }
 
                 return View(models);

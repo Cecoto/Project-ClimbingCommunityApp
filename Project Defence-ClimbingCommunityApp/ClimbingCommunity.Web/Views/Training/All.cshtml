@@ -8,12 +8,12 @@
 <h2 class="centered-heading">All Trainings</h2>
 
 <div class="container card-container">
-    <!-- Filters and Search Bar -->
+    
     <div class="row mb-3">
         <div class="col-md-6">
-            <form class="form-inline">
+            <form class="form-inline" method="get" action="/Training/All">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Search" name="searchString" value="">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">Search</button>
                     </div>

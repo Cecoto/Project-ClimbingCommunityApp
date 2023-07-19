@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using WebShopDemo.Core.Data.Common;
+    using static System.Net.Mime.MediaTypeNames;
 
 
     public class TrainingService : ITrainingService
@@ -128,6 +129,30 @@
                      Organizator = t.Coach,
                      Price = t.Price
                  }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<TrainingViewModel>> GetAllTrainingsByStringAsync(string text)
+        {
+            return await repo.AllReadonly<Training>(t => t.isActive == true || t.isActive == null)
+                .OrderByDescending(t => t.CreatedOn)
+                .Where(t=>t.Title.Contains(text) ||
+                t.Coach.FirstName.Contains(text) ||
+                t.Coach.LastName.Contains(text) ||
+                t.Target.Name.Contains(text)||
+                t.Location.Contains(text))
+                .Select(t => new TrainingViewModel()
+                {
+                    Id = t.Id.ToString(),
+                    Title = t.Title,
+                    PhotoUrl = t.PhotoUrl,
+                    Location = t.Location,
+                    OrganizatorId = t.CoachId,
+                    Duration = t.Duration,
+                    Target = t.Target.Name,
+                    isOrganizator = false,
+                    Organizator = t.Coach,
+                    Price = t.Price
+                }).ToListAsync();
         }
 
         public async Task<IEnumerable<TrainingViewModel>> GetLastThreeTrainingsAsync()

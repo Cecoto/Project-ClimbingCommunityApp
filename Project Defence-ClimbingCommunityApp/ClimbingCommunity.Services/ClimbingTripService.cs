@@ -82,6 +82,30 @@
             await repo.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingByStringTripsAsync(string text)
+        {
+            return await repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
+                 .OrderByDescending(ct => ct.CreatedOn)
+                 .Where(ct => ct.Title.Contains(text) ||
+                 ct.TripType.Name.Contains(text) ||
+                 ct.Destination.Contains(text) ||
+                 ct.Organizator.FirstName.Contains(text) ||
+                 ct.Organizator.LastName.Contains(text))
+                 .Select(ct => new ClimbingTripViewModel()
+                 {
+                     Id = ct.Id.ToString(),
+                     Title = ct.Title,
+                     PhotoUrl = ct.PhotoUrl,
+                     Destination = ct.Destination,
+                     OrganizatorId = ct.OrganizatorId,
+                     Duration = ct.Duration,
+                     TripType = ct.TripType.Name,
+                     isOrganizator = false,
+                     Organizator = ct.Organizator
+                 }).ToListAsync();
+
+        }
+
         public async Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingTripsAsync()
         {
             var models = await repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
@@ -105,7 +129,7 @@
         public async Task<IEnumerable<JoinedClimbingTripViewModel>> GetAllJoinedClimbingTripsByUserIdAsync(string userId)
         {
             return await repo
-                  .AllReadonly<ClimbingTrip>(ct => (ct.IsActive == true || ct.IsActive == null) && ct.Climbers.Any(c=>c.ClimberId==userId))
+                  .AllReadonly<ClimbingTrip>(ct => (ct.IsActive == true || ct.IsActive == null) && ct.Climbers.Any(c => c.ClimberId == userId))
                   .OrderByDescending(ct => ct.CreatedOn)
                   .Select(ct => new JoinedClimbingTripViewModel()
                   {
