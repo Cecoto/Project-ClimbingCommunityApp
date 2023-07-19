@@ -76,8 +76,11 @@
             return model;
         }
 
-        public async Task<ICollection<CommentViewModel>> GetAllCommentsByActivityId(string activityId)
+        public async Task<ICollection<CommentViewModel>> GetAllCommentsByActivityIdAndTypeAsync(string activityId, string activityType)
         {
+            if (activityType=="ClimbingTrip")
+            {
+
             return await repo.AllReadonly<Comment>(c => c.ClimbingTripId == Guid.Parse(activityId))
                 .Select(c => new CommentViewModel()
                 {
@@ -87,6 +90,19 @@
                     Author = c.Author
                 })
                 .ToListAsync();
+            }
+            else
+            {
+                return await repo.AllReadonly<Comment>(c => c.TrainingId == Guid.Parse(activityId))
+               .Select(c => new CommentViewModel()
+               {
+                   Id = c.Id,
+                   Text = c.Text,
+                   AuthorId = c.AuthorId,
+                   Author = c.Author
+               })
+               .ToListAsync();
+            }
         }
     }
 }

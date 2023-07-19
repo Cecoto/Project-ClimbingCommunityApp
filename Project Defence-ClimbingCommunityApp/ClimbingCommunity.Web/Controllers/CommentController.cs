@@ -17,10 +17,9 @@
         {
             ActivityCommentViewModel model = await commentService.GetActivityForCommentById(activityId, activityType);
 
-            model.Comments = await commentService.GetAllCommentsByActivityId(activityId);
+            model.Comments = await commentService.GetAllCommentsByActivityIdAndTypeAsync(activityId,activityType);
 
-            TempData["ActivityId"] = activityId;
-            TempData["ActivityType"] = activityType;
+            
 
             return View(model);
         }
@@ -38,7 +37,7 @@
             {
 
 
-                model.Comments = await commentService.GetAllCommentsByActivityId(activityId);
+                model.Comments = await commentService.GetAllCommentsByActivityIdAndTypeAsync(activityId,activityType);
 
                 return View("ActivityComments", model);
             }

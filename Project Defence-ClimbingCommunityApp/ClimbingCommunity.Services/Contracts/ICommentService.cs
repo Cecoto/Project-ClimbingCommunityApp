@@ -11,6 +11,6 @@
     {
         Task AddCommentAsync(string activityId, string activityType, string newCommentText, string userId);
         Task<ActivityCommentViewModel> GetActivityForCommentById(string activityId, string activityType);
-        Task<ICollection<CommentViewModel>> GetAllCommentsByActivityId(string activityId);
+        Task<ICollection<CommentViewModel>> GetAllCommentsByActivityIdAndTypeAsync(string activityId,string activityType);
     }
 }
