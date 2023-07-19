@@ -23,7 +23,7 @@
             targets.Add(new Target
             {
                 Id = 2,
-                Name = "Strenght"
+                Name = "Strength"
             });
             targets.Add(new Target
             {

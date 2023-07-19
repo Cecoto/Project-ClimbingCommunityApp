@@ -16,8 +16,9 @@
         Task CreateAsync(string organizatorId, TrainingFormViewModel model);
         Task<bool> IsTrainingExistsByIdAsync(string trainingId);
         Task<bool> IsUserOrganizatorOfTrainingByIdAsync(string userId, string trainingId);
-        Task<TrainingFormViewModel> GetTrainingForEditByIdAsync(string id);
-        Task EditTrainingByIdAsync(string id, TrainingFormViewModel model);
-        Task DeleteTrainingByIdAsync(string id);
+        Task<TrainingFormViewModel> GetTrainingForEditByIdAsync(string trainingId);
+        Task EditTrainingByIdAsync(string trainingId, TrainingFormViewModel model);
+        Task DeleteTrainingByIdAsync(string trainingId);
+        Task<IEnumerable<TrainingViewModel>> GetMyTrainingsByIdAsync(string userId);
     }
 }

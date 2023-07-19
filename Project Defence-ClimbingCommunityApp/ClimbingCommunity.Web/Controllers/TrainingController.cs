@@ -58,6 +58,49 @@
 
         }
         /// <summary>
+        /// Method that get all trainings.Visable for all users of the community.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            return View();
+        }
+        /// <summary>
+        /// Get method for reaching user trainings.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> MyTrainings()
+        {
+            if (!User.IsInRole("Coach"))
+            {
+                this.TempData[ErrorMessage] = "You must be a coach to have trainings!";
+
+                return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
+            }
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                this.TempData[ErrorMessage] = "You must be a coach to add new training!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                IEnumerable<TrainingViewModel> myTrainings = await trainingService.GetMyTrainingsByIdAsync(GetUserId()!);
+
+                return View(myTrainings);
+
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+
+        }
+        /// <summary>
         /// Get method for reaching add page.
         /// </summary>
         /// <returns></returns>
@@ -226,8 +269,13 @@
             }
 
         }
+        /// <summary>
+        /// Post method for solfdelete of a training.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult>Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (!User.IsInRole("Coach"))
             {

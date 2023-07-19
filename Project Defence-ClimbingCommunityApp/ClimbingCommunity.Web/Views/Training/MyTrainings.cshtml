@@ -1,5 +1,66 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<TrainingViewModel>
+
+<link rel="stylesheet" href="~/css/myTrainings.css" asp-append-version="true" />
+
+<div class="training-container">
+    @if (Model.Any())
+    {
+        @foreach (var training in Model)
+        {
+            <div class="training-card">
+                <h3>@training.Title</h3>
+                <img src="@training.PhotoUrl" alt="Training Photo" class="training-img" />
+
+                <div class="training-details">
+                    <p><strong>Location:</strong> @training.Location</p>
+                    <p><strong>Duration:</strong> @training.Duration hour/s</p>
+                    <p><strong>Target:</strong> @training.Target</p>
+                    <p><strong>Price:</strong> @training.Price lv.</p>
+
+                    <div class="button-container">
+                        <a asp-area="" asp-controller="Training" asp-action="Edit" asp-route-id="@training.Id" class="edit-button">Edit</a>
+                        <button type="button" class="delete-button" onclick="deleteTrip('@training.Id')">Delete</button>
+                        <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "Training")" />
+                        <button class="comments-button" onclick="toggleComments('@training.Id')">Comments</button>
+                    </div>
+
+                    <div class="comments-container">
+                        @if (training.Comments.Any())
+                        {
+                            foreach (var comment in training.Comments)
+                            {
+                                <p>@comment</p>
+                            }
+                        }
+                        else
+                        {
+                            <p>No comments yet. Be the first to write one!</p>
+                        }
+
+                        <form class="comment-form" data-trip-id="@training.Id">
+                            <textarea class="comment-input" placeholder="Write your comment here"></textarea>
+                            <button type="submit" class="btn btn-primary submit-comment">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="empty-message-container">
+            <p>You still don't have any created trainings.</p>
+            <a asp-area="" asp-controller="Training" asp-action="Add" class="add-new-button">Create New Training</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/OnDeleteAjax.js"></script>
+    <script>
+        function toggleComments(trainingId) {
+            const card = document.querySelector(`.training-card[data-training-id='${trainingId}']`);
+            card.classList.toggle('expanded');
+        }
+    </script>
 }

@@ -44,9 +44,9 @@
 
         }
 
-        public async Task DeleteTrainingByIdAsync(string id)
+        public async Task DeleteTrainingByIdAsync(string trainingId)
         {
-            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(id));
+            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(trainingId));
 
             if (training != null)
             {
@@ -55,9 +55,9 @@
             await repo.SaveChangesAsync();
         }
 
-        public async Task EditTrainingByIdAsync(string id, TrainingFormViewModel model)
+        public async Task EditTrainingByIdAsync(string trainingId, TrainingFormViewModel model)
         {
-            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(id));
+            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(trainingId));
 
             string photo = model.PhotoUrl;
 
@@ -134,9 +134,26 @@
                }).ToListAsync();
         }
 
-        public async Task<TrainingFormViewModel> GetTrainingForEditByIdAsync(string id)
+        public async Task<IEnumerable<TrainingViewModel>> GetMyTrainingsByIdAsync(string userId)
         {
-            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(id));
+            return await repo.AllReadonly<Training>(t => t.CoachId == userId && (t.isActive == true || t.isActive == null))
+                 .Select(t => new TrainingViewModel()
+                 {
+                     Id = t.Id.ToString(),
+                     Title = t.Title,
+                     PhotoUrl = t.PhotoUrl,
+                     Location = t.Location,
+                     Duration = t.Duration,
+                     Target = t.Target.Name,
+                     isOrganizator = true,
+                     Price = t.Price
+                 })
+                 .ToListAsync();
+        }
+
+        public async Task<TrainingFormViewModel> GetTrainingForEditByIdAsync(string trainingId)
+        {
+            Training training = await repo.GetByIdAsync<Training>(Guid.Parse(trainingId));
 
             return new TrainingFormViewModel()
             {

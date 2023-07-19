@@ -1,0 +1,82 @@
+﻿/* Styling for comments section */
+
+.comments-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.training-card.expanded .comments-container {
+    max-height: 500px; 
+    transition: max-height 0.3s ease-in;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.comment-input {
+    resize: none;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-comment {
+    background-color: #92d29b;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 150px;
+    align-self: flex-start;
+    border: none;
+    cursor: pointer;
+}
+
+    .submit-comment:hover {
+        background-color: darkgreen;
+    }
+
+.comments-button {
+    position: relative;
+    bottom: 0px;
+    right: -64px;
+    border: none;
+}
+
+    .comments-button:hover {
+        background-color: darkgreen;
+        text-decoration: solid;
+    }
+
+.empty-message-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.add-new-button {
+    background-color: #92d29b;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+    .add-new-button:hover {
+        background-color: darkorange;
+    }
