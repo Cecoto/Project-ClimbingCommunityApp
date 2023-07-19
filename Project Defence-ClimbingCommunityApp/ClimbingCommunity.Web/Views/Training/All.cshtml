@@ -48,7 +48,9 @@
                             <p><strong>Duration:</strong> @training.Duration hours</p>
                             <p><strong>Target:</strong> @training.Target</p>
                             <p><strong>Price:</strong> @training.Price lv.</p>
-                            <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@training.Id" class="btn btn-primary comments-button">Comments</a>
+
+                            <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@training.Id" asp-route-activityType="Training" class="btn btn-primary comments-button">Comments</a>
+                            
                             <div class="button-container">
                                 @if (training.isOrganizator)
                                 {

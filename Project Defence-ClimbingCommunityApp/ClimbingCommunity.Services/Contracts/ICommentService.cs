@@ -9,6 +9,8 @@
 
     public interface ICommentService
     {
-        Task<ICollection<CommentViewModel>> GetAllCommentsByTripId(string tripId);
+        Task AddCommentAsync(string activityId, string activityType, string newCommentText, string userId);
+        Task<ActivityCommentViewModel> GetActivityForCommentById(string activityId, string activityType);
+        Task<ICollection<CommentViewModel>> GetAllCommentsByActivityId(string activityId);
     }
 }

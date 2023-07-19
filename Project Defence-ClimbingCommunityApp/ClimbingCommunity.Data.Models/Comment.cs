@@ -20,16 +20,15 @@
         public string Text { get; set; } = null!;
 
         
-        public Guid ClimbingTripId { get; set; } 
-        public virtual ClimbingTrip ClimbingTrip { get; set; } = null!;
+        public Guid? ClimbingTripId { get; set; }
+        public virtual ClimbingTrip? ClimbingTrip { get; set; } 
 
 
        
-        public Guid TrainingId { get; set; }
-        public virtual Training Training { get; set; } = null!;
+        public Guid? TrainingId { get; set; }
+        public virtual Training? Training { get; set; }
 
 
-        
         public string AuthorId { get; set; } = null!;
         public virtual ApplicationUser Author { get; set; } = null!;
 

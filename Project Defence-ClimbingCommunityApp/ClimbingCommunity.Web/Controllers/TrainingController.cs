@@ -397,6 +397,11 @@
                 return GeneralError();
             }
         }
+        /// <summary>
+        /// Action for leaving training.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Leave(string id)
         {

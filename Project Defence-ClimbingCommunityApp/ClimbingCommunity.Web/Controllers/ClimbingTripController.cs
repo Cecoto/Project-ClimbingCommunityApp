@@ -100,7 +100,7 @@
                     {
                         model.isParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(userId, model.Id);
                     }
-                    model.Comments = await commentService.GetAllCommentsByTripId(model.Id);
+                    model.Comments = await commentService.GetAllCommentsByActivityId(model.Id);
                 }
 
                 return View(models);

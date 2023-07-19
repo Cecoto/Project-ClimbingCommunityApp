@@ -1,0 +1,37 @@
+﻿@model ActivityCommentViewModel
+
+<link rel="stylesheet" href="~/css/activityComments.css" asp-append-version="true" />
+
+<div class="activity-comments-container">
+    <h2 class="centered-heading">@Model.Title</h2>
+    <img src="@Model.PhotoUrl" alt="Activity Photo" class="activity-img" />
+
+    <div class="comments-section">
+        @if (Model.Comments.Any())
+        {
+            foreach (var comment in Model.Comments)
+            {
+                <div class="comment-item">
+                    <p>
+                        <strong>@comment.Author.FirstName @comment.Author.LastName:</strong>
+                        @comment.Text
+                    </p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No comments yet. Be the first to write one!</p>
+        }
+    </div>
+
+    <div class="add-comment-section">
+        <h3>Add Your Comment</h3>
+        <form method="post">
+            <div class="form-group">
+                <textarea class="form-control" rows="3" placeholder="Write your comment here" name="NewCommentText" required>@Model.NewCommentText</textarea>
+            </div>
+            <button asp-asp-controller="Comment" asp-action="AddComment" asp-route-activityId="@Model.Id" asp-route-activityType="@Model.ActivityType" type="submit" class="btn btn-primary">Add Comment</button>
+        </form>
+    </div>
+</div>

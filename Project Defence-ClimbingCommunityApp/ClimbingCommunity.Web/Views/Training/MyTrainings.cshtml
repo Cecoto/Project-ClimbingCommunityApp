@@ -23,25 +23,8 @@
                         <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "Training")" />
                         <button class="comments-button" onclick="toggleComments('@training.Id')">Comments</button>
                     </div>
+                    <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@training.Id" asp-route-activityType="Training" class="btn btn-primary comments-button">Comments</a>
 
-                    <div class="comments-container">
-                        @if (training.Comments.Any())
-                        {
-                            foreach (var comment in training.Comments)
-                            {
-                                <p>@comment</p>
-                            }
-                        }
-                        else
-                        {
-                            <p>No comments yet. Be the first to write one!</p>
-                        }
-
-                        <form class="comment-form" data-trip-id="@training.Id">
-                            <textarea class="comment-input" placeholder="Write your comment here"></textarea>
-                            <button type="submit" class="btn btn-primary submit-comment">Submit</button>
-                        </form>
-                    </div>
                 </div>
             </div>
         }

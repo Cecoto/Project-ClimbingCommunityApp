@@ -10,6 +10,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using WebShopDemo.Core.Data.Common;
+    using static System.Net.Mime.MediaTypeNames;
 
     public class CommentService : ICommentService
     {
@@ -18,9 +19,66 @@
         {
             repo = _repo;
         }
-        public async Task<ICollection<CommentViewModel>> GetAllCommentsByTripId(string tripId)
+
+        public async Task AddCommentAsync(string activityId, string activityType, string newCommentText, string userId)
         {
-            return await repo.AllReadonly<Comment>(c => c.ClimbingTripId == Guid.Parse(tripId))
+            Comment comment = new Comment
+            {
+                Text = newCommentText,
+                AuthorId = userId,
+                Author = await repo.GetByIdAsync<ApplicationUser>(userId),
+                isActive = true
+            };
+            if (activityType == "ClimbingTrip")
+            {
+
+                comment.ClimbingTripId = Guid.Parse(activityId);
+                
+
+            }
+            else if (activityType == "Training")
+            {
+
+                comment.TrainingId = Guid.Parse(activityId);
+                
+
+            }
+
+            await repo.AddAsync<Comment>(comment);
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<ActivityCommentViewModel> GetActivityForCommentById(string activityId, string activityType)
+        {
+            ActivityCommentViewModel model = new ActivityCommentViewModel()
+            {
+                Id = activityId
+            };
+
+            if (activityType == "ClimbingTrip")
+            {
+                ClimbingTrip activity = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(activityId));
+
+                model.Title = activity.Title;
+                model.PhotoUrl = activity.PhotoUrl;
+                model.ActivityType = activityType;
+
+            }
+            else if (activityType == "Training")
+            {
+                Training activity = await repo.GetByIdAsync<Training>(Guid.Parse(activityId));
+
+                model.Title = activity.Title;
+                model.PhotoUrl = activity.PhotoUrl;
+                model.ActivityType = activityType;
+            }
+            return model;
+        }
+
+        public async Task<ICollection<CommentViewModel>> GetAllCommentsByActivityId(string activityId)
+        {
+            return await repo.AllReadonly<Comment>(c => c.ClimbingTripId == Guid.Parse(activityId))
                 .Select(c => new CommentViewModel()
                 {
                     Id = c.Id,
