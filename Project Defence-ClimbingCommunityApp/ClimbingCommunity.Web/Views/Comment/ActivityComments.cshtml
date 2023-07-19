@@ -13,7 +13,7 @@
             {
                 <div class="comment-item">
                     <p>
-                        <strong>@comment.Author.FirstName @comment.Author.LastName:</strong>
+                        <a asp-controller="Profile" asp-action="UserProfile" asp-route-id="@comment.AuthorId">@comment.Author.FirstName @comment.Author.LastName:</a>
                         @comment.Text
                     </p>
                 </div>

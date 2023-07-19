@@ -7,10 +7,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using WebShopDemo.Core.Data.Common;
-    using static System.Net.Mime.MediaTypeNames;
+
 
     public class CommentService : ICommentService
     {
@@ -33,14 +32,14 @@
             {
 
                 comment.ClimbingTripId = Guid.Parse(activityId);
-                
+
 
             }
             else if (activityType == "Training")
             {
 
                 comment.TrainingId = Guid.Parse(activityId);
-                
+
 
             }
 
@@ -78,18 +77,18 @@
 
         public async Task<ICollection<CommentViewModel>> GetAllCommentsByActivityIdAndTypeAsync(string activityId, string activityType)
         {
-            if (activityType=="ClimbingTrip")
+            if (activityType == "ClimbingTrip")
             {
 
-            return await repo.AllReadonly<Comment>(c => c.ClimbingTripId == Guid.Parse(activityId))
-                .Select(c => new CommentViewModel()
-                {
-                    Id = c.Id,
-                    Text = c.Text,
-                    AuthorId = c.AuthorId,
-                    Author = c.Author
-                })
-                .ToListAsync();
+                return await repo.AllReadonly<Comment>(c => c.ClimbingTripId == Guid.Parse(activityId))
+                    .Select(c => new CommentViewModel()
+                    {
+                        Id = c.Id,
+                        Text = c.Text,
+                        AuthorId = c.AuthorId,
+                        Author = c.Author
+                    })
+                    .ToListAsync();
             }
             else
             {
@@ -103,6 +102,32 @@
                })
                .ToListAsync();
             }
+        }
+
+        public async Task<bool> IsActivityExistsByIdAndTypeAsync(string activityId, string activityType)
+        {
+            if (activityType == "ClimbingTrip")
+            {
+                return await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(activityId)) != null;
+
+            }
+            else if (activityType == "Training")
+            {
+                return await repo.GetByIdAsync<Training>(Guid.Parse(activityId)) != null;
+
+            }
+            return false;
+        }
+
+        public bool IsActivityTypeExist(string activityType)
+        {
+            if (activityType == "ClimbingTrip" || activityType == "Training")
+            {
+                return true;
+
+            }
+
+            return false;
         }
     }
 }
