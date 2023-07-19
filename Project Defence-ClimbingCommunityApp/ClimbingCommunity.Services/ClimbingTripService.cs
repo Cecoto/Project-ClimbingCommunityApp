@@ -222,6 +222,8 @@
             {
                 await repo.DeleteAsync<TripClimber>(tcToDelete);
             }
+
+            await repo.SaveChangesAsync();
         }
     }
 }

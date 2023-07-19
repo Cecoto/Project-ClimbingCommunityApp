@@ -1,10 +1,10 @@
 ﻿namespace ClimbingCommunity.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
     using ClimbingCommunity.Web.ViewModels.Training;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
 
     using static Common.NotificationMessageConstants;
 
@@ -78,18 +78,17 @@
         [HttpGet]
         public async Task<IActionResult> All()
         {
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                this.TempData[ErrorMessage] = "You must be logged in to reach that page!";
+
+                return RedirectToAction("Login", "User");
+            }
             try
             {
                 IEnumerable<ClimbingTripViewModel> models = await climbingTripService.GetAllClimbingTripsAsync();
 
                 string userId = GetUserId()!;
-
-                if (userId == null)
-                {
-                    this.TempData[ErrorMessage] = "Invalid ID of a user!";
-
-                    return RedirectToAction("Index", "Home");
-                }
 
                 foreach (ClimbingTripViewModel model in models)
                 {
@@ -100,8 +99,8 @@
                     else
                     {
                         model.isParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(userId, model.Id);
-                        model.Comments = await commentService.GetAllCommentsByTripId(model.Id);
                     }
+                    model.Comments = await commentService.GetAllCommentsByTripId(model.Id);
                 }
 
                 return View(models);
@@ -148,7 +147,7 @@
 
                 return GeneralError();
             }
-           
+
 
         }
         /// <summary>
@@ -437,7 +436,7 @@
             }
             try
             {
-                await climbingTripService.LeaveClimbingTripByIdAsync(id,GetUserId());
+                await climbingTripService.LeaveClimbingTripByIdAsync(id, GetUserId()!);
 
                 this.TempData[SuccessMessage] = "Successfuly left that trip!";
 
@@ -448,12 +447,6 @@
 
                 return GeneralError();
             }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddComment(string id)
-        {
-            return RedirectToAction();
         }
 
     }

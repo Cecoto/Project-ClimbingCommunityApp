@@ -64,7 +64,45 @@
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            return View();
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                this.TempData[ErrorMessage] = "You must be logged in to reach that page!";
+
+                return RedirectToAction("Login", "User");
+            }
+
+            try
+            {
+                IEnumerable<TrainingViewModel> models = await trainingService.GetAllTrainingsAsync();
+
+                string userId = GetUserId()!;
+                foreach (TrainingViewModel model in models)
+                {
+                    if (model.OrganizatorId == userId)
+                    {
+                        model.isOrganizator = true;
+                    }
+                    else
+                    {
+                        if (User.IsInRole("Climber"))
+                        {
+                            model.isParticipant = await trainingService.IsUserParticipateInTrainingByIdAsync(userId, model.Id);
+
+                        }
+                        else
+                        {
+                            model.isParticipant = false;
+                        }
+
+                    }
+                }
+                return View(models);
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
         }
         /// <summary>
         /// Get method for reaching user trainings.
@@ -83,7 +121,7 @@
             {
                 this.TempData[ErrorMessage] = "You must be a coach to add new training!";
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "User");
             }
 
             try
@@ -261,10 +299,10 @@
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to edit the climbing trip. Please try again later or contact administrator!");
+                this.TempData[ErrorMessage] = "Unexpected error occured while trying to edit the climbing trip. Please try again later or contact administrator!";
 
                 model.Targets = await trainingService.GetAllTargetsAsync();
-
+                model.IsEditModel = true;
                 return View(model);
             }
 
@@ -304,6 +342,96 @@
                 await trainingService.DeleteTrainingByIdAsync(id);
 
                 return RedirectToAction(nameof(LastThreeTrainings));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+        }
+        /// <summary>
+        /// Action for joining a training.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Join(string id)
+        {
+            bool isTrainingExists = await trainingService.IsTrainingExistsByIdAsync(id);
+
+            if (!isTrainingExists)
+            {
+                this.TempData[ErrorMessage] = "Training with the provided id does not exist! Please try again.";
+
+                return RedirectToAction("All", "Training");
+            }
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                this.TempData[ErrorMessage] = "You must be logged in to reach that page!";
+
+                return RedirectToAction("Login", "User");
+            }
+            if (!User.IsInRole("Climber"))
+            {
+                this.TempData[ErrorMessage] = "You must be climber in order to join this climbing trips!";
+                return RedirectToAction(nameof(All));
+            }
+            bool isUserOrganizator = await trainingService.IsUserOrganizatorOfTrainingByIdAsync(GetUserId()!, id);
+            if (isUserOrganizator)
+            {
+                this.TempData[ErrorMessage] = "You are the organizator of the trip!";
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+            try
+            {
+                await trainingService.JoinTrainingAsync(id, GetUserId()!);
+
+                this.TempData[SuccessMessage] = "Successfuly joined in that training!";
+
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Leave(string id)
+        {
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                this.TempData[ErrorMessage] = "You must be logged in to reach that page!";
+
+                return RedirectToAction("Login", "User");
+            }
+            bool isTrainingExists = await trainingService.IsTrainingExistsByIdAsync(id);
+            if (!isTrainingExists)
+            {
+                this.TempData[ErrorMessage] = "Training with the provided id does not exist! Please try again.";
+
+                return RedirectToAction("All", "Training");
+            }
+            if (!User.IsInRole("Climber"))
+            {
+                this.TempData[ErrorMessage] = "You must be climber to leave that training!";
+                return RedirectToAction(nameof(All));
+            }
+            bool isUserParticipant = await trainingService.IsUserParticipateInTrainingByIdAsync(GetUserId()!, id);
+            if (!isUserParticipant)
+            {
+                this.TempData[ErrorMessage] = "You are not participant of the that training! You first need to join if you wish to leave it!";
+
+                return RedirectToAction("All", "Training");
+            }
+            try
+            {
+                await trainingService.LeaveTrainingAsync(id, GetUserId()!);
+
+                this.TempData[SuccessMessage] = "Successfuly left that training!";
+
+                return RedirectToAction("JoinedActivites", "ClimbingTrip");
             }
             catch (Exception)
             {

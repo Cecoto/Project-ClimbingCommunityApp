@@ -20,5 +20,7 @@
         Task EditTrainingByIdAsync(string trainingId, TrainingFormViewModel model);
         Task DeleteTrainingByIdAsync(string trainingId);
         Task<IEnumerable<TrainingViewModel>> GetMyTrainingsByIdAsync(string userId);
+        Task JoinTrainingAsync(string trainingId, string userId);
+        Task LeaveTrainingAsync(string trainingId, string userId);
     }
 }

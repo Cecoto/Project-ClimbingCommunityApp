@@ -2,6 +2,7 @@
 {
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
+    using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
     using ClimbingCommunity.Web.ViewModels.Training;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -59,7 +60,7 @@
         {
             Training training = await repo.GetByIdAsync<Training>(Guid.Parse(trainingId));
 
-            string photo = model.PhotoUrl;
+            string photo = training.PhotoUrl;
 
             if (model.PhotoFile != null)
             {
@@ -110,9 +111,23 @@
                 .ToListAsync();
         }
 
-        public Task<IEnumerable<TrainingViewModel>> GetAllTrainingsAsync()
+        public async Task<IEnumerable<TrainingViewModel>> GetAllTrainingsAsync()
         {
-            throw new NotImplementedException();
+            return await repo.AllReadonly<Training>(t => t.isActive == true || t.isActive == null)
+                 .OrderByDescending(t => t.CreatedOn)
+                 .Select(t => new TrainingViewModel()
+                 {
+                     Id = t.Id.ToString(),
+                     Title = t.Title,
+                     PhotoUrl = t.PhotoUrl,
+                     Location = t.Location,
+                     OrganizatorId = t.CoachId,
+                     Duration = t.Duration,
+                     Target = t.Target.Name,
+                     isOrganizator = false,
+                     Organizator = t.Coach,
+                     Price = t.Price
+                 }).ToListAsync();
         }
 
         public async Task<IEnumerable<TrainingViewModel>> GetLastThreeTrainingsAsync()
@@ -193,6 +208,28 @@
         public async Task<bool> IsUserParticipateInTrainingByIdAsync(string userId, string trainingId)
         {
             return await repo.GetByIdsAsync<TrainingClimber>(new object[] { userId, Guid.Parse(trainingId) }) != null;
+        }
+
+        public async Task JoinTrainingAsync(string trainingId, string userId)
+        {
+            await repo.AddAsync<TrainingClimber>(new TrainingClimber()
+            {
+                ClimberId = userId,
+                TrainingId = Guid.Parse(trainingId)
+            });
+
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task LeaveTrainingAsync(string trainingId, string userId)
+        {
+            TrainingClimber tcToDelete = await repo.GetByIdsAsync<TrainingClimber>(new object[] { userId, Guid.Parse(trainingId) });
+
+            if (tcToDelete != null)
+            {
+                await repo.DeleteAsync(tcToDelete);
+            }
+            await repo.SaveChangesAsync();
         }
     }
 }
