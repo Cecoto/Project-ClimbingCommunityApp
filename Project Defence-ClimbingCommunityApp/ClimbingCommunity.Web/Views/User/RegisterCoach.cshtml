@@ -62,8 +62,10 @@
                 <span asp-validation-for="@Model.Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProfilePicture" class="form-label"></label>
-                <input asp-for="ProfilePicture" type="file" class="form-control-file" />
+                <label asp-for="PhotoFile" class="form-label"></label>
+                <img class="" src="@Model.ProfilePicture" />
+                <input asp-for="PhotoFile" type="file" class="form-control-file" accept="image/*" />
+                <span asp-validation-for="PhotoFile" class="text-danger"></span>
             </div>
         </div>
     </div>

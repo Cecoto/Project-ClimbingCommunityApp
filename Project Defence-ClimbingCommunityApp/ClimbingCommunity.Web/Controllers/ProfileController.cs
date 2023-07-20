@@ -141,7 +141,6 @@
 
             if (!ModelState.IsValid)
             {
-
                 model.ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync();
 
                 model.Levels = await userService.GetLevelsForFormAsync();

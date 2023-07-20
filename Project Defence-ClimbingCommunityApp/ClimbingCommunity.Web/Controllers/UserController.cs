@@ -23,6 +23,7 @@
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IUserService userService;
+        private readonly IImageService imageService;
 
         /// <summary>
         /// Constructor of the userController where we inject needed services for the controler.
@@ -36,13 +37,15 @@
             SignInManager<ApplicationUser> _signInManager,
             RoleManager<IdentityRole> _roleManager,
             IUserService _userService,
-            UserManager<ApplicationUser> _userManager)
+            UserManager<ApplicationUser> _userManager,
+            IImageService _imageService)
 
         {
             userManager = _userManager;
             signInManager = _signInManager;
             roleManager = _roleManager;
             userService = _userService;
+            imageService = _imageService;
         }
         /// <summary>
         /// Method that will manualy set to concrete user a role.Will be in the administratorController.
@@ -111,6 +114,11 @@
             if (!ModelState.IsValid)
             {
                 return View(model);
+            }
+
+            if (model.PhotoFile != null)
+            {
+                model.ProfilePicture = await imageService.SavePictureAsync(model.PhotoFile,"ProfilePictures");
             }
 
             if (String.IsNullOrWhiteSpace(model.ProfilePicture))
@@ -213,6 +221,12 @@
             {
                 return View(model);
             }
+
+            if (model.PhotoFile != null)
+            {
+                model.ProfilePicture = await imageService.SavePictureAsync(model.PhotoFile, "ProfilePictures");
+            }
+
             if (String.IsNullOrWhiteSpace(model.ProfilePicture))
             {
                 if (model.Gender == "Male")

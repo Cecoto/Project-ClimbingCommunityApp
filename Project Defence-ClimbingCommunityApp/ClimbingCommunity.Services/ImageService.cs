@@ -9,11 +9,11 @@
     public class ImageService : IImageService
     {
 
-        public async Task<string> SavePictureAsync(IFormFile profilePicture, string dirName)
+        public async Task<string> SavePictureAsync(IFormFile picture, string dirName)
         {
 
 
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(profilePicture.FileName);
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(picture.FileName);
 
             string profilePicturesDirectory = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{dirName}");
 
@@ -26,7 +26,7 @@
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await profilePicture.CopyToAsync(stream);
+                await picture.CopyToAsync(stream);
             }
 
             return $"/images/{dirName}/" + uniqueFileName;
