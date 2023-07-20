@@ -1,10 +1,12 @@
 ﻿@model IEnumerable<ClimbingTripViewModel>
-
+@{
+    ViewData["Title"] = "Latest trips";
+}
 <link rel="stylesheet" href="~/css/lastThree.css" asp-append-version="true" />
 
 
 <div class="lastThree-container">
-    <h2 class="centered-heading">Last Three Climbing Trips</h2>
+    <h2 class="centered-heading">Latest Climbing Trips</h2>
 
     <hr />
     @foreach (var trip in Model)

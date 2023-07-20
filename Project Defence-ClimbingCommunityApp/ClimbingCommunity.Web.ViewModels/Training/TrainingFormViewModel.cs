@@ -24,16 +24,21 @@
         public string Location { get; set; } = null!;
 
         [Range(DurationMinValue, DurationMaxValue)]
+        [Display(Name = "Duration(hours)")]
         public int Duration { get; set; }
 
         [MaxLength(ImageUrlMaxLength)]
+        
         public string? PhotoUrl { get; set; }
 
+        [Display(Name = "Photo")]
         public IFormFile? PhotoFile { get; set; }
 
+        [Display(Name = "Target")]
         public int TragetId { get; set; }
 
         public IEnumerable<TargetViewModel> Targets { get; set; }
+
 
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         public decimal Price { get; set; }

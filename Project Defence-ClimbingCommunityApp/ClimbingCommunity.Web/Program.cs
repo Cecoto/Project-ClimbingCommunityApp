@@ -1,12 +1,13 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 using ClimbingCommunity.Data;
 using ClimbingCommunity.Data.Models;
 using ClimbingCommunity.Services.Contracts;
 using ClimbingCommunity.Web.Infrastructure.Extensions;
 using ClimbingCommunity.Web.Infrastructure.ModelBinders;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using WebShopDemo.Core.Data.Common;
-using Microsoft.Extensions.Hosting;
+
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

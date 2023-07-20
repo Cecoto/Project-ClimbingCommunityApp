@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<TrainingViewModel>
 
 @{
-    ViewData["Title"] = "All Trainings";
+    ViewData["Title"] = "All trainings";
 }
 <link rel="stylesheet" href="~/css/cardFlip.css" asp-append-version="true" />
 
 <h2 class="centered-heading">All Trainings</h2>
 
 <div class="container card-container">
-    
+
     <div class="row mb-3">
         <div class="col-md-6">
             <form class="form-inline" method="get" action="/Training/All">
@@ -23,68 +23,79 @@
     </div>
 
     <div class="row">
-        @foreach (var training in Model)
+        @if (Model.Any())
         {
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <h4 class="card-title">@training.Title</h4>
-                            <img src="@training.PhotoUrl" alt="Training Photo" class="card-img-top" />
-                        </div>
-                        <div class="card-back">
-                            <div class="details-container">
-                                <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@training.Id">
-                                    Details
-                                </button>
-                                <div id="details-@training.Id" class="collapse">
-                                    <img src="@training.Organizator.ProfilePictureUrl" class="profile-pic">
-                                    <p><strong>Organizer:</strong> @training.Organizator.FirstName @training.Organizator.LastName</p>
-                                    <p><strong>Phone:</strong> @training.Organizator.PhoneNumber</p>
-                                    <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@training.Organizator.Id" class="buttoN">View Profile</a>
-                                </div>
+
+            @foreach (var training in Model)
+            {
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <h4 class="card-title">@training.Title</h4>
+                                <img src="@training.PhotoUrl" alt="Training Photo" class="card-img-top" />
                             </div>
-                            <p><strong>Location:</strong> @training.Location</p>
-                            <p><strong>Duration:</strong> @training.Duration hours</p>
-                            <p><strong>Target:</strong> @training.Target</p>
-                            <p><strong>Price:</strong> @training.Price lv.</p>
+                            <div class="card-back">
+                                <div class="details-container">
+                                    <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@training.Id">
+                                        Details
+                                    </button>
+                                    <div id="details-@training.Id" class="collapse">
+                                        <img src="@training.Organizator.ProfilePictureUrl" class="profile-pic">
+                                        <p><strong>Organizer:</strong> @training.Organizator.FirstName @training.Organizator.LastName</p>
+                                        <p><strong>Phone:</strong> @training.Organizator.PhoneNumber</p>
+                                        <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@training.Organizator.Id" class="buttoN">View Profile</a>
+                                    </div>
+                                </div>
+                                <p><strong>Location:</strong> @training.Location</p>
+                                <p><strong>Duration:</strong> @training.Duration hours</p>
+                                <p><strong>Target:</strong> @training.Target</p>
+                                <p><strong>Price:</strong> @training.Price lv.</p>
 
-                            <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@training.Id" asp-route-activityType="Training" class="btn btn-primary comments-button">Comments</a>
-                            
-                            <div class="button-container">
-                                @if (training.isOrganizator)
-                                {
-                                    <a asp-area="" asp-controller="Training" asp-action="Edit" asp-route-id="@training.Id" class="edit-button">Edit</a>
-                                    <form method="post" enctype="multipart/form-data">
-                                        <button type="button" class="delete-button" onclick="deleteTrip('@training.Id')">Delete</button>
-                                        <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "Training")" />
-                                    </form>
-                                }
-                                else
-                                {
-                                    @if (User.IsInRole("Climber"))
+                                <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@training.Id" asp-route-activityType="Training" class="btn btn-primary comments-button">Comments</a>
+
+                                <div class="button-container">
+                                    @if (training.isOrganizator)
                                     {
+                                        <a asp-area="" asp-controller="Training" asp-action="Edit" asp-route-id="@training.Id" class="edit-button">Edit</a>
+                                        <form method="post" enctype="multipart/form-data">
+                                            <button type="button" class="delete-button" onclick="deleteTrip('@training.Id')">Delete</button>
+                                            <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "Training")" />
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        @if (User.IsInRole("Climber"))
+                                        {
 
-                                        if (training.isParticipant)
-                                        {
-                                            <form method="post" enctype="multipart/form-data">
-                                                <button type="submit" asp-area="" asp-controller="Training" asp-action="Leave" asp-route-id="@training.Id" class="join-button">Leave</button>
-                                            </form>
-                                        }
-                                        else
-                                        {
-                                            <form method="post" enctype="multipart/form-data">
-                                                <button type="submit" asp-area="" asp-controller="Training" asp-action="Join" asp-route-id="@training.Id" class="join-button">Join</button>
-                                            </form>
+                                            if (training.isParticipant)
+                                            {
+                                                <form method="post" enctype="multipart/form-data">
+                                                    <button type="submit" asp-area="" asp-controller="Training" asp-action="Leave" asp-route-id="@training.Id" class="join-button">Leave</button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <form method="post" enctype="multipart/form-data">
+                                                    <button type="submit" asp-area="" asp-controller="Training" asp-action="Join" asp-route-id="@training.Id" class="join-button">Join</button>
+                                                </form>
+                                            }
                                         }
                                     }
-                                }
+                                </div>
+
+
                             </div>
-
-
                         </div>
                     </div>
                 </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-12">
+                <p>No activities found at the moment.</p>
+                <p>Please check back later or explore other activities.</p>
             </div>
         }
     </div>

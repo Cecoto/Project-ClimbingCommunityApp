@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<ClimbingTripViewModel>
 
 @{
-    ViewData["Title"] = "All Trips";
+    ViewData["Title"] = "All Climbing trips";
 }
 <link rel="stylesheet" href="~/css/cardFlip.css" asp-append-version="true" />
 
 <h2 class="centered-heading">All Trips</h2>
 
 <div class="container card-container">
-    
+
     <div class="row mb-3">
         <div class="col-md-6">
             <form class="form-inline" method="get" action="/ClimbingTrip/All">
@@ -20,78 +20,89 @@
                 </div>
             </form>
         </div>
-        
+
     </div>
     <div class="row">
-        @foreach (var trip in Model)
+        @if (Model.Any())
         {
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <h4 class="card-title">@trip.Title</h4>
-                            <img src="@trip.PhotoUrl" alt="Climbing Trip Photo" class="card-img-top" />
 
-                        </div>
-                        <div class="card-back">
-                            <div class="details-container">
-                                <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
-                                    Details
-                                </button>
-                                <div id="details-@trip.Id" class="collapse">
-                                    <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
-                                    <p><strong>Organizer:</strong> @trip.Organizator.FirstName @trip.Organizator.LastName</p>
-                                    <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
-                                    <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="buttoN">View Profile</a>
-                                </div>
+            @foreach (var trip in Model)
+            {
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <h4 class="card-title">@trip.Title</h4>
+                                <img src="@trip.PhotoUrl" alt="Climbing Trip Photo" class="card-img-top" />
+
                             </div>
-                            <p><strong>Destination:</strong> @trip.Destination</p>
-                            <p><strong>Trip Type:</strong> @trip.TripType</p>
-                            <p><strong>Duration:</strong> @trip.Duration days</p>
-                            <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@trip.Id" asp-route-activityType="ClimbingTrip" class="btn btn-primary comments-button">Comments</a>
-                            @if (User.IsInRole("Coach"))
-                            {
+                            <div class="card-back">
+                                <div class="details-container">
+                                    <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
+                                        Details
+                                    </button>
+                                    <div id="details-@trip.Id" class="collapse">
+                                        <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
+                                        <p><strong>Organizer:</strong> @trip.Organizator.FirstName @trip.Organizator.LastName</p>
+                                        <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
+                                        <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="buttoN">View Profile</a>
+                                    </div>
+                                </div>
+                                <p><strong>Destination:</strong> @trip.Destination</p>
+                                <p><strong>Trip Type:</strong> @trip.TripType</p>
+                                <p><strong>Duration:</strong> @trip.Duration days</p>
+                                <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@trip.Id" asp-route-activityType="ClimbingTrip" class="btn btn-primary comments-button">Comments</a>
+                                @if (User.IsInRole("Coach"))
+                                {
 
-                            }
-                            else
-                            {
+                                }
+                                else
+                                {
 
-                                <div class="button-container">
-                                    @if (trip.isOrganizator)
-                                    {
-                                        <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
-
-                                        <form method="post" enctype="multipart/form-data">
-
-                                            <button type="button" class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</button>
-
-                                            <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        if (trip.isParticipant)
+                                    <div class="button-container">
+                                        @if (trip.isOrganizator)
                                         {
-                                            <form method="post" enctype="multipart/form-data">
-                                                <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Leave" asp-route-id="@trip.Id" class="join-button">Leave</button>
-                                            </form>
+                                            <a asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" asp-route-id="@trip.Id" class="edit-button">Edit</a>
 
+                                            <form method="post" enctype="multipart/form-data">
+
+                                                <button type="button" class="delete-button" onclick="deleteTrip('@trip.Id')">Delete</button>
+
+                                                <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "ClimbingTrip")" />
+                                            </form>
                                         }
                                         else
                                         {
-                                            <form method="post" enctype="multipart/form-data">
-                                                <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="join-button">Join Trip</button>
-                                            </form>
+                                            if (trip.isParticipant)
+                                            {
+                                                <form method="post" enctype="multipart/form-data">
+                                                    <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Leave" asp-route-id="@trip.Id" class="join-button">Leave</button>
+                                                </form>
+
+                                            }
+                                            else
+                                            {
+                                                <form method="post" enctype="multipart/form-data">
+                                                    <button type="submit" asp-area="" asp-controller="ClimbingTrip" asp-action="Join" asp-route-id="@trip.Id" class="join-button">Join Trip</button>
+                                                </form>
+                                            }
                                         }
-                                    }
-                                </div>
-                            }
-                            
+                                    </div>
+                                }
+
+                            </div>
+
                         </div>
 
                     </div>
-
                 </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-12">
+                <p>No activities found at the moment.</p>
+                <p>Please check back later or explore other activities.</p>
             </div>
         }
     </div>
@@ -99,6 +110,6 @@
 
 @section Scripts {
     <script src="~/lib/jquery/"></script>
-    <script src="~/js/OnDeleteAjax.js"></script> 
+    <script src="~/js/OnDeleteAjax.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }

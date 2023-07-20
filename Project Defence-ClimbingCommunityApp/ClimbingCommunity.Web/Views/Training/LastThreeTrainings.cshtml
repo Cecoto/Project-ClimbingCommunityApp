@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<TrainingViewModel>
 
+@{
+    ViewData["Title"] = "Latest trainings";
+}
 <link rel="stylesheet" href="~/css/lastThree.css" asp-append-version="true" />
 
 <div class="lastThree-container">
-    <h2 class="centered-heading">Last Three Trainings</h2>
+    <h2 class="centered-heading">Latest Trainings</h2>
 
     <hr />
     @foreach (var training in Model)

@@ -33,6 +33,6 @@
 
         public ICollection<CommentViewModel> Comments { get; set; }
 
-        public string SearchString { get; set; }
+        
     }
 }

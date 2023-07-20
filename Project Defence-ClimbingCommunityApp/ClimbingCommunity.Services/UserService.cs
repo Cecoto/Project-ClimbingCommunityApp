@@ -166,7 +166,7 @@
         {
             Climber climber = await repo.GetByIdIncludingAsync<Climber>(c => c.Id == userId, c => c.ClimberSpeciality, c => c.Level);
 
-            string photo = climber.ProfilePictureUrl;
+            string? photo = climber.ProfilePictureUrl;
 
             if (model.PhotoFile != null)
             {
@@ -194,7 +194,7 @@
         {
             Coach coach = await repo.GetByIdAsync<Coach>(userId);
 
-            string photo = coach.ProfilePictureUrl;
+            string? photo = coach.ProfilePictureUrl;
 
             if (model.PhotoFile != null)
             {

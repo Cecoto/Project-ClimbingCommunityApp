@@ -70,7 +70,7 @@
 
                         @if (!ViewContext.RouteData.Values["action"].ToString().Equals("RegisterCoach", StringComparison.OrdinalIgnoreCase) &&
                         !ViewContext.RouteData.Values["action"].ToString().Equals("RegisterClimber", StringComparison.OrdinalIgnoreCase) &&
-                        !ViewContext.RouteData.Values["action"].ToString().Equals("Login", StringComparison.OrdinalIgnoreCase))
+                        !ViewContext.RouteData.Values["action"].ToString().Equals("Login", StringComparison.OrdinalIgnoreCase)!)
                         {
                             <partial name="_LoginPartial" />
                         }

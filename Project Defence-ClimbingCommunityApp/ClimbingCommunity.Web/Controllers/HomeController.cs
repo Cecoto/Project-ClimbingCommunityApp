@@ -28,7 +28,17 @@
         [AllowAnonymous]
         public IActionResult Index()
         {
-            //TO DO: if user is logged in to redirect him to different page!!!
+            if (User.Identity?.IsAuthenticated ?? false)
+            {
+                if (User.IsInRole("Climber"))
+                {
+                    return RedirectToAction("LastThreeClimbingTrips","ClimbingTrip");
+                }
+                else if (User.IsInRole("Coach"))
+                {
+                    return RedirectToAction("LastThreeTrainings","Training");
+                }
+            }
             return View();
         }
 
@@ -62,7 +72,10 @@
             return PartialView("_UserTypePopupPartial");
         }
 
-
+        /// <summary>
+        /// Default error page
+        /// </summary>
+        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

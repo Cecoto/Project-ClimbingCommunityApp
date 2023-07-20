@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Web.ViewModels.User
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.ApplicationUser;
@@ -10,15 +11,18 @@
     {
         [Required]
         [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
+        [Display(Name = "First name")]
         public string FirstName { get; set; } = null!;
 
         [Required]
         [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
+        [Display(Name = "Last name")]
         public string LastName { get; set; } = null!;
 
         [Required]
         [EmailAddress]
         [StringLength(EmailMaxLength, MinimumLength = EmailMinLength)]
+        [Display(Name = "Email adress")]
         public string Email { get; set; } = null!;
 
         [Required]
@@ -33,15 +37,19 @@
         [Required]
         [Phone]
         [StringLength(PhoneNumberMaxLength, MinimumLength = PhoneNumberMinLength)]
-        [Display(Name = "Phone")]
+        [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; } = null!;
 
         [StringLength(ImageUrlMaxLength)]
         public string? ProfilePicture { get; set; }
 
+        [Display(Name = "Profile picture")]
+        public IFormFile? PhotoFile { get; set; }
+
         public string Gender { get; set; } = null!;
 
         [Range(CoachingExperienceMinValue, CoachingExperienceMaxValue)]
+        [Display(Name = "Coaching experience (years)")]
         public int CoachingExperience { get; set; }
 
 

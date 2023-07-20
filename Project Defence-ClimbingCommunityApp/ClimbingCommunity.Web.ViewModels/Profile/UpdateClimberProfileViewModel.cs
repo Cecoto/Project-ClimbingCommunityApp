@@ -31,7 +31,6 @@
         [Required]
         [Phone]
         [StringLength(PhoneNumberMaxLength, MinimumLength = PhoneNumberMinLength)]
-        [Display(Name = "Phone")]
         public string PhoneNumber { get; set; } = null!;
 
         [StringLength(ImageUrlMaxLength)]

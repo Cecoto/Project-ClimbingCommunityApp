@@ -10,7 +10,11 @@
 <p>Join us today and become a part of the Climbing Community!</p>
 
 
+@if (!User.Identity?.IsAuthenticated ?? true)
+{
 <a class="cta-button" id="join-button" >Join Now</a>
+    
+}
 
 <div id="popup-placeholder">
 </div>

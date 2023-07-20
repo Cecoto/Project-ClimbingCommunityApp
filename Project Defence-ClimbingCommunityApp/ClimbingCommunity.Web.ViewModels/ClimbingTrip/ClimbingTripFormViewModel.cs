@@ -19,6 +19,7 @@
         [StringLength(DestinationMaxLength, MinimumLength = DestinationMinLength)]
         public string Destination { get; set; } = null!;
 
+        [Display(Name = "Trip type")]
         public int TripTypeId { get; set; }
 
         public string? OrganizatorId { get; set; }
@@ -27,11 +28,13 @@
 
         [Required]
         [Range(DurationMinValue,DurationMaxValue)]
+        [Display(Name = "Duration (days)")]
         public int Duration { get; set; }
 
         [StringLength(PhotoUrlMaxLength)]
         public string? PhotoUrl { get; set; }
 
+        [Display(Name = "Photo")]
         public IFormFile? PhotoFile { get; set; }
 
         public bool IsEditModel { get; set; }
