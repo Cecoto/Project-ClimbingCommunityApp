@@ -1,5 +1,7 @@
 ﻿namespace ClimbingCommunity.Web.Infrastructure.Extensions
 {
+    using ClimbingCommunity.Common;
+    using ClimbingCommunity.Data.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +40,11 @@
                 services.AddScoped(interfaceType, implementationType);
             }
         }
-
+        /// <summary>
+        /// This method seed roles in the application
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
         public static IApplicationBuilder SeedRoles(this IApplicationBuilder app)
         {
             using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
@@ -49,24 +55,66 @@
 
             Task.Run(async () =>
             {
-                if (!roleManager.RoleExistsAsync(Climber).Result)
+                if (!roleManager.RoleExistsAsync(RoleConstants.Climber).Result)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(Climber));
+                    await roleManager.CreateAsync(new IdentityRole(RoleConstants.Climber));
                 }
 
-                if (!roleManager.RoleExistsAsync(Coach).Result)
+                if (!roleManager.RoleExistsAsync(RoleConstants.Coach).Result)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(Coach));
+                    await roleManager.CreateAsync(new IdentityRole(RoleConstants.Coach));
                 }
 
                 if (!roleManager.RoleExistsAsync(Administrator).Result)
                 {
-                    await roleManager.CreateAsync(new IdentityRole(Administrator));
+                    await roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
                 }
             })
                 .GetAwaiter()
                 .GetResult();
             return app;
         }
+
+        /// <summary>
+        /// This method create application user who is the administrator of the app.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder AddAdministrator(this IApplicationBuilder app, string email, string password)
+        {
+            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+
+            UserManager<ApplicationUser> userManager = serviceProvider.GetService<UserManager<ApplicationUser>>()!;
+
+            Task.Run(async () =>
+            {
+                ApplicationUser adminUser = await userManager.FindByNameAsync(email);
+                if (adminUser == null)
+                {
+                    adminUser = new ApplicationUser
+                    {
+                        Email = email,
+                        UserName = email,
+                        UserType = Administrator,
+                        FirstName = "Admin",
+                        LastName = ""
+
+                    };
+                }
+                await userManager.CreateAsync(adminUser, password);
+
+                await userManager.AddToRoleAsync(adminUser, Administrator);
+            })
+                .GetAwaiter()
+                .GetResult();
+
+            return app;
+
+        }
+
     }
 }

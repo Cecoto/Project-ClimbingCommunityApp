@@ -15,6 +15,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+IConfiguration configuration = builder.Configuration.GetSection("AdminSettings");
+
 builder.Services.AddDbContext<ClimbingCommunityDbContext>(options =>
     options.UseSqlServer(connectionString));
 
@@ -78,6 +80,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.SeedRoles();
+
+app.AddAdministrator(configuration["AdminEmail"], configuration["AdminPassword"]);
 
 app.MapControllerRoute(
     name: "default",

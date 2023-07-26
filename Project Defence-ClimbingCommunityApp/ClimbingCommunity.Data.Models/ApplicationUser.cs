@@ -38,7 +38,7 @@
         public string? ProfilePictureUrl { get; set; }
 
         [Required]
-        [Comment("Here we save the userRole in the application.")]
+        [Comment("Here we save the user role in the application.")]
         [MaxLength(UserRoleMaxLength)]
         public string UserType { get; set; } = null!;
 

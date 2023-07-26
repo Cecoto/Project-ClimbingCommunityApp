@@ -319,6 +319,10 @@
                         return RedirectToAction("LastThreeTrainings", "Training");
 
                     }
+                    else
+                    {
+                        return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
+                    }
                 }
             }
             ModelState.AddModelError(string.Empty, "Invalid login! Please try again.");
