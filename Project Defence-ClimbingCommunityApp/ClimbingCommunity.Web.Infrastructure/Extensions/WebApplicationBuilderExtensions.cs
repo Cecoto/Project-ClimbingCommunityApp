@@ -1,8 +1,11 @@
 ﻿namespace ClimbingCommunity.Web.Infrastructure.Extensions
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using System.Reflection;
 
+    using static Common.RoleConstants;
 
     public static class WebApplicationBuilderExtensions
     {
@@ -34,6 +37,36 @@
 
                 services.AddScoped(interfaceType, implementationType);
             }
+        }
+
+        public static IApplicationBuilder SeedRoles(this IApplicationBuilder app)
+        {
+            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+
+            RoleManager<IdentityRole> roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>()!;
+
+            Task.Run(async () =>
+            {
+                if (!roleManager.RoleExistsAsync(Climber).Result)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(Climber));
+                }
+
+                if (!roleManager.RoleExistsAsync(Coach).Result)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(Coach));
+                }
+
+                if (!roleManager.RoleExistsAsync(Administrator).Result)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(Administrator));
+                }
+            })
+                .GetAwaiter()
+                .GetResult();
+            return app;
         }
     }
 }
