@@ -39,6 +39,13 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddApplicationServices(typeof(IUserService));
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminAccess", policy =>
+    {
+        policy.RequireRole("Administrator");
+    });
+});
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -51,6 +58,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
     {
+
         options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
     });
 

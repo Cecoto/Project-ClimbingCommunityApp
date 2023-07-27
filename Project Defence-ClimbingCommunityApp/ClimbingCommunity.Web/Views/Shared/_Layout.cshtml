@@ -1,5 +1,4 @@
-﻿@using static ClimbingCommunity.Common.GeneralApplicationConstants
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +23,7 @@
                 <div class="container-fluid">
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
-                        @if (User.IsInRole("Climber"))
+                        @if (User.IsInRole(nameof(ClimbingCommunity.Common.RoleConstants.Climber)))
                         {
                             <a class="navbar-brand" asp-area="" asp-controller="ClimbingTrip" asp-action="LastThreeClimbingTrips">
                                 <img src="~/logo.png" alt="logo" class="logo" />
@@ -38,7 +37,7 @@
                             <a class="navbar-brand nav-button" asp-area="" asp-controller="ClimbingTrip" asp-action="JoinedActivites">Joined Activities</a>
 
                         }
-                        else if (User.Identity?.IsAuthenticated ?? false && User.IsInRole(nameof(Coach)))
+                        else if (User.IsInRole(nameof(ClimbingCommunity.Common.RoleConstants.Coach)))
                         {
                             <a class="navbar-brand" asp-area="" asp-controller="Training" asp-action="LastThreeTrainings">
                                 <img src="~/logo.png" alt="logo" class="logo" />
@@ -50,6 +49,31 @@
                             <a class="navbar-brand nav-button" asp-area="" asp-controller="ClimbingTrip" asp-action="All">Climbing Trips</a>
 
                             <a class="navbar-brand nav-button" asp-area="" asp-controller="Training" asp-action="MyTrainings">My Trainings</a>
+                        }
+                        else if (User.IsInRole(nameof(Administrator)))
+                        {
+                            <a class="navbar-brand" asp-area="" asp-controller="Training" asp-action="LastThreeTrainings">
+                                <img src="~/logo.png" alt="logo" class="logo" />
+                            </a>
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle" href="#" id="climberDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Climber Pages
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="climberDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="ClimbingTrip" asp-action="All">All Trips</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="ClimbingTrip" asp-action="Add">Create Trip</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="ClimbingTrip" asp-action="JoinedActivities">Joined Activities</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle" href="#" id="coachDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                    Coach Pages
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="coachDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Training" asp-action="All">All Trainings</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Training" asp-action="Add">Create Training</a>
+                                </div>
+                            </li>
                         }
                     }
 

@@ -104,10 +104,11 @@
                         LastName = ""
 
                     };
-                }
-                await userManager.CreateAsync(adminUser, password);
+                    await userManager.CreateAsync(adminUser, password);
 
-                await userManager.AddToRoleAsync(adminUser, Administrator);
+                    await userManager.AddToRoleAsync(adminUser, Administrator);
+                }
+
             })
                 .GetAwaiter()
                 .GetResult();

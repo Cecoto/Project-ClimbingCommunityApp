@@ -320,7 +320,7 @@
 
                     }
                     else
-                    {
+                    {   // TO DO: To redirect to admin panel after login 
                         return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
                     }
                 }
