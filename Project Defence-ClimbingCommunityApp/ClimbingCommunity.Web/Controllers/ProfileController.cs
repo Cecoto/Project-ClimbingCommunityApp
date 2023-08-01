@@ -72,10 +72,15 @@
         [HttpGet]
         public async Task<IActionResult> UserProfile(string id)
         {
-            
-            ApplicationUser user = await userService.GetUserByIdAsync(id);
 
-            if (user.UserType == "Climber")
+            ApplicationUser user = await userService.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                this.TempData[ErrorMessage] = "User with that Id does not exist! Please try again later or contact the administrator"!;
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+            if (User.IsInRole(nameof(Climber)))
             {
                 try
                 {
@@ -95,19 +100,28 @@
 
                     return GeneralError();
                 }
-                
+
             }
             else
             {
-                CoachProfileViewModel model = await userService.GetCoachInfoAsync(id);
-
-                model.Photos = await userService.GetPhotosForUserAsync(id);
-
-                if (GetUserId() == id)
+                try
                 {
-                    model.IsOwner = true;
+                    CoachProfileViewModel model = await userService.GetCoachInfoAsync(id);
+
+                    model.Photos = await userService.GetPhotosForUserAsync(id);
+
+                    if (GetUserId() == id)
+                    {
+                        model.IsOwner = true;
+                    }
+                    return View("CoachProfile", model);
                 }
-                return View("CoachProfile", model);
+                catch (Exception)
+                {
+
+                    return GeneralError();
+                }
+
             }
         }
 

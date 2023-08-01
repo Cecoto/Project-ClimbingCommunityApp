@@ -101,7 +101,8 @@
                         UserName = email,
                         UserType = Administrator,
                         FirstName = "Admin",
-                        LastName = ""
+                        LastName = "",
+                        ProfilePictureUrl = "/images/ProfilePictures/Admin2.webp"
 
                     };
                     await userManager.CreateAsync(adminUser, password);
