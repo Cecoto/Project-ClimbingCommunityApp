@@ -11,8 +11,15 @@
     <div class="row mt-4">
         <div class="col">
             <div class="d-flex justify-content-between">
-                <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="BecomeCoach">Become a Climber</a>
-                <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="BecomeCoach">Become a Coach</a>
+                @if (!User.IsInRole("Climber"))
+                {
+                    <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="BecomeClimber">Become a Climber</a>
+
+                }
+                @if (!User.IsInRole("Coach"))
+                {
+                    <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="BecomeCoach">Become a Coach</a>
+                }
             </div>
         </div>
     </div>

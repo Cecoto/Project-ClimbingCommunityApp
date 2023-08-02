@@ -101,6 +101,7 @@
                     {
                         model.isOrganizator = true;
                     }
+
                     if (User.IsInRole(RoleConstants.Administrator))
                     {
                         model.isOrganizator = true;

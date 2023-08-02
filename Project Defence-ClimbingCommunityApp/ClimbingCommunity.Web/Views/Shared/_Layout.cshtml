@@ -50,7 +50,7 @@
 
                             <a class="navbar-brand nav-button" asp-area="" asp-controller="Training" asp-action="MyTrainings">My Trainings</a>
                         }
-                        else if (User.IsInRole(nameof(Administrator)))
+                        else if (User.IsInRole(Administrator))
                         {
                             <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">
                                 <img src="~/logo.png" alt="logo" class="logo" />

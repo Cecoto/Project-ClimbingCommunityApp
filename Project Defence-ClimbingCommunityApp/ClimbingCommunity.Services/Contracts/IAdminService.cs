@@ -8,7 +8,8 @@
 
     public interface IAdminService
     {
-        Task<bool> BecomeClimberAsync(string adminUserId);
-        Task<bool> BecomeCoachAsync(string adminUserId);
+        Task BecomeClimberAsync(string adminUserId);
+        Task BecomeCoachAsync(string adminUserId);
+       
     }
 }

@@ -114,10 +114,12 @@
                     {
                         model.isOrganizator = true;
                     }
+
                     if (User.IsInRole(RoleConstants.Administrator))
                     {
                         model.isOrganizator = true;
                     }
+
                     else
                     {
                         model.isParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(userId, model.Id);
@@ -263,7 +265,7 @@
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData[ErrorMessage] = "You must be a climber and organize of the trip in order to edit info of the climbing trip!";
+                this.TempData[ErrorMessage] = "You must be a climber and organizator of the trip in order to edit info of the climbing trip!";
                 if (User.IsInRole(RoleConstants.Administrator))
                 {
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
@@ -326,7 +328,7 @@
             }
             if (!User.IsInRole("Climber"))
             {
-                this.TempData[ErrorMessage] = "You must be a climber and organize of the trip in order to edit info of the climbing trip!";
+                this.TempData[ErrorMessage] = "You must be a climber and organizator of the trip in order to edit info of the climbing trip!";
 
                 if (User.IsInRole(RoleConstants.Administrator))
                 {

@@ -149,6 +149,11 @@
             return await repo.GetByIdAsync<Level>(levelId) != null;
         }
 
+        public async Task<bool> IsUserExistsByIdAsync(string userId)
+        {
+            return await repo.GetByIdAsync<ApplicationUser>(userId) != null;
+        }
+
         public async Task SavePhotosToUserByIdAsync(string userId, List<string> savedPhotoPaths)
         {
             var photos = savedPhotoPaths.Select(savedPhotoPath => new Photo

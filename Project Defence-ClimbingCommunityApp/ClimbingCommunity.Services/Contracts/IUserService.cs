@@ -24,5 +24,6 @@
         Task<ICollection<PhotoViewModel>> GetPhotosForUserAsync(string userId);
         Task SavePhotosToUserByIdAsync(string userId, List<string> savedPhotoPaths);
         Task<ApplicationUser> GetUserByIdAsync(string id);
+        Task<bool> IsUserExistsByIdAsync(string userId);
     }
 }
