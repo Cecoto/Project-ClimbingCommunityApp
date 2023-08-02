@@ -118,7 +118,7 @@
 
             if (model.PhotoFile != null)
             {
-                model.ProfilePicture = await imageService.SavePictureAsync(model.PhotoFile,"ProfilePictures");
+                model.ProfilePicture = await imageService.SavePictureAsync(model.PhotoFile, "ProfilePictures");
             }
 
             if (String.IsNullOrWhiteSpace(model.ProfilePicture))
@@ -190,7 +190,7 @@
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Redirection to login page</returns>
-        
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterClimber(RegisterClimberViewModel model)
@@ -309,20 +309,21 @@
                 if (result.Succeeded)
                 {
 
-                    if (user.UserType == "Climber")
+                    if (user.UserType == RoleConstants.Climber)
                     {
                         return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
 
                     }
-                    if (user.UserType == "Coach")
+                    if (user.UserType == RoleConstants.Coach)
                     {
                         return RedirectToAction("LastThreeTrainings", "Training");
 
                     }
-                    else
-                    {   // TO DO: To redirect to admin panel after login 
-                        return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
+                    if (user.UserType == Administrator)
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
                     }
+                   
                 }
             }
             ModelState.AddModelError(string.Empty, "Invalid login! Please try again.");

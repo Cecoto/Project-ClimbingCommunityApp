@@ -5,7 +5,7 @@
 
         public const int ReleaseYear = 2023;
 
-       
+        public const string AdminAreaName = "Admin";
 
     }
 }

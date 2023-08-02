@@ -5,8 +5,9 @@
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.Profile;
 
-    using static Common.NotificationMessageConstants;
     using ClimbingCommunity.Data.Models;
+    using ClimbingCommunity.Common;
+    using static Common.NotificationMessageConstants;
 
     /// <summary>
     /// A controller where we will manage account of the user.
@@ -80,7 +81,7 @@
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
-            if (User.IsInRole(nameof(Climber)))
+            if (user.UserType== RoleConstants.Climber)
             {
                 try
                 {
@@ -102,7 +103,7 @@
                 }
 
             }
-            else
+            else if(user.UserType==RoleConstants.Coach)
             {
                 try
                 {
@@ -122,6 +123,11 @@
                     return GeneralError();
                 }
 
+            }
+            else
+            {
+                this.TempData[ErrorMessage] = "You must be an administrator to have access to that pofile!";
+                return RedirectToAction("All", "ClimbingTrip");
             }
         }
 

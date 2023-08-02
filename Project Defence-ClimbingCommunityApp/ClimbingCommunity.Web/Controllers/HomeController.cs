@@ -10,15 +10,15 @@
     /// </summary>
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
 
         /// <summary>
         /// Home ctor with logger
         /// </summary>
         /// <param name="logger"></param>
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> _logger)
         {
-            _logger = logger;
+            logger = _logger;
         }
 
         /// <summary>
