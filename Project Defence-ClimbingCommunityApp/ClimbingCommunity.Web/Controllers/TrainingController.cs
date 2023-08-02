@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Web.Controllers
 {
+    using ClimbingCommunity.Common;
     using ClimbingCommunity.Services;
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
@@ -29,9 +30,14 @@
         [HttpGet]
         public async Task<IActionResult> LastThreeTrainings()
         {
-            if (!User.IsInRole("Coach"))
+            if (!User.IsInRole(RoleConstants.Coach))
             {
                 this.TempData[ErrorMessage] = "You must be a coach to have access to that page!";
+
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
             }
 
@@ -43,6 +49,10 @@
                 foreach (TrainingViewModel model in models)
                 {
                     if (userId == model.OrganizatorId)
+                    {
+                        model.isOrganizator = true;
+                    }
+                    if (User.IsInRole(RoleConstants.Administrator))
                     {
                         model.isOrganizator = true;
                     }
@@ -91,9 +101,13 @@
                     {
                         model.isOrganizator = true;
                     }
+                    if (User.IsInRole(RoleConstants.Administrator))
+                    {
+                        model.isOrganizator = true;
+                    }
                     else
                     {
-                        if (User.IsInRole("Climber"))
+                        if (User.IsInRole(RoleConstants.Climber))
                         {
                             model.isParticipant = await trainingService.IsUserParticipateInTrainingByIdAsync(userId, model.Id);
 
@@ -120,17 +134,21 @@
         [HttpGet]
         public async Task<IActionResult> MyTrainings()
         {
-            if (!User.IsInRole("Coach"))
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                this.TempData[ErrorMessage] = "You must be logged in to add new training!";
+
+                return RedirectToAction("Login", "User");
+            }
+            if (!User.IsInRole(RoleConstants.Coach))
             {
                 this.TempData[ErrorMessage] = "You must be a coach to have trainings!";
 
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
-            }
-            if (!User.Identity?.IsAuthenticated ?? true)
-            {
-                this.TempData[ErrorMessage] = "You must be a coach to add new training!";
-
-                return RedirectToAction("Login", "User");
             }
 
             try
@@ -154,10 +172,14 @@
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            if (!User.IsInRole("Coach"))
+            if (!User.IsInRole(RoleConstants.Coach))
             {
                 this.TempData[ErrorMessage] = "You must be a coach to add new training!";
 
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
             }
             try
@@ -185,9 +207,14 @@
         [HttpPost]
         public async Task<IActionResult> Add(TrainingFormViewModel model)
         {
-            if (!User.IsInRole("Coach"))
+            if (!User.IsInRole(RoleConstants.Coach))
             {
                 this.TempData[ErrorMessage] = "You must be a coach to add new trainings!";
+
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
 
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
             }
@@ -207,7 +234,7 @@
 
                 this.TempData[SuccessMessage] = "Training was added successfully!";
 
-                return RedirectToAction(nameof(LastThreeTrainings));
+                return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
@@ -224,9 +251,14 @@
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            if (!User.IsInRole("Coach"))
+            if (!User.IsInRole(RoleConstants.Coach))
             {
                 this.TempData[ErrorMessage] = "You must be a coach to edit trainings!";
+
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
 
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
             }
@@ -240,6 +272,10 @@
             }
             bool isUserOrganizator = await trainingService.IsUserOrganizatorOfTrainingByIdAsync(GetUserId()!, id);
 
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                isUserOrganizator = true;
+            }
             if (!isUserOrganizator)
             {
                 this.TempData[ErrorMessage] = "You must be an coach of the training in order to edit training info!";
@@ -276,10 +312,14 @@
                 return View(model);
 
             }
-            if (!User.IsInRole("Coach"))
+            if (!User.IsInRole(RoleConstants.Coach))
             {
                 this.TempData[ErrorMessage] = "You must be a coach to edit trainings!";
 
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
             }
 
@@ -292,6 +332,11 @@
             }
             bool isUserOrganizator = await trainingService.IsUserOrganizatorOfTrainingByIdAsync(GetUserId()!, id);
 
+
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                isUserOrganizator = true;
+            }
             if (!isUserOrganizator)
             {
                 this.TempData[ErrorMessage] = "You must be an coach of the training in order to edit training info!";
@@ -304,7 +349,7 @@
 
                 this.TempData[SuccessMessage] = "Training was successfully edited!";
 
-                return RedirectToAction(nameof(LastThreeTrainings));
+                return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
@@ -324,9 +369,14 @@
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            if (!User.IsInRole("Coach"))
+            if (!User.IsInRole(RoleConstants.Coach))
             {
                 this.TempData[ErrorMessage] = "You must be a coach to delete trainings!";
+
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
 
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
             }
@@ -340,6 +390,10 @@
             }
             bool isUserOrganizator = await trainingService.IsUserOrganizatorOfTrainingByIdAsync(GetUserId()!, id);
 
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                isUserOrganizator = true;
+            }
             if (!isUserOrganizator)
             {
                 this.TempData[ErrorMessage] = "You must be an coach of the training in order to delete it!";
@@ -350,7 +404,7 @@
             {
                 await trainingService.DeleteTrainingByIdAsync(id);
 
-                return RedirectToAction(nameof(LastThreeTrainings));
+                return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {

@@ -7,6 +7,7 @@
     using ClimbingCommunity.Web.ViewModels.Training;
 
     using static Common.NotificationMessageConstants;
+    using ClimbingCommunity.Common;
 
     /// <summary>
     /// Controller with all action with climbing trips
@@ -42,9 +43,13 @@
         [HttpGet]
         public async Task<IActionResult> LastThreeClimbingTrips()
         {
-            if (!User.IsInRole("Climber"))
+            if (!User.IsInRole(RoleConstants.Climber))
             {
                 this.TempData[ErrorMessage] = "You must be a climber to have access to that page!";
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("LastThreeTrainings", "Training");
             }
             try
@@ -57,6 +62,10 @@
                 foreach (ClimbingTripViewModel model in models)
                 {
                     if (userId == model.OrganizatorId)
+                    {
+                        model.isOrganizator = true;
+                    }
+                    if (User.IsInRole(RoleConstants.Administrator))
                     {
                         model.isOrganizator = true;
                     }
@@ -97,12 +106,15 @@
                     models = await climbingTripService.GetAllClimbingTripsAsync();
 
                 }
-
                 string userId = GetUserId()!;
 
                 foreach (ClimbingTripViewModel model in models)
                 {
                     if (userId == model.OrganizatorId)
+                    {
+                        model.isOrganizator = true;
+                    }
+                    if (User.IsInRole(RoleConstants.Administrator))
                     {
                         model.isOrganizator = true;
                     }
@@ -129,7 +141,7 @@
         [HttpGet]
         public async Task<IActionResult> JoinedActivites()
         {
-            if (!User.IsInRole("Climber"))
+            if (!User.IsInRole(RoleConstants.Climber))
             {
                 this.TempData[ErrorMessage] = "You must be a climber to see your joined activities";
 
@@ -167,10 +179,14 @@
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            if (!User.IsInRole("Climber"))
+            if (!User.IsInRole(RoleConstants.Climber))
             {
                 this.TempData[ErrorMessage] = "You must be a climber to add new climbing trips!";
 
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("LastThreeTrainings", "Training");
             }
             try
@@ -200,6 +216,11 @@
             if (!User.IsInRole("Climber"))
             {
                 this.TempData[ErrorMessage] = "You must be a climber to add new climbing trips!";
+
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("LastThreeTrainings", "Training");
             }
 
@@ -222,7 +243,7 @@
 
                 this.TempData[SuccessMessage] = "Climbing trip was added successfully!";
 
-                return RedirectToAction(nameof(LastThreeClimbingTrips));
+                return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
@@ -243,6 +264,10 @@
             if (!User.IsInRole("Climber"))
             {
                 this.TempData[ErrorMessage] = "You must be a climber and organize of the trip in order to edit info of the climbing trip!";
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("Index", "Home");
             }
 
@@ -257,6 +282,10 @@
 
             bool isOrganizerOfTrip = await climbingTripService.isUserOrganizatorOfTripByIdAsync(GetUserId()!, id);
 
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                isOrganizerOfTrip = true;
+            }
             if (!isOrganizerOfTrip)
             {
                 this.TempData[ErrorMessage] = "You must be an organizator of the trip in order to edit climbing trip info!";
@@ -298,10 +327,16 @@
             if (!User.IsInRole("Climber"))
             {
                 this.TempData[ErrorMessage] = "You must be a climber and organize of the trip in order to edit info of the climbing trip!";
+
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("Index", "Home");
             }
 
             bool tripExists = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
+
 
             if (!tripExists)
             {
@@ -312,6 +347,10 @@
 
             bool isOrganizerOfTrip = await climbingTripService.isUserOrganizatorOfTripByIdAsync(GetUserId()!, id);
 
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                isOrganizerOfTrip = true;
+            }
             if (!isOrganizerOfTrip)
             {
                 this.TempData[ErrorMessage] = "You must be an organizator of the trip in order to edit climbing trip info!";
@@ -350,12 +389,20 @@
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
-            if (!User.IsInRole("Climber"))
+            if (!User.IsInRole(RoleConstants.Climber))
             {
                 this.TempData[ErrorMessage] = "You must be climber in order to delete climbing trips!";
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
                 return RedirectToAction("MyProfile", "Profile");
             }
             bool isClimberOrganizator = await climbingTripService.isUserOrganizatorOfTripByIdAsync(GetUserId()!, id);
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                isClimberOrganizator = true;
+            }
             if (!isClimberOrganizator)
             {
                 this.TempData[ErrorMessage] = "You must be the the organizator of the trip you want to edit!";
@@ -365,8 +412,6 @@
             try
             {
                 await climbingTripService.DeleteTripByIdAsync(id);
-
-                this.TempData[SuccessMessage] = "Climbing trip was successfully deleted!";
 
                 return RedirectToAction(nameof(All));
             }

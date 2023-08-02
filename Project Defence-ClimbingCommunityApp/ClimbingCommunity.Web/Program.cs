@@ -51,14 +51,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/User/Login";
     options.LogoutPath = "/User/Logout";
-
-
+    options.AccessDeniedPath = "/Home/Error/401"; // need to create 401 page!!
 });
 
-builder.Services.AddControllersWithViews()
+builder.Services
+    .AddControllersWithViews()
     .AddMvcOptions(options =>
     {
-
         options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
     });
 
