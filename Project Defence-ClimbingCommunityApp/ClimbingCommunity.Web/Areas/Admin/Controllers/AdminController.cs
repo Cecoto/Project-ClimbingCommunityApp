@@ -2,6 +2,7 @@
 {
     using ClimbingCommunity.Common;
     using ClimbingCommunity.Services.Contracts;
+    using ClimbingCommunity.Web.ViewModels.AdminArea;
     using Microsoft.AspNetCore.Mvc;
 
     using static Common.NotificationMessageConstants;
@@ -15,6 +16,7 @@
             adminService = _adminService;
             userService = _userService;
         }
+        [HttpPost]
         public async Task<IActionResult> BecomeCoach()
         {
             string userId = GetUserId()!;
@@ -46,6 +48,7 @@
             }
         }
 
+        [HttpPost]
         public async Task<IActionResult> BecomeClimber()
         {
             string userId = GetUserId()!;
@@ -74,6 +77,14 @@
             {
                 return GeneralError();
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AllUsers()
+        {
+            IEnumerable<UserViewModel> models = await userService.GetAllUsersAsync();
+
+
+            return View(models);
         }
     }
 }

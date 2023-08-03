@@ -1,6 +1,7 @@
 ﻿namespace ClimbingCommunity.Services.Contracts
 {
     using ClimbingCommunity.Data.Models;
+    using ClimbingCommunity.Web.ViewModels.AdminArea;
     using ClimbingCommunity.Web.ViewModels.Profile;
     using ClimbingCommunity.Web.ViewModels.User.Climber;
 
@@ -25,5 +26,6 @@
         Task SavePhotosToUserByIdAsync(string userId, List<string> savedPhotoPaths);
         Task<ApplicationUser> GetUserByIdAsync(string id);
         Task<bool> IsUserExistsByIdAsync(string userId);
+        Task<IEnumerable<UserViewModel>> GetAllUsersAsync();
     }
 }

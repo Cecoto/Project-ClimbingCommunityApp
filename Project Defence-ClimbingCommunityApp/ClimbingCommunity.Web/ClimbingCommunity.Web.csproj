@@ -29,8 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Admin\" />
     <Folder Include="wwwroot\images\ClimbingTrips\" />
     <Folder Include="wwwroot\images\Trainings\" />
     <Folder Include="wwwroot\images\Photos\" />
