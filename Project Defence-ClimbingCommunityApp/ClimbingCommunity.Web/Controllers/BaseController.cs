@@ -1,11 +1,14 @@
 ﻿namespace ClimbingCommunity.Web.Controllers
 {
     using System.Security.Claims;
-
+    using ClimbingCommunity.Common;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
+
     using static Common.NotificationMessageConstants;
+
+    using static Common.GeneralApplicationConstants;
 
 
     /// <summary>
@@ -30,28 +33,32 @@
         {
             this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administrator.";
 
-            if (User.IsInRole("Climber"))
+            if (User.IsInRole(RoleConstants.Climber))
             {
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
 
             }
-            if (User.IsInRole("Coach"))
+            if (User.IsInRole(RoleConstants.Coach))
             {
                 return RedirectToAction("LastThreeTrainings", "Training");
 
             }
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
+            }
             return RedirectToAction("Index", "Home");
         }
 
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            base.OnActionExecuting(context);
+        //public override void OnActionExecuting(ActionExecutingContext context)
+        //{
+        //    base.OnActionExecuting(context);
 
-            if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Administrator"))
-            {
-                ViewData["Layout"] = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-            }
-        }
+        //    if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Administrator"))
+        //    {
+        //        ViewData["Layout"] = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+        //    }
+        //}
 
     }
 }

@@ -1,0 +1,55 @@
+﻿@model AdminAllActivitiesViewModel
+
+<h1>All Activities</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Created On</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var climbingTrip in Model.ClimbingTrips)
+            {
+                <tr>
+                    <td>@climbingTrip.CreatedOn</td>
+                    <td>@climbingTrip.Title</td>
+                    <td>@climbingTrip.Location</td>
+                    <td>
+                        @if (climbingTrip.IsActive ?? true)
+                        {
+                            <a href="@Url.Action("UpdateActivityStatus", new { id = climbingTrip.Id, isActive = false })" class="btn btn-danger btn-sm">Delete</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("UpdateActivityStatus", new { id = climbingTrip.Id, isActive = true })" class="btn btn-success btn-sm">Activate</a>
+                        }
+                    </td>
+                </tr>
+            }
+
+            @foreach (var training in Model.Trainings)
+            {
+                <tr>
+                    <td>@training.CreatedOn</td>
+                    <td>@training.Title</td>
+                    <td>@training.Location</td>
+                    <td>
+                        @if (training.IsActive ?? true)
+                        {
+                            <a href="@Url.Action("UpdateActivityStatus", new { id = training.Id, isActive = false })" class="btn btn-danger btn-sm">Deactivate</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("UpdateActivityStatus", new { id = training.Id, isActive = true })" class="btn btn-success btn-sm">Reactivate</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -11,10 +11,19 @@
     {
         private readonly IAdminService adminService;
         private readonly IUserService userService;
-        public AdminController(IAdminService _adminService, IUserService _userService)
+        private readonly IClimbingTripService climbingTripService;
+        private readonly ITrainingService trainingService;
+
+        public AdminController(
+            IAdminService _adminService,
+            IUserService _userService,
+            IClimbingTripService _climbingTripService,
+            ITrainingService _trainingService)
         {
             adminService = _adminService;
             userService = _userService;
+            climbingTripService = _climbingTripService;
+            trainingService = _trainingService;
         }
         [HttpPost]
         public async Task<IActionResult> BecomeCoach()
@@ -81,10 +90,38 @@
         [HttpGet]
         public async Task<IActionResult> AllUsers()
         {
-            IEnumerable<UserViewModel> models = await userService.GetAllUsersAsync();
 
+            try
+            {
+                IEnumerable<UserViewModel> models = await userService.GetAllUsersAsync();
 
-            return View(models);
+                return View(models);
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+
         }
+        [HttpGet]
+        public async Task<IActionResult> AllActivities()
+        {
+            try
+            {
+                AdminAllActivitiesViewModel allActivities = new AdminAllActivitiesViewModel()
+                {
+                    ClimbingTrips = await climbingTripService.GetAllTripsForAdminAsync(),
+                    Trainings = await trainingService.GetAllTrainingsForAdminAsync()
+                };
+                return View(allActivities);
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+        }
+
     }
 }

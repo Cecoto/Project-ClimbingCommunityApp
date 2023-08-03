@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Services.Contracts
 {
+    using ClimbingCommunity.Web.ViewModels.AdminArea;
     using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -35,5 +36,6 @@
         Task<IEnumerable<JoinedClimbingTripViewModel>> GetAllJoinedClimbingTripsByUserIdAsync(string userId);
 
         Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingByStringTripsAsync(string text);
+        Task<IEnumerable<AdminActivityViewModel>> GetAllTripsForAdminAsync();
     }
 }

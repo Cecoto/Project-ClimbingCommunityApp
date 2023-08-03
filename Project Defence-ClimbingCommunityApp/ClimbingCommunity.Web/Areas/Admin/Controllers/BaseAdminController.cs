@@ -6,6 +6,7 @@
     using static Common.GeneralApplicationConstants;
     using static Common.RoleConstants;
     using static Common.NotificationMessageConstants;
+    using ClimbingCommunity.Common;
 
     [Area(AdminAreaName)]
     [Authorize(Roles = Administrator)]
@@ -20,15 +21,19 @@
         {
             this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administrator.";
 
-            if (User.IsInRole("Climber"))
+            if (User.IsInRole(RoleConstants.Climber))
             {
                 return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
 
             }
-            if (User.IsInRole("Coach"))
+            if (User.IsInRole(RoleConstants.Coach))
             {
                 return RedirectToAction("LastThreeTrainings", "Training");
 
+            }
+            if (User.IsInRole(Administrator))
+            {
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
             }
             return RedirectToAction("Index", "Home");
         }

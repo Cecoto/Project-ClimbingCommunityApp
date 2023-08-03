@@ -2,6 +2,7 @@
 {
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
+    using ClimbingCommunity.Web.ViewModels.AdminArea;
     using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
     using ClimbingCommunity.Web.ViewModels.Training;
     using Microsoft.EntityFrameworkCore;
@@ -153,6 +154,21 @@
                     Organizator = t.Coach,
                     Price = t.Price
                 }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<AdminActivityViewModel>> GetAllTrainingsForAdminAsync()
+        {
+            return await repo.All<Training>()
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new AdminActivityViewModel()
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    CreatedOn = ct.CreatedOn.ToString("yyyy-MM-dd"),
+                    IsActive = ct.isActive,
+                    Location = ct.Location
+                })
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<TrainingViewModel>> GetLastThreeTrainingsAsync()

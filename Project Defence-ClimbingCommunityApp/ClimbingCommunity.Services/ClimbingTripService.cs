@@ -2,6 +2,7 @@
 {
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
+    using ClimbingCommunity.Web.ViewModels.AdminArea;
     using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -143,6 +144,21 @@
                       Organizator = ct.Organizator
                   }).ToListAsync();
 
+        }
+
+        public async Task<IEnumerable<AdminActivityViewModel>> GetAllTripsForAdminAsync()
+        {
+            return await repo.AllReadonly<ClimbingTrip>()
+                .OrderByDescending (ct => ct.CreatedOn)
+                .Select(ct => new AdminActivityViewModel()
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    CreatedOn = ct.CreatedOn.ToString("yyyy-MM-dd"),
+                    IsActive = ct.IsActive,
+                    Location = ct.Destination
+                })
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<TripTypeViewModel>> GetAllTripTypesAsync()

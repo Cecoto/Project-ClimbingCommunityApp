@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using ClimbingCommunity.Web.ViewModels.AdminArea;
     using ClimbingCommunity.Web.ViewModels.Training;
 
     public interface ITrainingService
@@ -23,5 +23,6 @@
         Task JoinTrainingAsync(string trainingId, string userId);
         Task LeaveTrainingAsync(string trainingId, string userId);
         Task<IEnumerable<TrainingViewModel>> GetAllTrainingsByStringAsync(string searchString);
+        Task<IEnumerable<AdminActivityViewModel>> GetAllTrainingsForAdminAsync();
     }
 }
