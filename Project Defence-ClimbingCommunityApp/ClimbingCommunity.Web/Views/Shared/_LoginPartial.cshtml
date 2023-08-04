@@ -6,11 +6,19 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-            var userProfilePicture = @UserManager.GetUserAsync(User).Result.ProfilePictureUrl;
-            var userFullName = $"{@UserManager.GetUserAsync(User).Result.FirstName} {@UserManager.GetUserAsync(User).Result.LastName}";
-        
+        var userProfilePicture = @UserManager.GetUserAsync(User).Result.ProfilePictureUrl;
+        var userFullName = $"{@UserManager.GetUserAsync(User).Result.FirstName} {@UserManager.GetUserAsync(User).Result.LastName}";
+
         <li class="nav-item">
-            <a class="nav-link text-dark green nav-button" asp-area="" asp-controller="Profile" asp-action="MyProfile"><img width="30" height="30" src="@userProfilePicture"> Hello, @userFullName</a>
+            @if (User.IsInRole(Administrator))
+            {
+                <a class="nav-link text-dark green nav-button" asp-area="Admin" asp-controller="Home" asp-action="Index"><img width="30" height="30" src="@userProfilePicture"> Hello, @userFullName</a>
+            }
+            else
+            {
+                <a class="nav-link text-dark green nav-button" asp-area="" asp-controller="Profile" asp-action="MyProfile"><img width="30" height="30" src="@userProfilePicture"> Hello, @userFullName</a>
+
+            }
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

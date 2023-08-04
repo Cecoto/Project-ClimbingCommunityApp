@@ -2,6 +2,7 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -29,6 +30,17 @@
                 <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="AllUsers">All Users</a>
                 <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="AllActivities">All Activities</a>
             </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <form asp-action="CreateRole" method="post">
+                <div class="mb-3">
+                    <label for="roleName" class="form-label">Role</label>
+                    <input type="text" class="form-control" id="roleName" name="role" placeholder="New Role (Moderator)" >
+                </div>
+                <button asp-area="Admin" asp-controller="Admin" asp-action="CreateRole" class="cta-button">Create Role</button>
+            </form>
         </div>
     </div>
 </div>

@@ -32,14 +32,13 @@
         /// <param name="_roleManager"></param>
         /// <param name="_userService"></param>
         /// <param name="_userManager"></param>
+        /// <param name="_imageService"></param>
         public UserController(
-
             SignInManager<ApplicationUser> _signInManager,
             RoleManager<IdentityRole> _roleManager,
             IUserService _userService,
             UserManager<ApplicationUser> _userManager,
             IImageService _imageService)
-
         {
             userManager = _userManager;
             signInManager = _signInManager;
@@ -72,9 +71,6 @@
         /// </summary>
         /// <returns></returns>
         /// 
-
-        [AllowAnonymous]
-        //TO DO: Only will add this method to administratorController where only admin is allow to manage roles
         public async Task<IActionResult> CreateRoles()
         {
             await roleManager.CreateAsync(new IdentityRole(Common.RoleConstants.Climber));

@@ -7,23 +7,29 @@
 
     using static Common.NotificationMessageConstants;
     using static Common.GeneralApplicationConstants;
+    using Microsoft.AspNetCore.Identity;
+
     public class AdminController : BaseAdminController
     {
         private readonly IAdminService adminService;
         private readonly IUserService userService;
         private readonly IClimbingTripService climbingTripService;
         private readonly ITrainingService trainingService;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public AdminController(
             IAdminService _adminService,
             IUserService _userService,
             IClimbingTripService _climbingTripService,
-            ITrainingService _trainingService)
+            ITrainingService _trainingService,
+            RoleManager<IdentityRole> _roleManager)
         {
             adminService = _adminService;
             userService = _userService;
             climbingTripService = _climbingTripService;
             trainingService = _trainingService;
+            roleManager = _roleManager;
+
         }
         [HttpPost]
         public async Task<IActionResult> BecomeCoach()
@@ -152,11 +158,45 @@
             }
             catch (Exception)
             {
-
                 return GeneralError();
             }
         }
+        /// <summary>
+        /// Methods that creates roles
+        /// </summary>
+        /// <returns></returns>
+        /// 
 
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(string role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                this.TempData[ErrorMessage] = "Role name cannot be empty!";
+
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName});
+            }
+
+            if (await roleManager.RoleExistsAsync(role))
+            {
+                TempData[ErrorMessage] = "Role already exists.";
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
+            }
+
+            try
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+
+                this.TempData[SuccessMessage] = $"Succesfully created role - {role}!";
+
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
+
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
 
     }
 }
