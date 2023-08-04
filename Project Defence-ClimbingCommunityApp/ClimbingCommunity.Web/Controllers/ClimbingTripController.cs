@@ -5,9 +5,10 @@
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.ClimbingTrip;
     using ClimbingCommunity.Web.ViewModels.Training;
+    using ClimbingCommunity.Common; 
 
     using static Common.NotificationMessageConstants;
-    using ClimbingCommunity.Common;
+    using static Common.GeneralApplicationConstants;
 
     /// <summary>
     /// Controller with all action with climbing trips
@@ -415,6 +416,12 @@
             {
                 await climbingTripService.DeleteTripByIdAsync(id);
 
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                    this.TempData[SuccessMessage] = "Succesfully deleted that activity from the application!";
+
+                    return RedirectToAction("AllActivities", "Admin", new { area = AdminAreaName });
+                }
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)

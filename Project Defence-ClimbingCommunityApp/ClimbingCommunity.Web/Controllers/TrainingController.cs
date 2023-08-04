@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using static Common.NotificationMessageConstants;
+    using static Common.GeneralApplicationConstants;
     /// <summary>
     /// Controller for Training entity
     /// </summary>
@@ -404,6 +405,13 @@
             try
             {
                 await trainingService.DeleteTrainingByIdAsync(id);
+
+                if (User.IsInRole(RoleConstants.Administrator))
+                {
+                this.TempData[SuccessMessage] = "Succesfully deleted that activity from the application!";
+
+                    return RedirectToAction("AllActivities", "Admin", new {area=AdminAreaName});
+                }
 
                 return RedirectToAction(nameof(All));
             }

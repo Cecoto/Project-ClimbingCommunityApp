@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using static Common.NotificationMessageConstants;
-
+    using static Common.GeneralApplicationConstants;
     public class AdminController : BaseAdminController
     {
         private readonly IAdminService adminService;
@@ -122,6 +122,41 @@
                 return GeneralError();
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> ActivateTraining(string id)
+        {
+            try
+            {
+                await adminService.ActivateTrainingByIdAsync(id);
+
+                this.TempData[SuccessMessage] = "Succesfully reactivted that activity in the application!";
+
+                return RedirectToAction("AllActivities", "Admin", new { area = AdminAreaName });
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> ActivateClimbingTrip(string id)
+        {
+            try
+            {
+                await adminService.ActiveteClimbingTripByIdAsync(id);
+
+                this.TempData[SuccessMessage] = "Succesfully reactivted that activity in the application!";
+
+                return RedirectToAction("AllActivities", "Admin", new { area = AdminAreaName });
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
+        }
+
 
     }
 }

@@ -10,6 +10,7 @@
                 <th>Title</th>
                 <th>Location</th>
                 <th>Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -22,11 +23,26 @@
                     <td>
                         @if (climbingTrip.IsActive ?? true)
                         {
-                            <a href="@Url.Action("UpdateActivityStatus", new { id = climbingTrip.Id, isActive = false })" class="btn btn-danger btn-sm">Delete</a>
+                            <text>Active</text>
                         }
                         else
                         {
-                            <a href="@Url.Action("UpdateActivityStatus", new { id = climbingTrip.Id, isActive = true })" class="btn btn-success btn-sm">Activate</a>
+                            <text>Not Active</text>
+                        }
+                    </td>
+                    <td>
+                        @if (climbingTrip.IsActive ?? true)
+                        {
+                            <form method="post">
+                                <button asp-area="" asp-controller="ClimbingTrip" asp-action="Delete" asp-route-id="@climbingTrip.Id" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post">
+
+                                <button asp-area="Admin" asp-controller="Admin" asp-action="ActivateClimbingTrip" asp-route-id="@climbingTrip.Id" class="btn btn-success btn-sm">Activate</button>
+                            </form>
                         }
                     </td>
                 </tr>
@@ -41,11 +57,26 @@
                     <td>
                         @if (training.IsActive ?? true)
                         {
-                            <a href="@Url.Action("UpdateActivityStatus", new { id = training.Id, isActive = false })" class="btn btn-danger btn-sm">Deactivate</a>
+                            <text>Active</text>
                         }
                         else
                         {
-                            <a href="@Url.Action("UpdateActivityStatus", new { id = training.Id, isActive = true })" class="btn btn-success btn-sm">Reactivate</a>
+                            <text>Not Active</text>
+                        }
+                    </td>
+                    <td>
+                        @if (training.IsActive ?? true)
+                        {
+                            <form method="post">
+                                <button asp-area="" asp-controller="Training" asp-action="Delete" asp-route-id="@training.Id" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post">
+
+                            <button asp-area="Admin" asp-controller="Admin" asp-action="ActivateTraining" asp-route-id="@training.Id" class="btn btn-success btn-sm">Activate</button>
+                            </form>
                         }
                     </td>
                 </tr>
@@ -53,3 +84,7 @@
         </tbody>
     </table>
 </div>
+@section Scripts {
+    <script src="~/lib/jquery/"></script>
+    <script src="~/js/OnDeleteAjax.js"></script>
+}
