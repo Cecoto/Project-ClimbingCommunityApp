@@ -28,17 +28,24 @@
 
         public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
         {
-           return await repo.All<ApplicationUser>()
-                .Where(u=>u.UserType != RoleConstants.Administrator)
-                .Select(user => new UserViewModel
-                {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Age = user.Age,
-                    Role = user.UserType
-                })
+            return await repo.All<ApplicationUser>()
+                 .Where(u => u.UserType != RoleConstants.Administrator)
+                 .Select(user => new UserViewModel
+                 {
+                     Id = user.Id,
+                     FirstName = user.FirstName,
+                     LastName = user.LastName,
+                     Email = user.Email,
+                     Age = user.Age,
+                     Role = user.UserType
+                 })
+                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetAllUsersEmailsAsync()
+        {
+            return await repo.All<ApplicationUser>()
+                .Select(user => user.Email)
                 .ToListAsync();
         }
 

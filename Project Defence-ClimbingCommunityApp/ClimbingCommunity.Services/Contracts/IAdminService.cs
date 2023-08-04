@@ -12,6 +12,5 @@
         Task ActiveteClimbingTripByIdAsync(string id);
         Task BecomeClimberAsync(string adminUserId);
         Task BecomeCoachAsync(string adminUserId);
-       
     }
 }

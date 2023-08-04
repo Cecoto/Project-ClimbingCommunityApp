@@ -50,15 +50,6 @@
             return RedirectToAction("Index", "Home");
         }
 
-        //public override void OnActionExecuting(ActionExecutingContext context)
-        //{
-        //    base.OnActionExecuting(context);
-
-        //    if (User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Administrator"))
-        //    {
-        //        ViewData["Layout"] = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-        //    }
-        //}
 
     }
 }

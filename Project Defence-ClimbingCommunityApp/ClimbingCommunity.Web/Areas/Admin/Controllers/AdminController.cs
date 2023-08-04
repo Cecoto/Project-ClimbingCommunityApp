@@ -8,6 +8,7 @@
     using static Common.NotificationMessageConstants;
     using static Common.GeneralApplicationConstants;
     using Microsoft.AspNetCore.Identity;
+    using ClimbingCommunity.Data.Models;
 
     public class AdminController : BaseAdminController
     {
@@ -16,19 +17,22 @@
         private readonly IClimbingTripService climbingTripService;
         private readonly ITrainingService trainingService;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public AdminController(
             IAdminService _adminService,
             IUserService _userService,
             IClimbingTripService _climbingTripService,
             ITrainingService _trainingService,
-            RoleManager<IdentityRole> _roleManager)
+            RoleManager<IdentityRole> _roleManager,
+            UserManager<ApplicationUser> _userManager)
         {
             adminService = _adminService;
             userService = _userService;
             climbingTripService = _climbingTripService;
             trainingService = _trainingService;
             roleManager = _roleManager;
+            userManager = _userManager;
 
         }
         [HttpPost]
@@ -174,7 +178,7 @@
             {
                 this.TempData[ErrorMessage] = "Role name cannot be empty!";
 
-                return RedirectToAction("Index", "Home", new { area = AdminAreaName});
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
             }
 
             if (await roleManager.RoleExistsAsync(role))
@@ -198,5 +202,40 @@
             }
         }
 
+        /// <summary>
+        /// Method that will manualy set to concrete user a role.Will be in the administratorController.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> AddUserToRoles(string email, string role)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                this.TempData[ErrorMessage] = "User with selected email does not exists!";
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
+            }
+
+            bool isUserInRole = await userManager.IsInRoleAsync(user, role);
+            if (isUserInRole)
+            {
+                this.TempData[ErrorMessage] = "User is already in that role!";
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
+            }
+            try
+            {
+                await userManager.AddToRoleAsync(user, role);
+
+                this.TempData[SuccessMessage] = $"Successfully added user to role - {role}";
+
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
+
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
     }
 }

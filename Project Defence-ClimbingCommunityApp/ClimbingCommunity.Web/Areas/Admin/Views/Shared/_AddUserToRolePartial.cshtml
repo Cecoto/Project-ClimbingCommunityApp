@@ -1,0 +1,27 @@
+﻿@model UsersRolesViewModel
+
+<form method="post">
+    <div class="form-group">
+        <label for="userEmail">User Email:</label>
+        <select class="form-control" id="userEmail" name="email" required>
+            <option value="">Select User Email</option>
+            @foreach (var userEmail in Model.UsersEmails)
+            {
+                <option value="@userEmail">@userEmail</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="userRole">Role:</label>
+        <select class="form-control" id="userRole" name="role" required>
+            <option value="">Select Role</option>
+            @foreach (var roleName in Model.RoleNames)
+            {
+                <option value="@roleName">@roleName</option>
+            }
+        </select>
+    </div>
+
+    <button asp-area="Admin" asp-controller="Admin" asp-action="AddUserToRoles" class="cta-button">Add Role to User</button>
+</form>

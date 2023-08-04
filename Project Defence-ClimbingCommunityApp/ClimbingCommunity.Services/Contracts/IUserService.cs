@@ -27,5 +27,6 @@
         Task<ApplicationUser> GetUserByIdAsync(string id);
         Task<bool> IsUserExistsByIdAsync(string userId);
         Task<IEnumerable<UserViewModel>> GetAllUsersAsync();
+        Task<IEnumerable<string>> GetAllUsersEmailsAsync();
     }
 }

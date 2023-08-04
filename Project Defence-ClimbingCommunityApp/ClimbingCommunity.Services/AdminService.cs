@@ -5,9 +5,6 @@
     using ClimbingCommunity.Services.Contracts;
     using Microsoft.AspNetCore.Identity;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using WebShopDemo.Core.Data.Common;
 
@@ -58,5 +55,6 @@
             await userManager.AddToRoleAsync(adminUser, RoleConstants.Coach);
         }
 
+      
     }
 }

@@ -47,40 +47,6 @@
             imageService = _imageService;
         }
         /// <summary>
-        /// Method that will manualy set to concrete user a role.Will be in the administratorController.
-        /// </summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        public async Task<IActionResult> AddUsersToRoles()
-        {
-            string email1 = "pesho@abv.bg";
-            string email2 = "ceco97@asd.bg";
-
-            var pesho = await userManager.FindByEmailAsync(email1);
-
-            var user2 = await userManager.FindByEmailAsync(email2);
-
-            await userManager.AddToRoleAsync(pesho, RoleConstants.Coach);
-            await userManager.AddToRoleAsync(user2, RoleConstants.Climber);
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        /// <summary>
-        /// Methods that creates roles
-        /// </summary>
-        /// <returns></returns>
-        /// 
-        public async Task<IActionResult> CreateRoles()
-        {
-            await roleManager.CreateAsync(new IdentityRole(Common.RoleConstants.Climber));
-            await roleManager.CreateAsync(new IdentityRole(Common.RoleConstants.Coach));
-            await roleManager.CreateAsync(new IdentityRole(Administrator));
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        /// <summary>
         /// Method for loading the form for register of a coach.
         /// </summary>
         /// <returns></returns>
