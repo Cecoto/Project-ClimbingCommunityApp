@@ -14,6 +14,7 @@
         public string Gender { get; set; } = null!; 
         public int CoachingExperience { get; set; }
         public string PhoneNumber { get; set; } = null!;
+        public int Age { get; set; }
         public ICollection<PhotoViewModel> Photos { get; set; }
         public string TypeOfUser { get; set; } = null!;
         public bool IsOwner { get; set; }

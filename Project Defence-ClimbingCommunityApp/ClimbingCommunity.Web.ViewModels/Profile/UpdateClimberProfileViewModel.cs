@@ -24,9 +24,8 @@
         public string LastName { get; set; } = null!;
 
         [Required]
-        [EmailAddress]
-        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength)]
-        public string Email { get; set; } = null!;
+        [Range(AgeMinValue,AgeMaxValue)]
+        public int Age { get; set; } 
 
         [Required]
         [Phone]

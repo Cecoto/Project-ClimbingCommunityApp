@@ -20,6 +20,7 @@
         public int ClimbingExperience { get; set; }
         public string PhoneNumber { get; set; } = null!;
         public string Level { get; set; } = null!;
+        public int Age { get; set; }
         public ICollection<PhotoViewModel> Photos { get; set; }
         public bool IsOwner { get; set; }
         

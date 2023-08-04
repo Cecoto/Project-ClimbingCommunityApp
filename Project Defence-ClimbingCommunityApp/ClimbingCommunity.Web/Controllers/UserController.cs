@@ -107,7 +107,8 @@
                 CoachingExperience = model.CoachingExperience,
                 Gender = gender,
                 ProfilePictureUrl = model.ProfilePicture,
-                UserType = "Coach"
+                UserType = "Coach",
+                Age = model.Age
 
             };
 
@@ -214,7 +215,8 @@
                 ProfilePictureUrl = model.ProfilePicture,
                 LevelId = model.LevelId,
                 ClimberSpecialityId = model.ClimberSpecialityId,
-                UserType = "Climber"
+                UserType = "Climber",
+                Age = model.Age
 
             };
 

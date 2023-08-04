@@ -46,6 +46,11 @@
 
         <div class="col-md-5">
             <div class="form-group">
+                <label asp-for="Age" class="form-label"></label>
+                <input asp-for="Age" class="form-control" placeholder="Enter your age" />
+                <span asp-validation-for="@Model.Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ClimbingExperience" class="form-label"></label>
                 <input asp-for="ClimbingExperience" class="form-control" placeholder="Enter your climbing experience" />
                 <span asp-validation-for="@Model.ClimbingExperience" class="text-danger"></span>

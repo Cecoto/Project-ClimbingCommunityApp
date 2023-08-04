@@ -20,6 +20,10 @@
         public string LastName { get; set; } = null!;
 
         [Required]
+        [Range(AgeMinValue,AgeMaxValue)]
+        public int Age { get; set; }
+
+        [Required]
         [EmailAddress]
         [StringLength(EmailMaxLength, MinimumLength = EmailMinLength)]
         [Display(Name = "Email adress")]

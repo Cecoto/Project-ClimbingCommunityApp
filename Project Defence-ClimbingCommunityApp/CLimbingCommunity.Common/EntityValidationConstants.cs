@@ -10,8 +10,8 @@
             public const int LastNameMinLength = 2;
             public const int LastNameMaxLength = 30;
 
-            public const int AgeMinValue = 2;
-            public const int AgeMaxValue = 30;
+            public const int AgeMinValue = 5;
+            public const int AgeMaxValue = 100;
 
             public const int ImageUrlMaxLength = 2048;
 

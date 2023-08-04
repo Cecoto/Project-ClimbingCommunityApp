@@ -65,7 +65,8 @@
                 Speciality = user.ClimberSpeciality.Name,
                 ClimbingExperience = user.ClimbingExperience,
                 TypeOfUser = user.UserType,
-                Level = user.Level.Name
+                Level = user.Level.Name,
+                Age = user.Age
             };
 
             return climber;
@@ -80,7 +81,7 @@
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
-                Email = user.Email,
+                Age = user.Age,
                 ProfilePictureUrl = user.ProfilePictureUrl!,
                 ClimberSpecialityId = user.ClimberSpeciality.Id,
                 LevelId = user.Level.Id,
@@ -114,7 +115,8 @@
                 Gender = user.Gender.ToString(),
                 Id = user.Id.ToString(),
                 CoachingExperience = user.CoachingExperience,
-                TypeOfUser = user.UserType
+                TypeOfUser = user.UserType,
+                Age = user.Age
 
             };
             return coach;
@@ -130,7 +132,7 @@
                 FirstName = coach.FirstName,
                 LastName = coach.LastName,
                 PhoneNumber = coach.PhoneNumber,
-                Email = coach.Email,
+                Age = coach.Age,
                 CoachingExperience = coach.CoachingExperience
             };
         }
@@ -210,7 +212,7 @@
             climber.LastName = model.LastName;
             climber.PhoneNumber = model.PhoneNumber;
             climber.ProfilePictureUrl = photo;
-            climber.Email = model.Email;
+            climber.Age = model.Age;
             climber.LevelId = model.LevelId;
             climber.ClimberSpecialityId = model.ClimberSpecialityId;
             climber.ClimbingExperience = model.ClimbingExperience;
@@ -238,7 +240,7 @@
             coach.LastName = model.LastName;
             coach.PhoneNumber = model.PhoneNumber;
             coach.ProfilePictureUrl = photo;
-            coach.Email = model.Email;
+            coach.Age = model.Age;
             coach.CoachingExperience = model.CoachingExperience;
 
             await repo.SaveChangesAsync();
