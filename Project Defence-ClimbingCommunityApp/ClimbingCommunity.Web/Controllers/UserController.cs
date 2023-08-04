@@ -87,11 +87,11 @@
             {
                 if (model.Gender == "Male")
                 {
-                    model.ProfilePicture = "/images/ProfilePictures/male.png";
+                    model.ProfilePicture = "/images/ProfilePictures/Default/Male.png";
                 }
                 else
                 {
-                    model.ProfilePicture = "/images/ProfilePictures/Female.png";
+                    model.ProfilePicture = "/images/ProfilePictures/Default/Female.png";
                 }
 
             }
@@ -194,11 +194,11 @@
             {
                 if (model.Gender == "Male")
                 {
-                    model.ProfilePicture = "/images/ProfilePictures/male.png";
+                    model.ProfilePicture = "/images/ProfilePictures/Default/Male.png";
                 }
                 else
                 {
-                    model.ProfilePicture = "/images/ProfilePictures/Female.png";
+                    model.ProfilePicture = "/images/ProfilePictures/Default/Female.png";
                 }
 
             }
