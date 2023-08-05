@@ -87,8 +87,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.SeedRoles();
-
 app.AddAdministrator(configuration["AdminEmail"], configuration["AdminPassword"]);
+
+app.EnableOnlineUsersCheck();
 
 app.UseEndpoints(endpoints =>
 {

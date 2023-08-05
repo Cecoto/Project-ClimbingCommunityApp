@@ -65,7 +65,7 @@
                     @foreach (var (photo, index) in Model.Photos.Select((photo, index) => (photo, index)))
                     {
                         <div class="carousel-item @(index == 0 ? "active" : "")">
-                            <img src="@photo.ImageUrl" class="d-block w-50" alt="User Photo" />
+                            <img src="@photo.ImageUrl" class="d-block w-50" width="150px"  alt="User Photo" />
                         </div>
                     }
                 </div>

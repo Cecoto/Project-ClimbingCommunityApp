@@ -2,6 +2,7 @@
 {
     using ClimbingCommunity.Common;
     using ClimbingCommunity.Data.Models;
+    using ClimbingCommunity.Web.Infrastructure.Middlewares;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
@@ -116,6 +117,11 @@
 
             return app;
 
+        }
+
+        public static IApplicationBuilder EnableOnlineUsersCheck(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<OnlineUsersMiddleware>();
         }
 
     }

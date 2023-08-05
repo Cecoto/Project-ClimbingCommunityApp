@@ -29,7 +29,6 @@
         public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
         {
             return await repo.All<ApplicationUser>()
-                 .Where(u => u.UserType != RoleConstants.Administrator)
                  .Select(user => new UserViewModel
                  {
                      Id = user.Id,

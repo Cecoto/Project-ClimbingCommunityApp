@@ -7,5 +7,10 @@
 
         public const string AdminAreaName = "Admin";
 
+        public const string OnlineUserCookieName = "IsOnline";
+
+        public const int LastActivityBeforeGoOflineMinutes = 10;
+
+
     }
 }
