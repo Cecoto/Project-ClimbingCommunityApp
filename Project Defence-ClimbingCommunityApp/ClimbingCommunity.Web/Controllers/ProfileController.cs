@@ -81,7 +81,7 @@
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
-            if (user.UserType== RoleConstants.Climber)
+            if (user.UserType == RoleConstants.Climber)
             {
                 try
                 {
@@ -103,7 +103,7 @@
                 }
 
             }
-            else if(user.UserType==RoleConstants.Coach)
+            else if (user.UserType == RoleConstants.Coach)
             {
                 try
                 {
@@ -139,15 +139,31 @@
         [HttpGet]
         public async Task<IActionResult> UpdateClimberProfile(string id)
         {
+            bool isUserExists = await userService.IsUserExistsByIdAsync(id);
 
-            UpdateClimberProfileViewModel model = await userService.GetClimberInfoForUpdateAsync(id);
+            if (!isUserExists)
+            {
+                this.TempData[ErrorMessage] = "User with that Id does not exist! Please try again later or contact the administrator"!;
 
-            model.ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync();
+                return RedirectToAction("All", "ClimbingTrip");
+            }
+            try
+            {
 
-            model.Levels = await userService.GetLevelsForFormAsync();
+                UpdateClimberProfileViewModel model = await userService.GetClimberInfoForUpdateAsync(id);
+
+                model.ClimberSpecialities = await userService.GetClimberSpecialitiesForFormAsync();
+
+                model.Levels = await userService.GetLevelsForFormAsync();
 
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                return GeneralError();
+            }
         }
 
         /// <summary>
@@ -158,6 +174,19 @@
         [HttpPost]
         public async Task<IActionResult> UpdateClimberProfile(UpdateClimberProfileViewModel model)
         {
+            bool isLevelValid = await userService.IsLevelIdValidByIdAsync(model.LevelId);
+
+            if (!isLevelValid)
+            {
+                ModelState.AddModelError(nameof(model.LevelId), "Invalid level id, please select it again!");
+            }
+
+            bool isClimbingSpecialityValid = await userService.IsClimbingSpecialityIdValidByIdAsync(model.ClimberSpecialityId);
+
+            if (!isClimbingSpecialityValid)
+            {
+                ModelState.AddModelError(nameof(model.ClimberSpecialityId), "Invalid speciality id, please select it again!");
+            }
 
             if (!ModelState.IsValid)
             {
@@ -192,6 +221,14 @@
         [HttpGet]
         public async Task<IActionResult> UpdateCoachProfile(string id)
         {
+            bool isUserExists = await userService.IsUserExistsByIdAsync(id);
+
+            if (!isUserExists)
+            {
+                this.TempData[ErrorMessage] = "User with that Id does not exist! Please try again later or contact the administrator"!;
+
+                return RedirectToAction("All", "ClimbingTrip");
+            }
 
             UpdateCoachProfileViewModel model = await userService.GetCoachInfoForUpdateAsync(id);
             return View(model);

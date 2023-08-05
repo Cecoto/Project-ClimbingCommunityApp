@@ -23,7 +23,7 @@
                 .HasValue<Climber>("Climber")
                 .HasValue<Coach>("Coach")
                 .HasValue("Administrator");
-;
+
         }
     }
 }
