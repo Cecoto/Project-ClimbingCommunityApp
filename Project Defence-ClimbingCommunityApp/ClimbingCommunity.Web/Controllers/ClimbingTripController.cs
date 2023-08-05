@@ -273,7 +273,6 @@
                 }
                 return RedirectToAction("Index", "Home");
             }
-
             bool tripExists = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
 
             if (!tripExists)

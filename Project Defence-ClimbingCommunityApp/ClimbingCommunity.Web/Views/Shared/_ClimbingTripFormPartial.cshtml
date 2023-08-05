@@ -34,7 +34,7 @@
     <div class="form-group">
         <label asp-for="PhotoFile"></label>
         <img class="" src="@Model.PhotoUrl" />
-        <input asp-for="PhotoFile" type="file" class="form-control-file" accept="image/*">
+        <input asp-for="PhotoFile" type="file" class="form-control-file" accept="image/*" required="true">
         <span asp-validation-for="PhotoFile" class="text-danger"></span>
     </div>
 

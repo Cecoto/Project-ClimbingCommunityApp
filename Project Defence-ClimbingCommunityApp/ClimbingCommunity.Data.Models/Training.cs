@@ -54,7 +54,7 @@
         public DateTime CreatedOn { get; set; }
 
         [Required]
-        [Comment("Photo of the climbing training willbe/Gym picture")]
+        [Comment("Photo of the climbing training will be/Gym picture")]
         public string PhotoUrl { get; set; } = null!;
 
         [Comment("Collection of joined climbers")]

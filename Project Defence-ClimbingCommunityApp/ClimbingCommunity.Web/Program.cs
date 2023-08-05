@@ -51,7 +51,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/User/Login";
     options.LogoutPath = "/User/Logout";
-    options.AccessDeniedPath = "/Home/Error/401"; // need to create 401 page!!
+    options.AccessDeniedPath = "/Home/Error?statusCode=401";
 });
 
 builder.Services
@@ -68,7 +68,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
 
-    app.UseDeveloperExceptionPage();
+    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+    //app.UseDeveloperExceptionPage();
 }
 else
 {

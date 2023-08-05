@@ -24,9 +24,8 @@
                         <a asp-area="" asp-controller="Training" asp-action="Edit" asp-route-id="@training.Id" class="edit-button">Edit</a>
                         <button type="button" class="delete-button" onclick="deleteTrip('@training.Id')">Delete</button>
                         <input type="hidden" id="baseUrl" value="@Url.Action("Delete", "Training")" />
-                        <button class="comments-button" onclick="toggleComments('@training.Id')">Comments</button>
+                    <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@training.Id" asp-route-activityType="Training" class=" comments-button">Comments</a>
                     </div>
-                    <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@training.Id" asp-route-activityType="Training" class="btn btn-primary comments-button">Comments</a>
 
                 </div>
             </div>
