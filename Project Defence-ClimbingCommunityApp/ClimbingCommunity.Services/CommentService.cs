@@ -81,12 +81,14 @@
             {
 
                 return await repo.AllReadonly<Comment>(c => c.ClimbingTripId == Guid.Parse(activityId))
+                    .OrderByDescending(c=>c.CreatedOn)
                     .Select(c => new CommentViewModel()
                     {
                         Id = c.Id,
                         Text = c.Text,
                         AuthorId = c.AuthorId,
-                        Author = c.Author
+                        Author = c.Author,
+                        CreatedOn = c.CreatedOn,
                     })
                     .ToListAsync();
             }

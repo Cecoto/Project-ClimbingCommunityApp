@@ -15,6 +15,6 @@
         public string AuthorId { get; set; } = null!;
         public ApplicationUser Author { get; set; } = null!;
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

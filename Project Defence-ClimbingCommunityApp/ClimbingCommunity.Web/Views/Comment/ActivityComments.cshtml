@@ -20,7 +20,7 @@
                             <img src="@comment.Author.ProfilePictureUrl" width="25px" height="25px"></img>
                             @comment.Author.FirstName @comment.Author.LastName
                             </a>
-                        <span class="comment-date">@comment.CreatedAt.ToString("MMM dd, yyyy")</span>
+                        <span class="comment-date">@comment.CreatedOn.ToString("MM-dd-yyyy - HH:mm")</span>
                     </div>
                     <p class="comment-text">@comment.Text</p>
                 </div>
@@ -36,12 +36,28 @@
         <h3 class="add-comment-heading">Add Your Comment</h3>
         <form method="post">
             <div class="form-group">
-                <textarea class="form-control" rows="3" placeholder="Write your comment here" name="NewCommentText" required>@Model.NewCommentText</textarea>
+                <input type="text"
+                       class="form-control emoji-input"
+                       placeholder="Write your comment here"
+                       name="NewCommentText"
+                       required />
             </div>
-            <div class="emoji-picker">
-                <!-- Your emoji picker code here -->
-            </div>
-            <button asp-asp-controller="Comment" asp-action="AddComment" asp-route-activityId="@Model.Id" asp-route-activityType="@Model.ActivityType" type="submit" class="btn btn-primary">Add Comment</button>
+            <button asp-asp-controller="Comment"
+                    asp-action="AddComment"
+                    asp-route-activityId="@Model.Id"
+                    asp-route-activityType="@Model.ActivityType"
+                    type="submit"
+                    class="btn btn-primary">
+                Add Comment
+            </button>
         </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.emoji-input').emojioneArea({
+            pickerPosition: 'bottom'
+        });
+    });
+</script>
