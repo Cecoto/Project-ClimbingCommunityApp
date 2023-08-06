@@ -19,6 +19,9 @@
         public string PhotoUrl { get; set; } = null!;
 
         public string OrganizatorId { get; set; } = null!;
+
         public Coach Organizator { get; set; } = null!;
+
+        public int NumberOfParticipants { get; set; }
     }
 }

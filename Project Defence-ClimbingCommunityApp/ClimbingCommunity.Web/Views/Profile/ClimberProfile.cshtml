@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" href="~/css/ProfileInfo.css" asp-append-version="true" />
 
-<h1 class="profile-heading">Profile</h1>
+<h1 class="profile-heading">@ViewData["Title"]</h1>
 <hr />
 <div class="profile-container">
     <div class="profile-info-container">
@@ -33,7 +33,7 @@
                 </div>
                 <div>
                     <strong>Level:</strong>
-                    <span>@Model.Level </span>
+                    <span>@Model.Level</span>
                 </div>
                 <div>
                     <strong>Climbing Experience:</strong>
@@ -48,13 +48,11 @@
 
         @if (Model.IsOwner)
         {
-
             <form>
                 <button class="btn btn-updateProfile" asp-area="" asp-controller="Profile" asp-action="UpdateClimberProfile" asp-route-id="@Model.Id">Manage Profile</button>
             </form>
         }
     </div>
-
 
     <div class="profile-photos">
         <h3>Photos</h3>
@@ -65,11 +63,10 @@
                     @foreach (var (photo, index) in Model.Photos.Select((photo, index) => (photo, index)))
                     {
                         <div class="carousel-item @(index == 0 ? "active" : "")">
-                            <img src="@photo.ImageUrl" class="d-block w-50" width="150px"  alt="User Photo" />
+                            <img src="@photo.ImageUrl" class="d-block w-100 h-100 photo" alt="User Photo" />
                         </div>
                     }
                 </div>
-
                 <button class="carousel-control-prev" type="button" data-bs-target="#user-carousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
@@ -85,17 +82,15 @@
             @if (Model.IsOwner)
             {
                 <p>No photos found. Add your first photo.</p>
-
             }
             else
             {
-                <p>@Model.FirstName still don't have photos uploaded.</p>
+                <p>@Model.FirstName still doesn't have photos uploaded.</p>
             }
         }
 
         @if (Model.IsOwner)
         {
-
             <div class="add-photos">
                 <h5>Add Photo</h5>
                 <form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="UploadPhotos">

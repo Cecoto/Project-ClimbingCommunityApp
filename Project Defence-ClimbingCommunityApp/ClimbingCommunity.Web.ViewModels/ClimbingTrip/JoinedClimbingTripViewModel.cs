@@ -21,6 +21,7 @@
         public string PhotoUrl { get; set; } = null!;
 
         public int Duration { get; set; }
+        public int NumberOfParticipants { get; set; }
 
     }
 }

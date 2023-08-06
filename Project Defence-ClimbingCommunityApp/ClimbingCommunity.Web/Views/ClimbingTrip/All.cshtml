@@ -49,8 +49,9 @@
                                     </div>
                                 </div>
                                 <p><strong>Destination:</strong> @trip.Destination</p>
-                                <p><strong>Trip Type:</strong> @trip.TripType</p>
                                 <p><strong>Duration:</strong> @trip.Duration days</p>
+                                <p><strong>Trip Type:</strong> @trip.TripType</p>
+                                <p><strong>Participants:</strong> @trip.NumberOfParticipants Climbers</p>
                                 <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@trip.Id" asp-route-activityType="ClimbingTrip" class="btn btn-primary comments-button">Comments</a>
                                 @if (User.IsInRole(ClimbingCommunity.Common.RoleConstants.Coach) && !User.IsInRole(Administrator))
                                 {

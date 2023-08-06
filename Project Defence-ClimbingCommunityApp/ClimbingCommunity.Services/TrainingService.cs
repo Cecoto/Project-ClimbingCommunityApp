@@ -97,7 +97,8 @@
                          Organizator = c.Coach,
                          Duration = c.Duration,
                          Target = c.Target.Name,
-                         Price = c.Price
+                         Price = c.Price,
+                         NumberOfParticipants = c.JoinedClimbers.Count(),
                      }).ToListAsync();
 
         }
@@ -128,7 +129,8 @@
                      Target = t.Target.Name,
                      isOrganizator = false,
                      Organizator = t.Coach,
-                     Price = t.Price
+                     Price = t.Price,
+                     NumberOfParticipants = t.JoinedClimbers.Count()
                  }).ToListAsync();
         }
 
@@ -136,10 +138,10 @@
         {
             return await repo.AllReadonly<Training>(t => t.isActive == true || t.isActive == null)
                 .OrderByDescending(t => t.CreatedOn)
-                .Where(t=>t.Title.Contains(text) ||
+                .Where(t => t.Title.Contains(text) ||
                 t.Coach.FirstName.Contains(text) ||
                 t.Coach.LastName.Contains(text) ||
-                t.Target.Name.Contains(text)||
+                t.Target.Name.Contains(text) ||
                 t.Location.Contains(text))
                 .Select(t => new TrainingViewModel()
                 {
@@ -152,7 +154,8 @@
                     Target = t.Target.Name,
                     isOrganizator = false,
                     Organizator = t.Coach,
-                    Price = t.Price
+                    Price = t.Price,
+                    NumberOfParticipants = t.JoinedClimbers.Count()
                 }).ToListAsync();
         }
 

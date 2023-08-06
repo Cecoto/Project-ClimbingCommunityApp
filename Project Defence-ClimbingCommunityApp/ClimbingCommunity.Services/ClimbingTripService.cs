@@ -102,7 +102,8 @@
                      Duration = ct.Duration,
                      TripType = ct.TripType.Name,
                      isOrganizator = false,
-                     Organizator = ct.Organizator
+                     Organizator = ct.Organizator,
+                     NumberOfParticipants=ct.Climbers.Count()
                  }).ToListAsync();
 
         }
@@ -120,7 +121,8 @@
                      Duration = ct.Duration,
                      TripType = ct.TripType.Name,
                      isOrganizator = false,
-                     Organizator = ct.Organizator
+                     Organizator = ct.Organizator,
+                     NumberOfParticipants = ct.Climbers.Count()
                  }).ToListAsync();
 
             return models;
@@ -140,7 +142,8 @@
                       OrganizatorId = ct.OrganizatorId,
                       Duration = ct.Duration,
                       TripType = ct.TripType.Name,
-                      Organizator = ct.Organizator
+                      Organizator = ct.Organizator,
+                      NumberOfParticipants= ct.Climbers.Count()
                   }).ToListAsync();
 
         }
