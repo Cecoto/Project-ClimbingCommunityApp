@@ -19,12 +19,9 @@
         [Comment("Content of the comment")]
         public string Text { get; set; } = null!;
 
-        
         public Guid? ClimbingTripId { get; set; }
         public virtual ClimbingTrip? ClimbingTrip { get; set; } 
 
-
-       
         public Guid? TrainingId { get; set; }
         public virtual Training? Training { get; set; }
 
@@ -33,5 +30,7 @@
         public virtual ApplicationUser Author { get; set; } = null!;
 
         public bool? isActive { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

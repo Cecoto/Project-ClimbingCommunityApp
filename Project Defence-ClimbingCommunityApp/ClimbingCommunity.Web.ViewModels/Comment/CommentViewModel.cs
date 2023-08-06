@@ -14,5 +14,7 @@
         public string Text { get; set; } = null!;
         public string AuthorId { get; set; } = null!;
         public ApplicationUser Author { get; set; } = null!;
+
+        public DateTime CreatedAt { get; set; }
     }
 }

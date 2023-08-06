@@ -14,28 +14,29 @@
             </div>
             <h2 class="profile-name">@Model.FirstName @Model.LastName</h2>
             <div class="profile-info">
-                <div>
+                <div class="info-item">
                     <strong>Role in the community:</strong>
                     <span>@Model.TypeOfUser</span>
                 </div>
-                <div>
+                <div class="info-item">
                     <strong>Gender:</strong>
                     <span>@Model.Gender</span>
                 </div>
-                <div>
+                <div class="info-item">
                     <strong>Age:</strong>
                     <span>@Model.Age</span>
                 </div>
-                <div>
+                <div class="info-item">
                     <strong>Coaching Experience:</strong>
                     <span>@Model.CoachingExperience years</span>
                 </div>
-                <div>
+                <div class="info-item">
                     <strong>Phone Number:</strong>
                     <span>@Model.PhoneNumber</span>
                 </div>
             </div>
         </div>
+
         @if (Model.IsOwner)
         {
             <div class="profile-actions">

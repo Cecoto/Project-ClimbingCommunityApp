@@ -8,6 +8,10 @@
     {
         public void Configure(EntityTypeBuilder<Comment> builder)
         {
+            builder
+                .Property(ct => ct.CreatedOn)
+                .HasDefaultValueSql("GETDATE()");
+
             builder.Property(c => c.isActive)
                 .HasDefaultValue(true);
             

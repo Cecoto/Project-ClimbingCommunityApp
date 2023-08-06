@@ -10,7 +10,6 @@
 .photo {
     border: 1px solid #ddd;
     border-radius: 20px;
-    display:flow-root;
 }
 
 .profile-photos {
@@ -78,27 +77,40 @@
     }
 }
 
+.profile-details {
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom:20px;
+}
 .profile-info {
-    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(1, minmax(100px, 1fr));
+    gap: 20px;
 }
 
-    .profile-info div {
-        display: grid;
-        align-items: flex-end;
-        row-gap: 10px; /* Increase the vertical spacing between rows */
-    }
+.info-item {
+    display: inline-flex;
+    align-items: center;
+}
 
-    .profile-info strong {
-        margin-right: 10px;
-    }
+.info-label {
+    font-weight: bold;
+    margin-right: 5px;
+    margin-bottom: 0;
+}
 
-.d-block {
-    width: 200px;
-    height: 300px;
+.info-value {
+    color: #444;
 }
 
 .profile-name {
     margin-bottom: 50px;
+
 }
 
 .profile-heading {
