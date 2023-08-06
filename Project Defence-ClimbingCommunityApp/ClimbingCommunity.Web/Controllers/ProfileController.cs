@@ -229,9 +229,16 @@
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
+            try
+            {
+                UpdateCoachProfileViewModel model = await userService.GetCoachInfoForUpdateAsync(id);
+                return View(model);
 
-            UpdateCoachProfileViewModel model = await userService.GetCoachInfoForUpdateAsync(id);
-            return View(model);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
         /// <summary>
         /// Post method that updates climbers info.

@@ -4,48 +4,58 @@
     IEnumerable<TripTypeViewModel> tripTypes = ViewData["TripTypes"] as List<TripTypeViewModel>;
 }
 
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" required>
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
+<link rel="stylesheet" href="~/css/Form.css" asp-append-version="true" />
 
-    <div class="form-group">
-        <label asp-for="Destination"></label>
-        <input asp-for="Destination" class="form-control" required>
-        <span asp-validation-for="Destination" class="text-danger"></span>
-    </div>
+<div class="form-container">
+    <form method="post" enctype="multipart/form-data" class="form">
+        <div class="form-group">
+            <label asp-for="Title">Title</label>
+            <input asp-for="Title" class="form-control" required>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="TripTypeId"></label>
-        <select asp-for="TripTypeId" asp-items="@(new SelectList(Model.TripTypes, "Id", "Name"))" class="form-control" required>
-            <option value="">Select Trip Type</option>
-        </select>
-        <span asp-validation-for="TripTypeId" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Destination" class="control-label">Destination</label>
+            <input asp-for="Destination" class="form-control" required>
+            <span asp-validation-for="Destination" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Duration"></label>
-        <input asp-for="Duration" class="form-control" required>
-        <span asp-validation-for="Duration" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="TripTypeId" class="control-label">Trip Type</label>
+            <select asp-for="TripTypeId" asp-items="@(new SelectList(Model.TripTypes, "Id", "Name"))" class="form-control" required>
+                <option value="">Select Trip Type</option>
+            </select>
+            <span asp-validation-for="TripTypeId" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="PhotoFile"></label>
-        <img class="" src="@Model.PhotoUrl" />
-        <input asp-for="PhotoFile" type="file" class="form-control-file" accept="image/*" required="true">
-        <span asp-validation-for="PhotoFile" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Duration" class="control-label">Duration</label>
+            <input asp-for="Duration" class="form-control" required>
+            <span asp-validation-for="Duration" class="text-danger"></span>
+        </div>
 
-    @if (Model.IsEditModel)
-    {
-        <button asp-area="" asp-controller="ClimbingTrip" asp-action="Edit" type="submit" class="btn btn-primary">Save</button>
+        <div class="form-group">
+            <label asp-for="PhotoFile" class="control-label">Photo</label>
+            <div class="photo-container">
+                <img class="image-preview" src="@Model.PhotoUrl" alt="Trip Photo">
+            </div>
+            @if (Model.IsEditModel)
+            {
+                <input asp-for="PhotoFile" type="file" class="form-control-file" accept="image/*">
 
-    }
-    else
-    {
-        <button asp-area="" asp-controller="ClimbingTrip" asp-action="Add" type="submit" class="btn btn-primary">Add Trip</button>
+            }
+            else
+            {
+                <input asp-for="PhotoFile" type="file" class="form-control-file" accept="image/*" required="true">
 
-    }
-</form>
+            }
+            <span asp-validation-for="PhotoFile" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <button asp-area="" asp-controller="ClimbingTrip" asp-action="@(Model.IsEditModel ? "Edit" : "Add")" type="submit" class="btn btn-primary">@Html.Raw(Model.IsEditModel ? "Save" : "Add Trip")</button>
+        </div>
+    </form>
+
+</div>
+</div>

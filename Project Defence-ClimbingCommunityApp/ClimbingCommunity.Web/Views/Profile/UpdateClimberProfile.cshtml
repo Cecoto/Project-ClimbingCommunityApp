@@ -1,72 +1,73 @@
 ﻿@model UpdateClimberProfileViewModel
 
-<link rel="stylesheet" href="~/css/udapteProfileForm.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/Form.css" asp-append-version="true" />
 
 @{
     ViewData["Title"] = "Update climber profile";
 }
 
-<h1 class="profile-heading">Manage Profile</h1>
+<h1 class="text-center mb-0">Manage Profile</h1>
+<hr >
+<div class="form-container ">
+    <form asp-action="UpdateClimberProfile" method="post" enctype="multipart/form-data" class="form mb-2">
 
-<form asp-action="UpdateClimberProfile" method="post" enctype="multipart/form-data">
-  
-    <div class="form-group">
-        <label asp-for="@Model.PhotoFile">Profile Picture</label>
-        <div class="profile-picture">
-            <img src="@Model.ProfilePictureUrl" alt="Profile Picture" />
+        <div class="form-group">
+            <label asp-for="@Model.PhotoFile">Profile Picture</label>
+            <div class="profile-picture">
+                <img src="@Model.ProfilePictureUrl" alt="Profile Picture" />
+            </div>
+            <span>Change profile picture</span>
+            <input asp-for="PhotoFile" type="file" class="form-control-file">
+            <span asp-validation-for="@Model.PhotoFile" class="text-danger"></span>
         </div>
-        <span>Change profile picture</span>
-        <input asp-for="PhotoFile" type="file" class="form-control-file">
-        <span asp-validation-for="@Model.PhotoFile" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.FirstName">First Name</label>
-        <input asp-for="@Model.FirstName" class="form-control" required>
-        <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="@Model.FirstName">First Name</label>
+            <input asp-for="@Model.FirstName" class="form-control" required>
+            <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.LastName">Last Name</label>
-        <input asp-for="@Model.LastName" class="form-control" required>
-        <span asp-validation-for="@Model.LastName" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="@Model.LastName">Last Name</label>
+            <input asp-for="@Model.LastName" class="form-control" required>
+            <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Age">Age</label>
-        <input asp-for="@Model.Age" class="form-control" required>
-        <span asp-validation-for="@Model.Age" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="LevelId" class="form-label">Level</label>
-        <select asp-for="LevelId" asp-items="@(new SelectList(Model.Levels, "Id", "Name"))" class="form-control">
-            <option value="">Select a level</option>
-        </select>
-        <span asp-validation-for="@Model.LevelId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ClimberSpecialityId" class="form-label">Speciality</label>
-        <select asp-for="ClimberSpecialityId" asp-items="@(new SelectList(@Model.ClimberSpecialities, "Id", "Name"))" class="form-control">
-            <option value="">Select a speciality</option>
-        </select>
-        <span asp-validation-for="@Model.ClimberSpecialityId" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="@Model.Age">Age</label>
+            <input asp-for="@Model.Age" class="form-control" required>
+            <span asp-validation-for="@Model.Age" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LevelId" class="form-label">Level</label>
+            <select asp-for="LevelId" asp-items="@(new SelectList(Model.Levels, "Id", "Name"))" class="form-control">
+                <option value="">Select a level</option>
+            </select>
+            <span asp-validation-for="@Model.LevelId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ClimberSpecialityId" class="form-label">Speciality</label>
+            <select asp-for="ClimberSpecialityId" asp-items="@(new SelectList(@Model.ClimberSpecialities, "Id", "Name"))" class="form-control">
+                <option value="">Select a speciality</option>
+            </select>
+            <span asp-validation-for="@Model.ClimberSpecialityId" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.PhoneNumber">Phone Number</label>
-        <input asp-for="@Model.PhoneNumber" class="form-control" required>
-        <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="@Model.PhoneNumber">Phone Number</label>
+            <input asp-for="@Model.PhoneNumber" class="form-control" required>
+            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.ClimbingExperience">Climbing Experience (in years)</label>
-        <input asp-for="@Model.ClimbingExperience" class="form-control" required>
-        <span asp-validation-for="@Model.ClimbingExperience" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="@Model.ClimbingExperience">Climbing Experience (in years)</label>
+            <input asp-for="@Model.ClimbingExperience" class="form-control" required>
+            <span asp-validation-for="@Model.ClimbingExperience" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-updateProfile" asp-controller="Profile" asp-action="UpdateClimberProfile">Update Profile</button>
-</form>
-
+        <button type="submit" class="btn-form" asp-controller="Profile" asp-action="UpdateClimberProfile">Update Profile</button>
+    </form>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
