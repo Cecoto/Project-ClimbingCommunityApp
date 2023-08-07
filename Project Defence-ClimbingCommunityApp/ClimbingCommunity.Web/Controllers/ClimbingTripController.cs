@@ -338,8 +338,6 @@
             }
 
             bool tripExists = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
-
-
             if (!tripExists)
             {
                 this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist!";

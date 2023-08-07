@@ -9,7 +9,7 @@
     public interface IAdminService
     {
         Task ActivateTrainingByIdAsync(string id);
-        Task ActiveteClimbingTripByIdAsync(string id);
+        Task ActivateClimbingTripByIdAsync(string id);
         Task BecomeClimberAsync(string adminUserId);
         Task BecomeCoachAsync(string adminUserId);
     }

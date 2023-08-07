@@ -154,7 +154,7 @@
         {
             try
             {
-                await adminService.ActiveteClimbingTripByIdAsync(id);
+                await adminService.ActivateClimbingTripByIdAsync(id);
 
                 this.TempData[SuccessMessage] = "Succesfully reactivted that activity in the application!";
 

@@ -103,7 +103,7 @@
                      TripType = ct.TripType.Name,
                      isOrganizator = false,
                      Organizator = ct.Organizator,
-                     NumberOfParticipants=ct.Climbers.Count()
+                     NumberOfParticipants = ct.Climbers.Count()
                  }).ToListAsync();
 
         }
@@ -111,7 +111,7 @@
         public async Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingTripsAsync()
         {
             var models = await repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
-                .OrderByDescending (ct => ct.CreatedOn)
+                .OrderByDescending(ct => ct.CreatedOn)
                  .Select(ct => new ClimbingTripViewModel()
                  {
                      Id = ct.Id.ToString(),
@@ -125,7 +125,7 @@
                      Organizator = ct.Organizator,
                      NumberOfParticipants = ct.Climbers.Count()
                  }).ToListAsync();
-       
+
 
             return models;
         }
@@ -145,7 +145,7 @@
                       Duration = ct.Duration,
                       TripType = ct.TripType.Name,
                       Organizator = ct.Organizator,
-                      NumberOfParticipants= ct.Climbers.Count()
+                      NumberOfParticipants = ct.Climbers.Count()
                   }).ToListAsync();
 
         }
@@ -153,7 +153,7 @@
         public async Task<IEnumerable<AdminActivityViewModel>> GetAllTripsForAdminAsync()
         {
             return await repo.AllReadonly<ClimbingTrip>()
-                .OrderByDescending (ct => ct.CreatedOn)
+                .OrderByDescending(ct => ct.CreatedOn)
                 .Select(ct => new AdminActivityViewModel()
                 {
                     Id = ct.Id.ToString(),
@@ -218,6 +218,11 @@
 
         public async Task<bool> IsClimbingTripExistsByIdAsync(string id)
         {
+            bool isGuidValid = Guid.TryParse(id,out Guid result);
+            if (!isGuidValid)
+            {
+                return false;
+            }
             ClimbingTrip trip = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(id));
             if (trip != null)
             {

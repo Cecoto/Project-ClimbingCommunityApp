@@ -266,12 +266,14 @@
             }
 
             bool isTrainingExists = await trainingService.IsTrainingExistsByIdAsync(id);
+
             if (!isTrainingExists)
             {
                 this.TempData[ErrorMessage] = "Training with the provided id does not exist!";
 
-                return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
+                return RedirectToAction("LastThreeTrainings", "Training");
             }
+
             bool isUserOrganizator = await trainingService.IsUserOrganizatorOfTrainingByIdAsync(GetUserId()!, id);
 
             if (User.IsInRole(RoleConstants.Administrator))
@@ -330,7 +332,7 @@
             {
                 this.TempData[ErrorMessage] = "Training with the provided id does not exist!";
 
-                return RedirectToAction("LastThreeClimbingTrips", "ClimbingTrip");
+                return RedirectToAction("LastThreeTrainings", "Training");
             }
             bool isUserOrganizator = await trainingService.IsUserOrganizatorOfTrainingByIdAsync(GetUserId()!, id);
 

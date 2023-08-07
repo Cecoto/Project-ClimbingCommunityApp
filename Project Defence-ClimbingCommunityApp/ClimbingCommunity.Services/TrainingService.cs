@@ -235,6 +235,11 @@
 
         public async Task<bool> IsTrainingExistsByIdAsync(string trainingId)
         {
+            bool isGuidValid = Guid.TryParse(trainingId, out Guid _);
+            if (!isGuidValid)
+            {
+                return false;
+            }
             return await repo.GetByIdAsync<Training>(Guid.Parse(trainingId)) != null;
         }
 

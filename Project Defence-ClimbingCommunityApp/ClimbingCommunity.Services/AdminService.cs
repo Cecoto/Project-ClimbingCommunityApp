@@ -31,7 +31,7 @@
             await repo.SaveChangesAsync();
         }
 
-        public async Task ActiveteClimbingTripByIdAsync(string id)
+        public async Task ActivateClimbingTripByIdAsync(string id)
         {
             ClimbingTrip trainingForActivation = await repo.GetByIdAsync<ClimbingTrip>(Guid.Parse(id));
 
