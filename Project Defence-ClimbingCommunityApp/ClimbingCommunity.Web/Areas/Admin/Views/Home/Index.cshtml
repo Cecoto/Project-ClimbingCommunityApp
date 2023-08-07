@@ -2,46 +2,56 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
+<link rel="stylesheet" href="~/css/adminDashboard.css" asp-append-version="true" />
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Welcome, Admin!</h1>
-        </div>
+<div class="admin-container">
+    <div class="admin-header">
+        <h1 class="admin-title">Welcome, Admin!</h1>
     </div>
-    <div class="row mt-4">
-        <div class="col">
-            <div class="d-flex justify-content-between">
+
+    <div class="admin-section">
+        <h3 class="admin-section-title">Admin Actions</h3>
+        <div class="admin-buttons">
+            <div class="admin-button">
                 @if (!User.IsInRole("Climber"))
                 {
-                    <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="BecomeClimber">Become a Climber</a>
-
+                    <a class="cta-button cta-button-green" asp-area="Admin" asp-controller="Admin" asp-action="BecomeClimber">Become a Climber</a>
                 }
+            </div>
+            <div class="admin-button">
                 @if (!User.IsInRole("Coach"))
                 {
-                    <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="BecomeCoach">Become a Coach</a>
+                    <a class="cta-button cta-button-blue" asp-area="Admin" asp-controller="Admin" asp-action="BecomeCoach">Become a Coach</a>
                 }
             </div>
         </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col">
-            <div class="d-flex justify-content-between">
+        <div class="admin-actions">
+            <div class="admin-action">
                 <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="AllUsers">All Users</a>
+            </div>
+            <div class="admin-action">
                 <a class="cta-button" asp-area="Admin" asp-controller="Admin" asp-action="AllActivities">All Activities</a>
             </div>
         </div>
     </div>
-    <div class="row mt-4">
-        <div class="col">
+
+    <div class="admin-section">
+        <h3 class="admin-section-title">Create New Role</h3>
+        <div class="admin-create-role">
             <form asp-action="CreateRole" method="post">
                 <div class="mb-3">
-                    <label for="roleName" class="form-label">Role</label>
-                    <input type="text" class="form-control" id="roleName" name="role" placeholder="New Role (Moderator)" >
+                    <label for="roleName" class="form-label">Role:</label>
+                    <input type="text" class="form-control" id="roleName" name="role" placeholder="New Role (Moderator)">
                 </div>
                 <button asp-area="Admin" asp-controller="Admin" asp-action="CreateRole" class="cta-button">Create Role</button>
             </form>
         </div>
     </div>
-    <partial name="_AddUserToRolePartial" />
+
+    <div class="admin-section">
+        <h3 class="admin-section-title">Add User to Role</h3>
+        <div class="admin-add-user">
+            <partial name="_AddUserToRolePartial" />
+        </div>
+    </div>
 </div>

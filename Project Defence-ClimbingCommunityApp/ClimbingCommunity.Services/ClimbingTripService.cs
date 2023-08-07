@@ -111,6 +111,7 @@
         public async Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingTripsAsync()
         {
             var models = await repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending (ct => ct.CreatedOn)
                  .Select(ct => new ClimbingTripViewModel()
                  {
                      Id = ct.Id.ToString(),
@@ -124,6 +125,7 @@
                      Organizator = ct.Organizator,
                      NumberOfParticipants = ct.Climbers.Count()
                  }).ToListAsync();
+       
 
             return models;
         }

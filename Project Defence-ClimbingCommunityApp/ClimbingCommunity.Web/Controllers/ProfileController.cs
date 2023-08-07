@@ -8,6 +8,7 @@
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Common;
     using static Common.NotificationMessageConstants;
+    using static Common.GeneralApplicationConstants;
 
     /// <summary>
     /// A controller where we will manage account of the user.
@@ -38,7 +39,7 @@
         [HttpGet]
         public async Task<IActionResult> MyProfile()
         {
-            if (!User.Identity?.IsAuthenticated ?? false)
+            if (!User.Identity?.IsAuthenticated ?? true)
             {
                 TempData["ErrorMessage"] = "You need to be a member of the community to reach that page!";
 
@@ -81,7 +82,16 @@
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
-            if (user.UserType == RoleConstants.Climber)
+            if (user.UserType == RoleConstants.Administrator)
+            {
+                if (!User.IsInRole(RoleConstants.Administrator))
+                {
+                    this.TempData[ErrorMessage] = "You must be an administrator to have access to that pofile!";
+                    return RedirectToAction("All", "ClimbingTrip");
+                }
+                return RedirectToAction("Index", "Home", new { area = AdminAreaName });
+            }
+            else if (user.UserType == RoleConstants.Climber)
             {
                 try
                 {
@@ -103,7 +113,7 @@
                 }
 
             }
-            else if (user.UserType == RoleConstants.Coach)
+            else /*user.UserType == RoleConstants.Coach*/
             {
                 try
                 {
@@ -124,11 +134,8 @@
                 }
 
             }
-            else
-            {
-                this.TempData[ErrorMessage] = "You must be an administrator to have access to that pofile!";
-                return RedirectToAction("All", "ClimbingTrip");
-            }
+
+
         }
 
         /// <summary>

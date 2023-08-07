@@ -25,41 +25,7 @@
                 <div class="container-fluid">
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
-                        if (User.IsInRole(Administrator))
-                        {
-                            <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">
-                                <img src="~/logo.png" alt="logo" class="logo" />
-                            </a>
-
-                            <div class="navbar-collapse d-flex justify-content-between">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link nav-button dropdown-toggle" href="#" id="climberDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Climber Pages
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="climberDropdown">
-                                            <a class="dropdown-item" asp-area="" asp-controller="ClimbingTrip" asp-action="All">All Trips</a>
-                                            <a class="dropdown-item" asp-area="" asp-controller="ClimbingTrip" asp-action="Add">Create Trip</a>
-                                        </div>
-                                    </li>
-                                </ul>
-
-
-
-                                <ul class="navbar-nav">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link nav-button dropdown-toggle" href="#" id="coachDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Coach Pages
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="coachDropdown">
-                                            <a class="dropdown-item" asp-area="" asp-controller="Training" asp-action="All">All Trainings</a>
-                                            <a class="dropdown-item" asp-area="" asp-controller="Training" asp-action="Add">Create Training</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        }
-                        else if (User.IsInRole(ClimbingCommunity.Common.RoleConstants.Climber))
+                         if (User.IsInRole(ClimbingCommunity.Common.RoleConstants.Climber))
                         {
                             <a class="navbar-brand" asp-area="" asp-controller="ClimbingTrip" asp-action="LastThreeClimbingTrips">
                                 <img src="~/logo.png" alt="logo" class="logo" />
