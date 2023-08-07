@@ -4,11 +4,8 @@
 
 <link rel="stylesheet" href="~/css/adminDashboard.css" asp-append-version="true" />
 
+<h1 class="admin-title">Welcome, Admin!</h1>
 <div class="admin-container">
-    <div class="admin-header">
-        <h1 class="admin-title">Welcome, Admin!</h1>
-    </div>
-
     <div class="admin-section">
         <h3 class="admin-section-title">Admin Actions</h3>
         <div class="admin-buttons">
@@ -39,8 +36,8 @@
         <h3 class="admin-section-title">Create New Role</h3>
         <div class="admin-create-role">
             <form asp-action="CreateRole" method="post">
-                <div class="mb-3">
-                    <label for="roleName" class="form-label">Role:</label>
+               
+                <div>
                     <input type="text" class="form-control" id="roleName" name="role" placeholder="New Role (Moderator)">
                 </div>
                 <button asp-area="Admin" asp-controller="Admin" asp-action="CreateRole" class="cta-button">Create Role</button>

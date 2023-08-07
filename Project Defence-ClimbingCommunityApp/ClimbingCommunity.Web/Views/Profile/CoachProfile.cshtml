@@ -9,10 +9,12 @@
 <div class="profile-container">
     <div class="profile-info-container">
         <div class="profile-details">
-            <div class="profile-picture">
-                <img src="@Model.ProfilePicture" alt="Profile Picture" />
+            <div class="profile-top">
+                <div class="profile-picture">
+                    <img src="@Model.ProfilePicture" alt="Profile Picture" />
+                </div>
+                <h2 class="profile-name">@Model.FirstName @Model.LastName</h2>
             </div>
-            <h2 class="profile-name">@Model.FirstName @Model.LastName</h2>
             <div class="profile-info">
                 <div class="info-item">
                     <strong>Role in the community:</strong>
@@ -54,7 +56,7 @@
                     @foreach (var (photo, index) in Model.Photos.Select((photo, index) => (photo, index)))
                     {
                         <div class="carousel-item @(index == 0 ? "active" : "")">
-                            <img src="@photo.ImageUrl" class="d-block w-100 h-100 photo" alt="User Photo" />
+                            <img src="@photo.ImageUrl" class="d-block photo" alt="User Photo" />
                         </div>
                     }
                 </div>
@@ -83,7 +85,7 @@
         @if (Model.IsOwner)
         {
             <div class="add-photos">
-                <h4>Add Photo</h4>
+                <h3>Add Photo</h3>
                 <form method="post" enctype="multipart/form-data">
                     <input type="file" name="photos" multiple />
                     <button asp-area="" asp-controller="Profile" asp-action="UploadPhotos" type="submit" class="btn btn-updateProfile">Upload</button>

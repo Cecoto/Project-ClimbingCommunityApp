@@ -1,6 +1,6 @@
 ﻿/* Shared Form Styles */
 .form-container {
-    max-width: 500px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -11,6 +11,22 @@
 .form {
     display: flex;
     flex-direction: column;
+}
+
+/*.update {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}*/
+
+
+.centered-heading {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    letter-spacing: 6px;
+    font-weight: 800;
+    margin-top: 20px;
 }
 
 .form-group {
@@ -28,20 +44,13 @@
     width: 100%;
 }
 
-.btn-primary {
-    padding: 10px 20px;
-    background-color: #007bff;
-    border: none;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 .image-preview {
     max-width: 100%;
     height: auto;
     margin-top: 10px;
 }
+
 .profile-picture {
     width: 200px;
     height: 200px;
@@ -55,7 +64,7 @@
         object-fit: cover;
     }
 
-.btn-form{
+.btn-form {
     background-color: #92d29b;
     color: white;
     padding: 10px 20px;
@@ -66,4 +75,5 @@
 
     .btn-form:hover {
         background-color: darkgreen;
+        transition: background-color 0.3s ease;
     }

@@ -6,6 +6,8 @@
 
 <link rel="stylesheet" href="~/css/Form.css" asp-append-version="true" />
 
+<h2 class="centered-heading">@ViewData["Title"]</h2>
+
 <div class="form-container">
     <form method="post" enctype="multipart/form-data" class="form">
         <div class="form-group">
@@ -52,10 +54,10 @@
             <span asp-validation-for="PhotoFile" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <button asp-area="" asp-controller="ClimbingTrip" asp-action="@(Model.IsEditModel ? "Edit" : "Add")" type="submit" class="btn btn-primary">@Html.Raw(Model.IsEditModel ? "Save" : "Add Trip")</button>
+        <div class="form">
+            <button asp-area="" asp-controller="ClimbingTrip" asp-action="@(Model.IsEditModel ? "Edit" : "Add")" type="submit" class="btn-form">@Html.Raw(Model.IsEditModel ? "Save" : "Add Trip")</button>
         </div>
     </form>
 
 </div>
-</div>
+

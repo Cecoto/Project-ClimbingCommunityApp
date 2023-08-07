@@ -18,8 +18,8 @@
     }
 
     .lastThree-card img {
-        width: 100%;
-        height: auto;
+        width: 1000px;
+        height: 800px;
         margin-bottom: 10px;
         border-radius: 8px;
         margin-top: 10px;
@@ -32,7 +32,7 @@
 /* Center the heading */
 .centered-heading {
     text-align: center;
-    font-size: 28px;
+    font-size: 32px;
     margin-bottom: 0px;
     letter-spacing: 6px;
     font-weight: 800;
@@ -71,15 +71,12 @@
 .edit-button {
     background-color: #ffd800;
     color: #fff;
-    padding: 10px 20px;
+    padding: 13px 34px;
     font-size: 25px;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    margin-bottom: 20px;
-    margin-top: 10px;
     align-self: flex-start;
-    margin-right:10px;
 }
 
     .edit-button:hover {
@@ -95,9 +92,10 @@
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    margin-bottom: 20px;
-    margin-top: 10px;
+    margin-bottom: 15px;
+    margin-top: 15px;
     align-self: flex-start;
+    border: none;
 }
 
     .delete-button:hover {

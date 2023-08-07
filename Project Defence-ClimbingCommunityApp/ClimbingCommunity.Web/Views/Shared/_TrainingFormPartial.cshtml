@@ -5,6 +5,7 @@
 }
 <link rel="stylesheet" href="~/css/Form.css" asp-append-version="true" />
 
+<h2 class="centered-heading">@ViewData["Title"]</h2>
 <div class="form-container">
     <form method="post" enctype="multipart/form-data" class="form">
         <div class="form-group">
@@ -57,11 +58,11 @@
 
         @if (Model.IsEditModel)
         {
-            <button asp-area="" asp-controller="Training" asp-action="Edit" type="submit" class="btn btn-primary">Save</button>
+            <button asp-area="" asp-controller="Training" asp-action="Edit" type="submit" class="btn-form">Save</button>
         }
         else
         {
-            <button asp-area="" asp-controller="Training" asp-action="Add" type="submit" class="btn btn-primary">Add Training</button>
+            <button asp-area="" asp-controller="Training" asp-action="Add" type="submit" class="btn-form">Add Training</button>
         }
     </form>
 </div>

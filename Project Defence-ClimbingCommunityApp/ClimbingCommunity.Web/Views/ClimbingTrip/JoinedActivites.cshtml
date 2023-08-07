@@ -40,14 +40,16 @@
                                 </form>
 
                             </div>
-                            <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
-                                Details
-                            </button>
-                            <div id="details-@trip.Id" class="collapse">
-                                <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
-                                <p><strong>Organizator:</strong> @trip.Organizator.FirstName @trip.Organizator.LastName</p>
-                                <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
-                                <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="buttoN">View Profile</a>
+                            <div class="details-container">
+                                <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@trip.Id">
+                                    Details
+                                </button>
+                                <div id="details-@trip.Id" class="collapse">
+                                    <img src="@trip.Organizator.ProfilePictureUrl" class="profile-pic">
+                                    <p><strong>Organizator:</strong> @trip.Organizator.FirstName @trip.Organizator.LastName</p>
+                                    <p><strong>Phone:</strong> @trip.Organizator.PhoneNumber</p>
+                                    <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@trip.Organizator.Id" class="buttoN">View Profile</a>
+                                </div>
                             </div>
                             <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@trip.Id" asp-route-activityType="ClimbingTrip" class="btn btn-primary comments-button">Comments</a>
 
@@ -89,16 +91,17 @@
                                 </form>
 
                             </div>
-                            <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@training.Id">
-                                Details
-                            </button>
-                            <div id="details-@training.Id" class="collapse">
-                                <img src="@training.Organizator.ProfilePictureUrl" class="profile-pic">
-                                <p><strong>Organizer:</strong> @training.Organizator.FirstName @training.Organizator.LastName</p>
-                                <p><strong>Phone:</strong> @training.Organizator.PhoneNumber</p>
-                                <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@training.Organizator.Id" class="buttoN">View Profile</a>
+                            <div class="details-container">
+                                <button class="btn btn-primary accordion-button" data-bs-toggle="collapse" data-bs-target="#details-@training.Id">
+                                    Details
+                                </button>
+                                <div id="details-@training.Id" class="collapse">
+                                    <img src="@training.Organizator.ProfilePictureUrl" class="profile-pic">
+                                    <p><strong>Organizer:</strong> @training.Organizator.FirstName @training.Organizator.LastName</p>
+                                    <p><strong>Phone:</strong> @training.Organizator.PhoneNumber</p>
+                                    <a asp-area="" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@training.Organizator.Id" class="buttoN">View Profile</a>
+                                </div>
                             </div>
-
                             <a asp-controller="Comment" asp-action="ActivityComments" asp-route-activityId="@training.Id" asp-route-activityType="Training" class="btn btn-primary comments-button">Comments</a>
 
                         </div>

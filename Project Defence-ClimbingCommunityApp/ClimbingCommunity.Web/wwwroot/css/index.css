@@ -1,9 +1,9 @@
 ﻿
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff;
-    margin-bottom: 300px;
+    background-color: #e6e6e6;
     padding: 0;
+    margin-bottom:300px;
 }
 
 .indexContainer {
@@ -53,9 +53,10 @@ a {
     }
 
 .footer {
-    background-color: #f7f7f7;
+    background-color: #fff;
     color: #fff;
     text-align: left;
+    box-shadow: 0 2px 4px rgba(0.3, 0, 0,0);
 }
 
     .footer .FAQ {
