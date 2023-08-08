@@ -22,7 +22,6 @@
             repo = _repo;
             imageService = _imageService;
 
-
         }
 
         public async Task CreateAsync(string organizatorId, ClimbingTripFormViewModel model)
@@ -274,5 +273,8 @@
 
             await repo.SaveChangesAsync();
         }
+
+
+
     }
 }

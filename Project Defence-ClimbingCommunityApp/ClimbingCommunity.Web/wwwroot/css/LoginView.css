@@ -7,7 +7,9 @@
 
 .form-group {
     margin-bottom: 20px;
+    color:whitesmoke;
 }
+
 .centered-heading {
     text-align: center;
     font-size: 32px;
@@ -15,7 +17,9 @@
     letter-spacing: 6px;
     font-weight: 800;
     margin-top: 20px;
+    color: whitesmoke;
 }
+
 .form-label {
     font-weight: bold;
 }
@@ -23,14 +27,16 @@
 .form-control {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid white;
     border-radius: 5px;
 }
 
 .text-danger {
     color: red;
 }
-
+.message{
+    color:whitesmoke;
+}
 .btn-login {
     background-color: #92d29b;
     color: white;
@@ -43,6 +49,7 @@
     .btn-login:hover {
         background-color: darkgreen;
     }
+
 .container {
     display: flex;
     justify-content: flex-start;

@@ -5,34 +5,36 @@
 @{
     ViewData["Title"] = "Login";
 }
+<body background="https://images.squarespace-cdn.com/content/v1/53ff4a5ce4b0946dd6956d37/1409251563817-2G016TMKSQQOUSHBJ5SG/Chin_x_low.jpg?format=2500w">
 
-<h2 class="centered-heading">Login</h2>
-<div class="container">
-    <form asp-action="Login" method="post" class="login-form">
-        <div class="form-group">
-            <label asp-for="EmailAddress" class="form-label"></label>
-            <input asp-for="EmailAddress" class="form-control" placeholder="Enter your email address" />
-            <span asp-validation-for="EmailAddress" class="text-danger"></span>
-        </div>
+    <h2 class="centered-heading">Login</h2>
+    <div class="container">
+        <form asp-action="Login" method="post" class="login-form">
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="form-label"></label>
+                <input asp-for="EmailAddress" class="form-control" placeholder="Enter your email address" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
 
-        <div class="form-group">
-            <label asp-for="Password" class="form-label"></label>
-            <input asp-for="Password" class="form-control" placeholder="Enter your password" type="password" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
+            <div class="form-group">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" placeholder="Enter your password" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
 
-        <div class="form-group text-center">
-            <button type="submit" class="btn btn-login">
-                Login
-            </button>
-        </div>
-    </form>
-   
-</div>
-<div>
-    <a>Don't have an account? Click <a class="link-primary" id="register-link">here</a> to register.</a>
-</div>
-<div id="popup-placeholder"> </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-login">
+                    Login
+                </button>
+            </div>
+        </form>
+
+    </div>
+    <div class="message">
+        <a>Don't have an account? Click <a class="link-primary" id="register-link">here</a> to register.</a>
+    </div>
+    <div id="popup-placeholder"> </div>
+</body>
 
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

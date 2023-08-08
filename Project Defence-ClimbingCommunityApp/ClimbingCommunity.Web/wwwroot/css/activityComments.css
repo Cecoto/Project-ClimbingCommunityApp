@@ -9,7 +9,7 @@
 .activity-comments-container {
     padding: 20px;
     border: 1px solid #e1e1e1;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #f9f9f9;
 }
     .activity-comments-container h2 {
@@ -20,23 +20,28 @@
         font-weight: 700;
         margin-top: 20px;
     }
+    
 
-.activity-img {
-    display: block;
-    margin: 20px auto;
-    max-width: 100%;
-    border: 1px solid #e1e1e1;
-    border-radius: 10px;
-}
+    .activity-img {
+        display: block;
+        margin: 20px auto;
+        max-width: 100%;
+        border: 1px solid #e1e1e1;
+        border-radius: 10px;
+        height:900px;
+        width:1200px;
+    }
 
 .comments-section {
+    
     margin-bottom: 20px;
 }
 
 .comment-item {
     border: 3px solid #e1e1e1;
     padding: 0px 10px;
-    border-radius:20px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 .comment-header {

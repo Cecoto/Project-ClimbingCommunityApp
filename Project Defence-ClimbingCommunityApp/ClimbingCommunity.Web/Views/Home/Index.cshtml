@@ -8,17 +8,20 @@
     <link rel="stylesheet" href="~/css/index.css" />
 </head>
 
-<body>
+<body background="https://images.squarespace-cdn.com/content/v1/53ff4a5ce4b0946dd6956d37/1409251563360-CWVRKQXIDAFOPRD5FB5A/20103011_Chad_2484-Edit.jpg?format=2500w">
     <div class="indexContainer">
-        <h1>Welcome to Our App</h1>
+        <h1 class="centered-heading">Welcome to Our App</h1>
 
         <p>Join our community and start your journey with us!</p>
 
-        <a class="cta-button" id="join-button" >Join Now</a>
-         <div id="popup-placeholder"></div>
+        <a class="cta-button" id="join-button">Join Now</a>
+        <div id="popup-placeholder"></div>
         <p>
-
-            <a asp-area="" asp-controller="User" asp-action="Login">Already a member of our community? Click here to login.</a>
+            <span>
+                Already a member of our community? Click
+            </span>
+            <a asp-area="" asp-controller="User" asp-action="Login">here</a>
+            <span>to login.</span>
         </p>
 
     </div>
