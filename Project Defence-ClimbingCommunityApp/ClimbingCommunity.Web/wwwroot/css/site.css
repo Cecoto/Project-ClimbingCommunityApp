@@ -13,9 +13,18 @@ html {
     min-height: 100%;
 }
 
-body {
+/*body {
     margin-bottom: 50px;
+}*/
+footer{
+    position:relative;
+    height:auto;
 }
+
+nav{
+    height:80px;
+}
+
 .logo {
     width: 250px; /* Adjust this value to control the width of the logo */
     height: 50px; /* Adjust this value to control the height of the logo */

@@ -2,8 +2,8 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #e6e6e6;
+    /*background-image: url(https://images.squarespace-cdn.com/content/v1/53ff4a5ce4b0946dd6956d37/1409251563817-2G016TMKSQQOUSHBJ5SG/Chin_x_low.jpg?format=2500w);*/
     padding: 0;
-    margin-bottom:300px;
 }
 
 .indexContainer {
@@ -43,9 +43,14 @@ p {
         color: white;
     }
 
+    .wrapper{
+       position:relative;
+       margin-bottom:150px;
+    }
 a {
     color: #007bff;
     text-decoration: double;
+    
 }
 
     a:hover {
@@ -56,12 +61,12 @@ a {
     background-color: #fff;
     color: #fff;
     text-align: left;
-    box-shadow: 0 2px 4px rgba(0.3, 0, 0,0);
 }
 
     .footer .FAQ {
         width: 150px;
-        font-size: 14px;
+        font-size: 18px;
+        line-height:40px;
     }
 
         .footer .FAQ a:hover {

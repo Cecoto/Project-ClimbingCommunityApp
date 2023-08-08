@@ -4,9 +4,9 @@
     ViewData["Title"] = "Comments section";
 }
 <link rel="stylesheet" href="~/css/activityComments.css" asp-append-version="true" />
-<h1 class="text-center mb-4">Comment Section</h1>
+<h1 class="centered-heading">Comment Section</h1>
 <div class="activity-comments-container">
-    <h2 class="centered-heading">@Model.Title</h2>
+    <h2 class="comment-title" >@Model.Title</h2>
     <img src="@Model.PhotoUrl" alt="Activity Photo" class="activity-img" />
 
     <div class="comments-section">
@@ -16,9 +16,9 @@
             {
                 <div class="comment-item">
                     <div class="comment-header">
-                        <a asp-controller="Profile" asp-action="UserProfile" asp-route-id="@comment.AuthorId">
+                        <a class="author-name" asp-controller="Profile" asp-action="UserProfile" asp-route-id="@comment.AuthorId">
                             <img src="@comment.Author.ProfilePictureUrl" width="25px" height="25px"></img>
-                            @comment.Author.FirstName @comment.Author.LastName
+                            @comment.Author.FirstName @comment.Author.LastName:
                             </a>
                         <span class="comment-date">@comment.CreatedOn.ToString("MM-dd-yyyy - HH:mm")</span>
                     </div>

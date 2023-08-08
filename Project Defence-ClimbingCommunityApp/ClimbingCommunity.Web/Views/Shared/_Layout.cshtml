@@ -25,7 +25,7 @@
                 <div class="container-fluid">
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
-                         if (User.IsInRole(ClimbingCommunity.Common.RoleConstants.Climber))
+                        if (User.IsInRole(ClimbingCommunity.Common.RoleConstants.Climber))
                         {
                             <a class="navbar-brand" asp-area="" asp-controller="ClimbingTrip" asp-action="LastThreeClimbingTrips">
                                 <img src="~/logo.png" alt="logo" class="logo" />
@@ -52,7 +52,7 @@
 
                             <a class="navbar-brand nav-button" asp-area="" asp-controller="Training" asp-action="MyTrainings">My Trainings</a>
                         }
-                         
+
                     }
 
                     else
@@ -92,18 +92,21 @@
 </body>
 <footer class="footer text-muted">
 
-    &copy; 2023 - Climbing Community App @ReleaseYear
-    @if (DateTime.UtcNow.Year != ReleaseYear)
-    {
-        @Html.Raw($" - {DateTime.UtcNow.Year}")
-        ;
+    <div class="div-footer">
 
-    }
-    <div class="FAQ">
+        &copy; 2023 - Climbing Community App @ReleaseYear
+        @if (DateTime.UtcNow.Year != ReleaseYear)
+        {
+            @Html.Raw($" - {DateTime.UtcNow.Year}")
+            ;
 
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FAQ">FAQ</a>
+        }
+        <div class="FAQ">
 
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="FAQ">FAQ</a>
+
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
+        </div>
     </div>
 
 </footer>

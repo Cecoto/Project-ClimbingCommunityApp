@@ -26,7 +26,8 @@
                 Text = newCommentText,
                 AuthorId = userId,
                 Author = await repo.GetByIdAsync<ApplicationUser>(userId),
-                isActive = true
+                isActive = true,
+                CreatedOn = DateTime.UtcNow
             };
             if (activityType == "ClimbingTrip")
             {

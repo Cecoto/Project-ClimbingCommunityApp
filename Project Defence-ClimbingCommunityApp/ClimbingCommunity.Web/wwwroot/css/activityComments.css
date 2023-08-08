@@ -1,66 +1,32 @@
-﻿/*.activity-comments-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.activity-img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-.comments-section {
-    margin-bottom: 30px;
-}
-
-.comment-item {
-    margin-bottom: 10px;
-}
-
-.add-comment-section {
-    margin-top: 30px;
-}
-
-    .add-comment-section h3 {
-        margin-bottom: 10px;
-    }
-
-.form-control {
-    resize: vertical;
-}
-
-.btn-primary {
-    margin-top: 10px;
-}
-
-.centered-heading {
+﻿.centered-heading {
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 32px;
+    margin-bottom: 40px;
     letter-spacing: 6px;
     font-weight: 800;
+    margin-top: 20px;
 }
-*/
 .activity-comments-container {
     padding: 20px;
     border: 1px solid #e1e1e1;
     border-radius: 5px;
     background-color: #f9f9f9;
 }
-
-.centered-heading {
-    text-align: center;
-}
+    .activity-comments-container h2 {
+        text-align: left;
+        font-size: 28px;
+        margin-bottom: 20px;
+        letter-spacing: 6px;
+        font-weight: 700;
+        margin-top: 20px;
+    }
 
 .activity-img {
     display: block;
     margin: 20px auto;
     max-width: 100%;
     border: 1px solid #e1e1e1;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .comments-section {
@@ -68,8 +34,9 @@
 }
 
 .comment-item {
-    border-bottom: 1px solid #e1e1e1;
-    padding: 10px 0;
+    border: 3px solid #e1e1e1;
+    padding: 0px 10px;
+    border-radius:20px;
 }
 
 .comment-header {
@@ -77,6 +44,15 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
+}
+    .comment-header img{
+        width:25px;
+        height:25px;
+        border-radius:50%;
+    }
+.author-name{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size:25px;
 }
 
 .comment-date {
@@ -99,6 +75,8 @@
 }
 
 .add-comment-heading {
+    font-weight:500;
+    letter-spacing:5px;
     margin-bottom: 10px;
 }
 
