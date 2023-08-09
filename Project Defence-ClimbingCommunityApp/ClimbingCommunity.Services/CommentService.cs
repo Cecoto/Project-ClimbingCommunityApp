@@ -29,6 +29,10 @@
                 isActive = true,
                 CreatedOn = DateTime.UtcNow
             };
+            if (newCommentText == null)
+            {
+                return;
+            }
             if (activityType == "ClimbingTrip")
             {
 
@@ -42,6 +46,11 @@
                 comment.TrainingId = Guid.Parse(activityId);
 
 
+            }
+            else
+            {
+               
+                return;
             }
 
             await repo.AddAsync<Comment>(comment);
@@ -93,7 +102,7 @@
                     })
                     .ToListAsync();
             }
-            else
+            else 
             {
                 return await repo.AllReadonly<Comment>(c => c.TrainingId == Guid.Parse(activityId))
                .Select(c => new CommentViewModel()
@@ -105,7 +114,9 @@
                })
                .ToListAsync();
             }
+            
         }
+
 
         public async Task<bool> IsActivityExistsByIdAndTypeAsync(string activityId, string activityType)
         {

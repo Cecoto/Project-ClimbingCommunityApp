@@ -11,8 +11,11 @@
 
         public async Task<string> SavePictureAsync(IFormFile picture, string dirName)
         {
-
-
+            if (dirName==string.Empty)
+            {
+                return string.Empty;
+                    
+            }
             string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(picture.FileName);
 
             string profilePicturesDirectory = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{dirName}");
