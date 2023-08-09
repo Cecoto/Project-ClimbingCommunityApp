@@ -30,7 +30,7 @@
 
                 model.PhotoUrl = await imageService.SavePictureAsync(model.PhotoFile, "Trainings");
             }
-
+            
             Training training = new Training()
             {
                 Title = model.Title,

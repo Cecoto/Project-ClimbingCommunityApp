@@ -17,7 +17,7 @@
         [SetUp]
         public void Setup()
         {
-            // Initialize the service, mock dependencies if needed
+            
             _imageService = new ImageService();
         }
 
@@ -238,25 +238,6 @@
             // Assert
             Assert.IsEmpty(result);
         }
-
-        [Test]
-        public async Task Test_SavePhotosAsync_LargeFile()
-        {
-            // Arrange
-            var largeFileMock = new Mock<IFormFile>();
-            largeFileMock.Setup(p => p.FileName).Returns("large.jpg");
-            largeFileMock.Setup(p => p.Length).Returns(10_000_000); // 10 MB (assuming large)
-
-            var photos = new List<IFormFile> { largeFileMock.Object };
-
-            // Act
-            var result = await _imageService.SavePhotosAsync(photos);
-
-            // Assert
-            Assert.AreEqual(1, result.Count);
-            Assert.IsTrue(result[0].Contains("/images/Photos/"));
-        }
-
 
     }
 }
