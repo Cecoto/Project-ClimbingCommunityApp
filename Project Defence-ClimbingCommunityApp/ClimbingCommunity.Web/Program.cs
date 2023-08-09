@@ -38,7 +38,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddApplicationServices(typeof(IUserService));
-
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminAccess", policy =>

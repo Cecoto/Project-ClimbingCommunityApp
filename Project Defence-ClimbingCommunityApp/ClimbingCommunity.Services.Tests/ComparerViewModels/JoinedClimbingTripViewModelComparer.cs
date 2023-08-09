@@ -8,11 +8,11 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class ClimbingTripViewModelComparer : IComparer, IComparer<ClimbingTripViewModel>
+    public class JoinedClimbingTripViewModelComparer : IComparer, IComparer<JoinedClimbingTripViewModel>
     {
         public int Compare(object x, object y)
         {
-            if (x is ClimbingTripViewModel xModel && y is ClimbingTripViewModel yModel)
+            if (x is JoinedClimbingTripViewModel xModel && y is JoinedClimbingTripViewModel yModel)
             {
                 return Compare(xModel, yModel);
             }
@@ -20,7 +20,7 @@
             return -1;
         }
 
-        public int Compare(ClimbingTripViewModel x, ClimbingTripViewModel y)
+        public int Compare(JoinedClimbingTripViewModel x, JoinedClimbingTripViewModel y)
         {
             if (x == null && y == null)
                 return 0;
@@ -32,7 +32,7 @@
                 return 1;
 
 
-            int idComparison = string.Compare(x.Id, y.Id,StringComparison.OrdinalIgnoreCase);
+            int idComparison = string.Compare(x.Id, y.Id, StringComparison.OrdinalIgnoreCase);
             if (idComparison != 0)
                 return idComparison;
 
@@ -59,5 +59,4 @@
             return 0;
         }
     }
-
 }

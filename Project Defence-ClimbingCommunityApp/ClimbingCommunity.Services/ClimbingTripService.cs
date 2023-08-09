@@ -84,13 +84,14 @@
 
         public async Task<IEnumerable<ClimbingTripViewModel>> GetAllClimbingByStringTripsAsync(string text)
         {
+            text = text.ToLower();
             return await repo.AllReadonly<ClimbingTrip>(ct => ct.IsActive == true || ct.IsActive == null)
                  .OrderByDescending(ct => ct.CreatedOn)
-                 .Where(ct => ct.Title.Contains(text) ||
-                 ct.TripType.Name.Contains(text) ||
-                 ct.Destination.Contains(text) ||
-                 ct.Organizator.FirstName.Contains(text) ||
-                 ct.Organizator.LastName.Contains(text))
+                 .Where(ct => ct.Title.ToLower().Contains(text) ||
+                 ct.TripType.Name.ToLower().Contains(text) ||
+                 ct.Destination.ToLower().Contains(text) ||
+                 ct.Organizator.FirstName.ToLower().Contains(text) ||
+                 ct.Organizator.LastName.ToLower().Contains(text))
                  .Select(ct => new ClimbingTripViewModel()
                  {
                      Id = ct.Id.ToString(),

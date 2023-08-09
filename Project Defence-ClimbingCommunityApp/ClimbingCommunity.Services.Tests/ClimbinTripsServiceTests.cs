@@ -17,6 +17,7 @@
     using ClimbingCommunity.Services.Tests.ComparerViewModels;
     using ClimbingCommunity.Services.Tests.Mocking;
     using NUnit.Framework.Internal;
+    using ClimbingCommunity.Web.ViewModels.AdminArea;
 
     [TestFixture]
     public class ClimbingTripServiceTests
@@ -947,20 +948,676 @@
 
             await Task.CompletedTask;
         }
-
         [Test]
-        public async Task Test_GetLastThreeClimbingTripsAsync()
+        public async Task Test_GetAllClimbingByStringTripsAsync_WithTitleFilter()
         {
             // Arrange
-            var tripData = TripsForTesting();
+            var searchText = "ing";
+            var tripsData = TripsForTesting();
 
-
-            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripData);
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
 
             _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
-                           .Returns(mockQueryable);
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
 
-            var expectedViewModels = tripData
+            IEnumerable<ClimbingTripViewModel> expectedViewModels = tripsData
+                .OrderByDescending(x => x.CreatedOn)
+                .Where(ct => ct.Title.Contains(searchText))
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingByStringTripsAsync(searchText);
+
+            // Assert
+
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllClimbingByStringTripsAsync_WithTripTypeFilter()
+        {
+            // Arrange
+            var searchText = "ing";
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            IEnumerable<ClimbingTripViewModel> expectedViewModels = tripsData
+                .OrderByDescending(x => x.CreatedOn)
+                .Where(ct => ct.TripType.Name.Contains(searchText))
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingByStringTripsAsync(searchText);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllClimbingByStringTripsAsync_WithDestinationFilter()
+        {
+            // Arrange
+            var searchText = "land";
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            IEnumerable<ClimbingTripViewModel> expectedViewModels = tripsData
+                .OrderByDescending(x => x.CreatedOn)
+                .Where(ct => ct.Destination.Contains(searchText)) // Match destination
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingByStringTripsAsync(searchText);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+
+        [Test]
+        public async Task Test_GetAllClimbingByStringTripsAsync_WithOrganizerFilter()
+        {
+            // Arrange
+            var searchText = "an";
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            IEnumerable<ClimbingTripViewModel> expectedViewModels = tripsData
+                .OrderByDescending(x => x.CreatedOn)
+                .Where(ct => ct.Organizator.FirstName.Contains(searchText) || ct.Organizator.LastName.Contains(searchText)) // Match organizer's name
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    Organizator = ct.Organizator
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingByStringTripsAsync(searchText);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+
+        [Test]
+        public async Task Test_GetAllClimbingByStringTripsAsync_WithNoMatchingFilters()
+        {
+            // Arrange
+            var searchText = "not found filter";
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(Enumerable.Empty<ClimbingTrip>());
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            IEnumerable<ClimbingTripViewModel> expectedViewModels = Enumerable.Empty<ClimbingTripViewModel>();
+            // Act
+            var result = await _climbingTripService.GetAllClimbingByStringTripsAsync(searchText);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllClimbingByStringTripsAsync_WithCombinedFilters()
+        {
+            // Arrange
+            var searchText = "Finland"; // Match both Title and Destination
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            IEnumerable<ClimbingTripViewModel> expectedViewModels = tripsData
+                .OrderByDescending(x => x.CreatedOn)
+                .Where(ct => ct.Title.Contains(searchText) || ct.Destination.Contains(searchText))
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingByStringTripsAsync(searchText);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllClimbingByStringTripsAsync_WithEmptySearchText()
+        {
+            // Arrange
+            var searchText = string.Empty;
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(Enumerable.Empty<ClimbingTrip>());
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            IEnumerable<ClimbingTripViewModel> expectedViewModels = Enumerable.Empty<ClimbingTripViewModel>();
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingByStringTripsAsync(searchText);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllClimbingByStringTripsAsync_WithCaseSensitiveSearchText()
+        {
+            // Arrange
+            var searchText = "FiNLand";
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            IEnumerable<ClimbingTripViewModel> expectedViewModels = tripsData
+                .OrderByDescending(x => x.CreatedOn)
+                .Where(ct => ct.Destination.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingByStringTripsAsync(searchText);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllClimbingTripsAsync_ReturnsAllActiveTrips()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    isOrganizator = false,
+                    Organizator = ct.Organizator,
+                    NumberOfParticipants = ct.Climbers.Count()
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+
+
+        [Test]
+        public async Task Test_GetAllClimbingTripsAsync_NoActiveTrips_ReturnsEmpty()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData.ForEach(trip => trip.IsActive = false);
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(Enumerable.Empty<ClimbingTrip>());
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            var expectedViewModels = Enumerable.Empty<ClimbingTripViewModel>();
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+
+        [Test]
+        public async Task Test_GetAllClimbingTripsAsync_WithParticipantsCount()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].Climbers.Add(new TripClimber());
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    isOrganizator = false,
+                    Organizator = ct.Organizator,
+                    NumberOfParticipants = ct.Climbers.Count()
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllClimbingTripsAsync_MixedActiveAndInactiveTrips()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].IsActive = false;
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable
+                           .OrderByDescending(x => x.CreatedOn)
+                           .Where(ct => ct.IsActive == true));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    isOrganizator = false,
+                    Organizator = ct.Organizator,
+                    NumberOfParticipants = ct.Climbers.Count()
+                });
+
+            // Act
+
+            var result = await _climbingTripService.GetAllClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+
+
+        }
+        [Test]
+        public async Task Test_GetAllClimbingTripsAsync_NoTrips_ReturnsEmpty()
+        {
+            // Arrange
+            var tripsData = new List<ClimbingTrip>();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(Enumerable.Empty<ClimbingTrip>());
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            var expectedViewModels = Enumerable.Empty<ClimbingTripViewModel>();
+
+            // Act
+            var result = await _climbingTripService.GetAllClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllJoinedClimbingTripsByUserIdAsync_UserJoinsMultipleActiveTrips()
+        {
+            // Arrange
+            var userId = "a923b58b-aa08-4b8d-881c-29f001074473";
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable
+                           .OrderByDescending(x => x.CreatedOn)
+                           .Where(ct => ct.IsActive == true && ct.Climbers.Any(c => c.ClimberId == userId)));
+
+            var expectedViewModels = tripsData
+                .Where(ct => (ct.IsActive == true || ct.IsActive == null) && ct.Climbers.Any(c => c.ClimberId == userId))
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new JoinedClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    Organizator = ct.Organizator,
+                    NumberOfParticipants = ct.Climbers.Count(),
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllJoinedClimbingTripsByUserIdAsync(userId);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new JoinedClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllJoinedClimbingTripsByUserIdAsync_InvalidUserIdJoinsNoTrips()
+        {
+            // Arrange
+            var userId = "user1"; // Replace with a valid user ID
+            var tripsData = TripsForTesting(); // User is not a climber in any trip
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable
+                           .OrderByDescending(x => x.CreatedOn)
+                           .Where(ct => ct.Climbers.Any(c => c.ClimberId == userId)));
+
+            var expectedViewModels = Enumerable.Empty<JoinedClimbingTripViewModel>();
+
+            // Act
+            var result = await _climbingTripService.GetAllJoinedClimbingTripsByUserIdAsync(userId);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new JoinedClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllJoinedClimbingTripsByUserIdAsync_UserJoinsOnlyOneTrip()
+        {
+            // Arrange
+            var userId = "3b699615-c307-4e09-ab9f-6f8c3538b248";
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable
+                           .OrderByDescending(x => x.CreatedOn)
+                           .Where(ct => ct.IsActive == true && ct.Climbers.Any(c => c.ClimberId == userId)));
+
+            var expectedViewModels = tripsData
+                .Where(ct => (ct.IsActive == true || ct.IsActive == null) && ct.Climbers.Any(c => c.ClimberId == userId))
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new JoinedClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    Organizator = ct.Organizator,
+                    NumberOfParticipants = ct.Climbers.Count(),
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllJoinedClimbingTripsByUserIdAsync(userId);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new JoinedClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllJoinedClimbingTripsByUserIdAsync_UserJoinsMultipleActiveAndUnActiveTrips()
+        {
+            // Arrange
+            var userId = "a923b58b-aa08-4b8d-881c-29f001074473";
+            var tripsData = TripsForTesting();
+            tripsData[1].IsActive = false;
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable
+                           .OrderByDescending(x => x.CreatedOn)
+                           .Where(ct => ct.IsActive == true && ct.Climbers.Any(c => c.ClimberId == userId)));
+
+            var expectedViewModels = tripsData
+                .Where(ct => (ct.IsActive == true || ct.IsActive == null) && ct.Climbers.Any(c => c.ClimberId == userId))
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new JoinedClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    Organizator = ct.Organizator,
+                    NumberOfParticipants = ct.Climbers.Count(),
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllJoinedClimbingTripsByUserIdAsync(userId);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new JoinedClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllTripsForAdminAsync_NoTripsExist()
+        {
+            // Arrange
+            var tripsData = new List<ClimbingTrip>(); // Empty list of trips
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>())
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            var expectedViewModels = Enumerable.Empty<AdminActivityViewModel>();
+
+            // Act
+            var result = await _climbingTripService.GetAllTripsForAdminAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new AdminActivityViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllTripsForAdminAsync_MultipleTripsExist()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>())
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn));
+
+            var expectedViewModels = tripsData
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new AdminActivityViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    CreatedOn = ct.CreatedOn.ToString("yyyy-MM-dd"),
+                    IsActive = ct.IsActive,
+                    Location = ct.Destination
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllTripsForAdminAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new AdminActivityViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllTripsForAdminAsync_TripsWithMixedActiveAndInactiveStatus()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].IsActive = false; // Inactive trip
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>())
+                           .Returns(mockQueryable
+                           .OrderByDescending(x => x.CreatedOn)
+                           .Where(ct=>ct.IsActive==true));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true)
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Select(ct => new AdminActivityViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    CreatedOn = ct.CreatedOn.ToString("yyyy-MM-dd"),
+                    IsActive = ct.IsActive,
+                    Location = ct.Destination
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllTripsForAdminAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new AdminActivityViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllTripsForAdminAsync_TripsWithInvalidDateCreatedOn()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].CreatedOn = DateTime.MinValue; // Trip with null CreatedOn date
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>())
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn)
+                           .Where(ct=>ct.CreatedOn.Year>2022));
+
+            var expectedViewModels = tripsData
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Where(ct => ct.CreatedOn.Year > 2022)
+                .Select(ct => new AdminActivityViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    CreatedOn = ct.CreatedOn.ToString("yyyy-MM-dd"), 
+                    IsActive = ct.IsActive,
+                    Location = ct.Destination
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllTripsForAdminAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new AdminActivityViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetAllTripsForAdminAsync_TripsWithNullLocation()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].Destination = null; // Trip with null Destination
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>())
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn)
+                           .Where(ct=>ct.Destination!=null));
+
+            var expectedViewModels = tripsData
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Where(ct => ct.Destination != null)
+                .Select(ct => new AdminActivityViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    CreatedOn = ct.CreatedOn.ToString("yyyy-MM-dd"),
+                    IsActive = ct.IsActive,
+                    Location = ct.Destination
+                });
+
+            // Act
+            var result = await _climbingTripService.GetAllTripsForAdminAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new AdminActivityViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetLastThreeClimbingTripsAsync_BasicCaseWithActiveTrips()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable
+                           .OrderByDescending(x => x.CreatedOn)
+                           .Take(3)
+                           .Where(ct=>ct.IsActive==true));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
                 .Take(3)
                 .Select(ct => new ClimbingTripViewModel
                 {
@@ -978,8 +1635,157 @@
             var result = await _climbingTripService.GetLastThreeClimbingTripsAsync();
 
             // Assert
-            CollectionAssert.AreEquivalent(expectedViewModels, result);
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
         }
+        [Test]
+        public async Task Test_GetLastThreeClimbingTripsAsync_ReturningOnlyTwoBecauseOtherInActive()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].IsActive = false;
+            tripsData[1].IsActive = false;
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable
+                           .OrderByDescending(x => x.CreatedOn)
+                           .Where(ct => ct.IsActive == true));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Take(3)
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    isOrganizator = false
+                });
+
+            // Act
+            var result = await _climbingTripService.GetLastThreeClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetLastThreeClimbingTripsAsync_MultipleTripsWithSameCreatedOnDate()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].CreatedOn = DateTime.UtcNow;
+            tripsData[1].CreatedOn = DateTime.UtcNow;
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn)
+                           .Where(ct => ct.IsActive == true)
+                           .Take(3));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Take(3)
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    isOrganizator = false
+                });
+
+            // Act
+            var result = await _climbingTripService.GetLastThreeClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetLastThreeClimbingTripsAsync_TripsWithDifferentTripTypes()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].TripType.Name = "Rope climbing";
+            tripsData[1].TripType.Name = "Bouldering";
+            tripsData[2].TripType.Name = "Sport climbing";
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn)
+                           .Where(ct=>ct.IsActive==true)
+                           .Take(3));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Take(3)
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    isOrganizator = false
+                });
+
+            // Act
+            var result = await _climbingTripService.GetLastThreeClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+        [Test]
+        public async Task Test_GetLastThreeClimbingTripsAsync_ReturnsOldestBecauseMostRecentIsInActive()
+        {
+            // Arrange
+            var tripsData = TripsForTesting();
+            tripsData[0].IsActive = false;
+
+            var mockQueryable = new MockAsyncEnumerable<ClimbingTrip>(tripsData);
+
+            _repositoryMock.Setup(repo => repo.AllReadonly<ClimbingTrip>(It.IsAny<Expression<Func<ClimbingTrip, bool>>>()))
+                           .Returns(mockQueryable.OrderByDescending(x => x.CreatedOn)
+                           .Where(ct=>ct.IsActive==true)
+                           .Take(3));
+
+            var expectedViewModels = tripsData
+                .Where(ct => ct.IsActive == true || ct.IsActive == null)
+                .OrderByDescending(ct => ct.CreatedOn)
+                .Take(3)
+                .Select(ct => new ClimbingTripViewModel
+                {
+                    Id = ct.Id.ToString(),
+                    Title = ct.Title,
+                    PhotoUrl = ct.PhotoUrl,
+                    Destination = ct.Destination,
+                    OrganizatorId = ct.OrganizatorId,
+                    Duration = ct.Duration,
+                    TripType = ct.TripType.Name,
+                    isOrganizator = false
+                });
+
+            // Act
+            var result = await _climbingTripService.GetLastThreeClimbingTripsAsync();
+
+            // Assert
+            CollectionAssert.AreEqual(expectedViewModels, result, new ClimbingTripViewModelComparer());
+        }
+
 
 
         private static List<ClimbingTrip> TripsForTesting()
@@ -989,40 +1795,111 @@
                 new ClimbingTrip
                 {
                     Id = Guid.NewGuid(),
-                    Title = "Trip 1",
+                    Title = "Finland solo climbing",
                     PhotoUrl = "photo1.jpg",
-                    Destination = "Destination 1",
+                    Destination = "FiNland",
                     OrganizatorId = "organizer1",
                     Duration = 5,
-                    TripType = new TripType { Id = 1, Name = "Type 1" },
+                    CreatedOn = DateTime.UtcNow,
+                    TripType = new TripType()
+                    {
+                        Id = 1,
+                        Name = "Rope climbing"
+                    },
+                    Organizator = new Climber()
+                    {
+                        FirstName = "Stoyan"
+                    },
                     IsActive = true,
-                    CreatedOn = DateTime.UtcNow.AddDays(-2)
+                    TripTypeId = 1,
+                    Climbers = {new TripClimber()
+                    {
+                        ClimberId = "a923b58b-aa08-4b8d-881c-29f001074473"
+                    },
+                       new TripClimber()
+                       {
+                           ClimberId="3b699615-c307-4e09-ab9f-6f8c3538b248"
+                       }
+                    }
                 },
                 new ClimbingTrip
                 {
                     Id = Guid.NewGuid(),
-                    Title = "Trip 2",
+                    Title = "Finland rope climbing",
                     PhotoUrl = "photo2.jpg",
-                    Destination = "Destination 2",
+                    Destination = "Finland",
                     OrganizatorId = "organizer2",
                     Duration = 7,
-                    TripType = new TripType { Id = 2, Name = "Type 2" },
+                    CreatedOn = DateTime.UtcNow.AddDays(-1),
+                    TripType = new TripType()
+                    {
+                        Id = 2,
+                        Name = "Bouldering"
+                    },
+                    Organizator = new Climber()
+                    {
+                        FirstName = "Hristyan"
+                    },
                     IsActive = true,
-                    CreatedOn = DateTime.UtcNow.AddDays(-3)
+                    TripTypeId = 2,
+                    Climbers = {new TripClimber()
+                    {
+                        ClimberId = "a923b58b-aa08-4b8d-881c-29f001074473"
+                    } }
                 },
                 new ClimbingTrip
                 {
                     Id = Guid.NewGuid(),
-                    Title = "Trip 3",
+                    Title = "Finland bouldering",
                     PhotoUrl = "photo3.jpg",
-                    Destination = "Destination 3",
+                    Destination = "Finland",
                     OrganizatorId = "organizer3",
                     Duration = 3,
-                    TripType = new TripType { Id = 3, Name = "Type 3" },
-                    IsActive = false,
-                    CreatedOn = DateTime.UtcNow.AddDays(-2)
+                    CreatedOn = DateTime.UtcNow.AddDays(-3),
+                    TripType = new TripType()
+                    {
+                        Id = 3,
+                        Name = "Bouldering"
+                    },
+                    Organizator = new Climber()
+                    {
+                        FirstName = "Ivan"
+                    },
+                    IsActive = true,
+                    TripTypeId= 3,
+                    Climbers = {new TripClimber()
+                    {
+                        ClimberId = "a923b58b-aa08-4b8d-881c-29f001074473"
+                    } }
+                },
+                new ClimbingTrip
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Finland solo climbing",
+                    PhotoUrl = "photo1.jpg",
+                    Destination = "FiNland",
+                    OrganizatorId = "organizer1",
+                    Duration = 5,
+                    CreatedOn = DateTime.UtcNow.AddDays(-10),
+                    TripType = new TripType()
+                    {
+                        Id = 1,
+                        Name = "Rope climbing"
+                    },
+                    Organizator = new Climber()
+                    {
+                        FirstName = "Stoyan"
+                    },
+                    IsActive = true,
+                    TripTypeId = 1,
+                    Climbers = {
+                        new TripClimber()
+                        {
+                            ClimberId = "a923b58b-aa08-4b8d-881c-29f001074473"
+                        }
+                    }
                 }
-          };
+            };
             return tripData;
         }
     }

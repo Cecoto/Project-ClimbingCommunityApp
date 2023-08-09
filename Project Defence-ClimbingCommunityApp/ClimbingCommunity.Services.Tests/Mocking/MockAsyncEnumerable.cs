@@ -9,13 +9,14 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class MockAsyncEnumerable<T> : IAsyncEnumerable<T>, IQueryable<T>
+    public class MockAsyncEnumerable<T> : IAsyncEnumerable<T>, IQueryable<T>,IOrderedQueryable<T>
     {
         private readonly IQueryable<T> _queryable;
 
         public MockAsyncEnumerable(IEnumerable<T> enumerable)
         {
             _queryable = enumerable.AsQueryable();
+
         }
 
         public MockAsyncEnumerable(Expression expression)
@@ -48,7 +49,6 @@
     public class MockAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
         private readonly IEnumerator<T> _enumerator;
-
         public MockAsyncEnumerator(IEnumerator<T> enumerator)
         {
             _enumerator = enumerator ?? throw new ArgumentNullException(nameof(enumerator));
