@@ -23,7 +23,7 @@ body {
 }
 
 p {
-    font-size:25px;
+    font-size:18px;
     color: #000000;
     margin-bottom: 20px;
 }
@@ -37,7 +37,7 @@ p {
     text-decoration: none;
     border-radius: 7px;
     transition: background-color 0.3s ease;
-    margin-bottom: 2px
+    margin-bottom: 0px
 }
 
     .nav-button:hover {
@@ -45,7 +45,7 @@ p {
         text-decoration: double;
         color: white;
     }
-
+    
     .wrapper{
        position:relative;
        margin-bottom:150px;
@@ -58,6 +58,7 @@ a {
 
     a:hover {
         text-decoration: underline;
+        cursor:pointer;
     }
 
 .footer {

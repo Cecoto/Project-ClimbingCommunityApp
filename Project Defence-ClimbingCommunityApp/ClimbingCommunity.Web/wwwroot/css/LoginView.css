@@ -9,7 +9,24 @@
     margin-bottom: 20px;
     color:whitesmoke;
 }
+body {
+    background-image: url("https://images.squarespace-cdn.com/content/v1/53ff4a5ce4b0946dd6956d37/1409251566185-6HFNF8WYI08PRQ7YULC2/MM7795_100606_00300-Edit.jpg?format=2500w");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom:500px;
+}
+/*.picture{
+    width:1300px;
+    height:800px;
+}
+img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    position:absolute;
+    z-index:-1;
 
+}*/
 .centered-heading {
     text-align: center;
     font-size: 32px;

@@ -1,16 +1,26 @@
-﻿h2 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 10px;
+﻿.centered-heading {
+    text-align: left;
+    font-size: 30px;
+    margin-bottom: 70px;
+    letter-spacing: 6px;
+    font-weight: 800;
+    margin-top: 20px;
+    color:whitesmoke;
 }
 
 p {
-    color: #666;
+    color: whitesmoke;
     font-size: 16px;
     line-height: 1.5;
     margin-bottom: 10px;
     margin-top:20px;
 
+}
+body {
+    background-image: url("https://images.squarespace-cdn.com/content/v1/53ff4a5ce4b0946dd6956d37/1412689380852-WR0U905C3CAUCF6D6Q0N/oman+1.png?format=2500w");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom:500px;
 }
 
 .cta-button {
@@ -23,7 +33,7 @@ p {
     border-radius: 4px;
     transition: background-color 0.3s ease;
     margin-bottom: 20px;
-    margin-top : 30px;
+    margin-top: 30px;
 }
 
     .cta-button:hover {

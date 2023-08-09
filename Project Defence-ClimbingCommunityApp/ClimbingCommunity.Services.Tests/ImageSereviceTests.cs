@@ -113,8 +113,150 @@
             Assert.NotNull(result);
             Assert.IsTrue(result.Contains($"/images/{dirName}/"));
         }
+        [Test]
+        public async Task Test_SavePictureAsync_FileSuccessfullySaved()
+        {
+            // Arrange
+            var pictureMock = new Mock<IFormFile>();
+            pictureMock.Setup(p => p.FileName).Returns("test.jpg");
+            pictureMock.Setup(p => p.CopyToAsync(It.IsAny<Stream>(), It.IsAny<CancellationToken>()))
+                       .Returns(Task.CompletedTask);
 
-        
+            var dirName = "testDir";
+
+            // Act
+            var result = await _imageService.SavePictureAsync(pictureMock.Object, dirName);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsTrue(result.Contains($"/images/{dirName}/"));
+
+            var expectedFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot/images/{dirName}");
+            Assert.True(Directory.Exists(expectedFilePath));
+
+            var expectedFullPath = Path.Combine(expectedFilePath, result.Replace($"/images/{dirName}/", ""));
+            Assert.True(File.Exists(expectedFullPath));
+        }
+        [Test]
+        public void Test_DeletePicture_FileExists()
+        {
+            // Arrange
+            var imagePath = "/images/test.jpg";
+            var wwwrootPath = Directory.GetCurrentDirectory();
+            var fullPath = Path.Combine(wwwrootPath, "wwwroot" + imagePath);
+
+            // Create a dummy file
+            File.WriteAllText(fullPath, "Test content");
+
+            // Act
+            _imageService.DeletePicture(imagePath);
+
+            // Assert
+            Assert.IsFalse(File.Exists(fullPath));
+        }
+
+        [Test]
+        public void Test_DeletePicture_FileDoesNotExist()
+        {
+            // Arrange
+            var imagePath = "/images/nonexistent.jpg";
+            var wwwrootPath = Directory.GetCurrentDirectory();
+            var fullPath = Path.Combine(wwwrootPath, "wwwroot" + imagePath);
+
+            // Act
+            _imageService.DeletePicture(imagePath);
+
+            // Assert
+            Assert.IsFalse(File.Exists(fullPath)); 
+        }
+
+        [Test]
+        public void Test_DeletePicture_EmptyImagePath()
+        {
+            // Arrange
+            var imagePath = ""; 
+
+            // Act & Assert
+            Assert.DoesNotThrow(() =>
+            {
+                _imageService.DeletePicture(imagePath); 
+            });
+        }
+
+        [Test]
+        public void Test_DeletePicture_NullImagePath()
+        {
+            // Arrange
+            string imagePath = null; 
+
+            // Act & Assert
+            Assert.DoesNotThrow(() =>
+            {
+                _imageService.DeletePicture(imagePath); 
+            });
+        }
+
+        [Test]
+        public void Test_DeletePicture_InvalidImagePath()
+        {
+            // Arrange
+            var imagePath = "/invalid-path.jpg"; 
+
+            // Act & Assert
+            Assert.DoesNotThrow(() =>
+            {
+                _imageService.DeletePicture(imagePath); 
+            });
+        }
+        [Test]
+        public async Task Test_SavePhotosAsync_EmptyList()
+        {
+            // Arrange
+            var photos = new List<IFormFile>();
+
+            // Act
+            var result = await _imageService.SavePhotosAsync(photos);
+
+            // Assert
+            Assert.IsEmpty(result);
+        }
+
+
+        [Test]
+        public async Task Test_SavePhotosAsync_FilesWithNoContent()
+        {
+            // Arrange
+            var emptyFileMock = new Mock<IFormFile>();
+            emptyFileMock.Setup(p => p.FileName).Returns("empty.jpg");
+            emptyFileMock.Setup(p => p.Length).Returns(0);
+
+            var photos = new List<IFormFile> { emptyFileMock.Object };
+
+            // Act
+            var result = await _imageService.SavePhotosAsync(photos);
+
+            // Assert
+            Assert.IsEmpty(result);
+        }
+
+        [Test]
+        public async Task Test_SavePhotosAsync_LargeFile()
+        {
+            // Arrange
+            var largeFileMock = new Mock<IFormFile>();
+            largeFileMock.Setup(p => p.FileName).Returns("large.jpg");
+            largeFileMock.Setup(p => p.Length).Returns(10_000_000); // 10 MB (assuming large)
+
+            var photos = new List<IFormFile> { largeFileMock.Object };
+
+            // Act
+            var result = await _imageService.SavePhotosAsync(photos);
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.IsTrue(result[0].Contains("/images/Photos/"));
+        }
+
 
     }
 }
