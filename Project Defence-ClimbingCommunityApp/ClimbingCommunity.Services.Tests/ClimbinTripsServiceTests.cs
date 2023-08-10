@@ -11,13 +11,13 @@
     using System.Linq.Expressions;
     using System.Text;
     using System.Threading.Tasks;
-    using WebShopDemo.Core.Data.Common;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Query;
     using ClimbingCommunity.Services.Tests.ComparerViewModels;
     using ClimbingCommunity.Services.Tests.Mocking;
     using NUnit.Framework.Internal;
     using ClimbingCommunity.Web.ViewModels.AdminArea;
+    using ClimbingCommunity.Data.Common;
 
     [TestFixture]
     public class ClimbingTripServiceTests

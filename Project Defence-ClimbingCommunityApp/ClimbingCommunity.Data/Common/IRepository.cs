@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace WebShopDemo.Core.Data.Common
+namespace ClimbingCommunity.Data.Common
 {
     /// <summary>
     /// Abstraction of repository access methods
@@ -39,7 +39,7 @@ namespace WebShopDemo.Core.Data.Common
         /// <param name="search"></param>
         /// <param name="includes"></param>
         /// <returns>Expression tree</returns>
-        IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search,params Expression<Func<T, object>>[] includes) where T : class;
+        IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search, params Expression<Func<T, object>>[] includes) where T : class;
 
         /// <summary>
         /// Gets specific record from database by primary key

@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Services
 {
+    using ClimbingCommunity.Data.Common;
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.Comment;
@@ -8,7 +9,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using WebShopDemo.Core.Data.Common;
 
 
     public class CommentService : ICommentService

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace WebShopDemo.Core.Data.Common
+namespace ClimbingCommunity.Data.Common
 {
     /// <summary>
     /// Implementation of repository access methods
@@ -28,11 +28,11 @@ namespace WebShopDemo.Core.Data.Common
         /// </summary>
         protected DbSet<T> DbSet<T>() where T : class
         {
-            return this.Context.Set<T>();
+            return Context.Set<T>();
         }
         public Repository(ClimbingCommunityDbContext context)
         {
-            this.Context = context;
+            Context = context;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace WebShopDemo.Core.Data.Common
 
         public IQueryable<T> All<T>(Expression<Func<T, bool>> search) where T : class
         {
-            return this.DbSet<T>().Where(search).AsQueryable();
+            return DbSet<T>().Where(search).AsQueryable();
         }
 
         /// <summary>
@@ -73,13 +73,13 @@ namespace WebShopDemo.Core.Data.Common
         /// <returns>Expression tree</returns>
         public IQueryable<T> AllReadonly<T>() where T : class
         {
-            return this.DbSet<T>()
+            return DbSet<T>()
                 .AsQueryable()
                 .AsNoTracking();
         }
         public IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class
         {
-            return this.DbSet<T>()
+            return DbSet<T>()
                 .Where(search)
                 .AsQueryable()
                 .AsNoTracking();
@@ -110,7 +110,7 @@ namespace WebShopDemo.Core.Data.Common
         {
             T entity = await GetByIdAsync<T>(id);
 
-            Delete<T>(entity);
+            Delete(entity);
         }
 
         /// <summary>
@@ -134,11 +134,11 @@ namespace WebShopDemo.Core.Data.Common
         /// <param name="entity">Entity representing record to be deleted</param>
         public void Delete<T>(T entity) where T : class
         {
-            EntityEntry entry = this.Context.Entry(entity);
+            EntityEntry entry = Context.Entry(entity);
 
             if (entry.State == EntityState.Detached)
             {
-                this.DbSet<T>().Attach(entity);
+                DbSet<T>().Attach(entity);
             }
 
             entry.State = EntityState.Deleted;
@@ -150,7 +150,7 @@ namespace WebShopDemo.Core.Data.Common
         /// <param name="entity">Entity to be detached</param>
         public void Detach<T>(T entity) where T : class
         {
-            EntityEntry entry = this.Context.Entry(entity);
+            EntityEntry entry = Context.Entry(entity);
 
             entry.State = EntityState.Detached;
         }
@@ -162,7 +162,7 @@ namespace WebShopDemo.Core.Data.Common
         /// </summary>
         public void Dispose()
         {
-            this.Context.Dispose();
+            Context.Dispose();
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace WebShopDemo.Core.Data.Common
 
         public async Task<T> GetByIdIncludingAsync<T>(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties) where T : class
         {
-            var query = this.Context.Set<T>().AsQueryable();
+            var query = Context.Set<T>().AsQueryable();
 
             foreach (var includeProperty in includeProperties)
             {
@@ -199,7 +199,7 @@ namespace WebShopDemo.Core.Data.Common
         /// <returns>Error code</returns>
         public int SaveChanges()
         {
-            return this.Context.SaveChanges();
+            return Context.SaveChanges();
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace WebShopDemo.Core.Data.Common
         /// <returns>Error code</returns>
         public async Task<int> SaveChangesAsync()
         {
-            return await this.Context.SaveChangesAsync();
+            return await Context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace WebShopDemo.Core.Data.Common
         /// <param name="entity">Entity for record to be updated</param>
         public void Update<T>(T entity) where T : class
         {
-            this.DbSet<T>().Update(entity);
+            DbSet<T>().Update(entity);
         }
 
         /// <summary>
@@ -226,17 +226,17 @@ namespace WebShopDemo.Core.Data.Common
         /// <param name="entities">Enumerable collection of entities to be updated</param>
         public void UpdateRange<T>(IEnumerable<T> entities) where T : class
         {
-            this.DbSet<T>().UpdateRange(entities);
+            DbSet<T>().UpdateRange(entities);
         }
 
         public void DeleteRange<T>(IEnumerable<T> entities) where T : class
         {
-            this.DbSet<T>().RemoveRange(entities);
+            DbSet<T>().RemoveRange(entities);
         }
 
         public void DeleteRange<T>(Expression<Func<T, bool>> deleteWhereClause) where T : class
         {
-            var entities = All<T>(deleteWhereClause);
+            var entities = All(deleteWhereClause);
             DeleteRange(entities);
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Services
 {
+    using ClimbingCommunity.Data.Common;
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.AdminArea;
@@ -8,7 +9,6 @@
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using WebShopDemo.Core.Data.Common;
     using static System.Net.Mime.MediaTypeNames;
 
 

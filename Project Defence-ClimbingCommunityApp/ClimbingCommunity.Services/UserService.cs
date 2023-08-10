@@ -8,11 +8,11 @@
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.User.Climber;
-    using WebShopDemo.Core.Data.Common;
     using ClimbingCommunity.Web.ViewModels.Profile;
     using Microsoft.AspNetCore.Http;
     using ClimbingCommunity.Web.ViewModels.AdminArea;
     using ClimbingCommunity.Common;
+    using ClimbingCommunity.Data.Common;
 
     public class UserService : IUserService
     {

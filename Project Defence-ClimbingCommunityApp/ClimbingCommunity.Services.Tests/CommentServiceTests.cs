@@ -1,5 +1,6 @@
 ﻿namespace ClimbingCommunity.Services.Tests
 {
+    using ClimbingCommunity.Data.Common;
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Tests.ComparerViewModels;
     using ClimbingCommunity.Services.Tests.Mocking;
@@ -11,7 +12,6 @@
     using System.Linq.Expressions;
     using System.Text;
     using System.Threading.Tasks;
-    using WebShopDemo.Core.Data.Common;
 
     [TestFixture]
     public class CommentServiceTests

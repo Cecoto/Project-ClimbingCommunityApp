@@ -1,12 +1,12 @@
 namespace ClimbingCommunity.Services.Tests
 {
     using ClimbingCommunity.Common;
+    using ClimbingCommunity.Data.Common;
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
     using Microsoft.AspNetCore.Identity;
     using Moq;
     using NUnit.Framework.Internal;
-    using WebShopDemo.Core.Data.Common;
 
     [TestFixture]
     public class AdminServiceTests

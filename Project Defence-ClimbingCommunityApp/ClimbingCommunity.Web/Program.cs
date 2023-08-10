@@ -6,9 +6,7 @@ using ClimbingCommunity.Data.Models;
 using ClimbingCommunity.Services.Contracts;
 using ClimbingCommunity.Web.Infrastructure.Extensions;
 using ClimbingCommunity.Web.Infrastructure.ModelBinders;
-using WebShopDemo.Core.Data.Common;
-
-
+using ClimbingCommunity.Data.Common;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

@@ -1,12 +1,12 @@
 ﻿namespace ClimbingCommunity.Services
 {
     using ClimbingCommunity.Common;
+    using ClimbingCommunity.Data.Common;
     using ClimbingCommunity.Data.Models;
     using ClimbingCommunity.Services.Contracts;
     using Microsoft.AspNetCore.Identity;
     using System;
     using System.Threading.Tasks;
-    using WebShopDemo.Core.Data.Common;
 
     public class AdminService : IAdminService
     {
