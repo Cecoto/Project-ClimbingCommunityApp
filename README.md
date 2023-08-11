@@ -16,24 +16,48 @@
 <a id="overview"></a>
 ## Overview
 The Climbing Community application is a platform designed to bring climbing enthusiasts together. It offers a range of features including training programs, events, and user profiles for climbers and coaches. Users can easily find and join training sessions, view coach profiles, upload photos, and interact with fellow climbers in a dedicated community space. With its user-friendly interface and comprehensive functionalities, Climbing Community aims to foster a thriving community of climbers and coaches.
+
+"Climbing community" have to four user types: three registered and one unregistered.
+
+1.Administrator
+
+- Admins can Create, Read, Edit, and Delete all pages ,can comment, and users to roles and create new roles. Also have access to user current status online or offline.
+
+2.Climber
+
+- Climber can Create, Read, Edit, and Delete Climbing trips. They can join and leave other climbing trips and also can join trainings created by coaches, and can comment posts.
+
+3.Coach user
+
+ - Coaches can Create, Read, Edit, and Delete Trainings.They have access to watch climbers posts and comment posts.
+
+4.Guest User
+
+ - Unregistered users can view only the Home page, FAQ and About us pages. Also can reach regisster and login pages.
+
 <a id="getting-started"></a>
 ## Getting started
-o access the project, download the project's zip file and open it with Visual Studio or another IDE. Ensure you have SQL Server Management Studio (SMSS) installed.
+To access the project, download the project's zip file and open it with Visual Studio or another IDE. Ensure you have SQL Server Management Studio (SMSS) installed.
 Add a connection string to the "Manage Secrets JSON" and also add admin credential you want to use as admin after that.You can use that for easier setup:
 
+```
 "ConnectionStrings": {
-    "DefaultConnection": "Server=;Database="";Trusted_Connection=True;MultipleActiveResultSets=true"
+    "DefaultConnection": "Server=YourServer;Database="SomeDbName";Trusted_Connection=True;MultipleActiveResultSets=true" 
   },
   "AdminSettings": {
-    "AdminEmail": "admin@climbingcommunity.com",
-    "AdminPassword": "admin123456"
+     "AdminEmail": "admin@climbingcommunity.com",
+     "AdminPassword": "admin123456"    
   }
+```
   
 This step will change once the application is deployed.Create initial migration via the "package manager Control" to see the test data. You can use the following commands:
 
 Add-Migration initial
 
 Update-Database
+
+<a id="credentials"></a>
+## Credetials
 
 <a id="build-wtih"></a>
 ## Build with
