@@ -27,7 +27,7 @@
                 AuthorId = userId,
                 Author = await repo.GetByIdAsync<ApplicationUser>(userId),
                 isActive = true,
-                CreatedOn = DateTime.UtcNow
+                CreatedOn = DateTime.Now
             };
             if (newCommentText == null)
             {

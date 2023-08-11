@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClimbingCommunity.Data.Migrations
 {
     [DbContext(typeof(ClimbingCommunityDbContext))]
-    [Migration("20230806100330_AddedCreatedOnToCommentEntity")]
-    partial class AddedCreatedOnToCommentEntity
+    [Migration("20230811113603_AddCreatedOnColumnToCommentEntity")]
+    partial class AddCreatedOnColumnToCommentEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,19 +227,19 @@ namespace ClimbingCommunity.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4b74d555-f6ba-4726-a493-4ce06b2de221"),
+                            Id = new Guid("ea30b7d9-4924-4743-bddc-efc9c0a1a4ce"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Destination = "France, Fontainebleau",
                             Duration = 10,
                             IsActive = true,
                             OrganizatorId = "930cb0dc-0c2c-4e74-a885-d93f862588fb",
-                            PhotoUrl = "\"~/images/ClimbingTrips/Font.jpg\"",
+                            PhotoUrl = "~/images/ClimbingTrips/Font.jpg",
                             Title = "First Climbing Trip",
                             TripTypeId = 1
                         },
                         new
                         {
-                            Id = new Guid("bf006687-4a59-4ba1-aecb-7a8a48cafb13"),
+                            Id = new Guid("c13681e3-da5e-447c-ac3f-94285b1a2e5b"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Destination = "South Afrika, Capetown",
                             Duration = 20,
@@ -251,7 +251,7 @@ namespace ClimbingCommunity.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f949f386-dbca-48fb-a847-19d2e516926a"),
+                            Id = new Guid("ca27c662-2ca4-45f6-8d13-6e8a1129c18b"),
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Destination = "Spain, Mallorca",
                             Duration = 5,

@@ -32,7 +32,7 @@
                 TripTypeId = 1,
                 OrganizatorId = "930cb0dc-0c2c-4e74-a885-d93f862588fb",
                 IsActive = true,
-                PhotoUrl = "\"~/images/ClimbingTrips/Font.jpg\""
+                PhotoUrl = "~/images/ClimbingTrips/Font.jpg"
             });
             trips.Add(new ClimbingTrip
             {
