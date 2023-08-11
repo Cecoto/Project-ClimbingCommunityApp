@@ -11,7 +11,8 @@
 - [Features](#features)
 - [License](#license)
 - [Contact](#contact)
-
+- [Gallery](#gallery)
+  
 <a id="overview"></a>
 ## Overview
 The Climbing Community application is a platform designed to bring climbing enthusiasts together. It offers a range of features including training programs, events, and user profiles for climbers and coaches. Users can easily find and join training sessions, view coach profiles, upload photos, and interact with fellow climbers in a dedicated community space. With its user-friendly interface and comprehensive functionalities, Climbing Community aims to foster a thriving community of climbers and coaches.
@@ -114,7 +115,32 @@ Get started quickly with installation steps, usage guidelines, and prerequisites
 ### Testing
 Our application is thoroughly tested through unit tests and integration tests.
 Trust in our commitment to delivering a reliable and bug-free experience.
-
+<a id="gallery"></a>
+## Gallery
+### Home page - guest users
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/869e81fa-57f2-41c3-8fba-c3eeb93e2d44)
+### FAQ page
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/a2eab675-a9d9-4272-934b-202ac4a612ca)
+### About us page
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/764b4757-fb52-4ab5-9c80-2e70105007f3)
+### Pop up page
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/6968fe81-49c9-4110-8a98-c792634a7ec6)
+###Register Climber page
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/30e4d83f-853f-4b3c-bc52-f3d8e5a4a470)
+### Registet Coach page
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/caf9c9cd-072d-4584-a2c2-9b3982ce8168)
+### LoginPage
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/0cdbc86c-5e2f-404a-94c3-153d5d9c0f08)
+### Home page for logged in users
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/fd096fe7-0709-43ae-ac01-3ce742a164d6)
+### Users Profile page
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/d740007b-1176-42fe-a00e-59b91a3bcfdb)
+### All page
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/92d00c92-c89a-49fc-9829-042a42677e78)
+### Admin pages
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/85e3775d-3fdb-40da-adea-63dd558da85f)
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/43aba76f-1da3-46d0-a927-8b75c5e1172d)
+![image](https://github.com/Cecoto/Project-ClimbingCommunityApp/assets/106250052/559c0ce9-b3af-4536-8115-6d25bf785a53)
 <a id="contact"></a>
 ## Contact
 If you have any questions, suggestions, or feedback, please feel free to contact us:
