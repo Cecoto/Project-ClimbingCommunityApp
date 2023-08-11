@@ -11,20 +11,19 @@
 - [Usage](#usage)
 - [License](#license)
 - [Contact](#contact)
-- [Galery](#gallery)
 
 <a id="overview"></a>
 ## Overview
 The Climbing Community application is a platform designed to bring climbing enthusiasts together. It offers a range of features including training programs, events, and user profiles for climbers and coaches. Users can easily find and join training sessions, view coach profiles, upload photos, and interact with fellow climbers in a dedicated community space. With its user-friendly interface and comprehensive functionalities, Climbing Community aims to foster a thriving community of climbers and coaches.
-#### [Back to Table of Contents](#table_of_contents)
+#### [Back to Table of Contents](#table-of-contents)
 
 <a id="features"></a>
 ## Features
 Welcome to ClimbingCommunity, a web application designed to enhance your climbing experience. Explore the exciting features that our platform offers:
 
 ### User Management
-Create a personalized account as a climber, coach, or administrator.
-Update your profile with essential details and showcase your climbing experience.
+Create a personalized account as a climber, coach.
+Update your profile with essential details and showcase your experience.
 
 ### Training Management
 Browse through a diverse selection of training sessions, each with detailed information and organizers' details.
@@ -69,4 +68,4 @@ Get started quickly with installation steps, usage guidelines, and prerequisites
 Our application is thoroughly tested through unit tests and integration tests.
 Trust in our commitment to delivering a reliable and bug-free experience.
 
-# [Back to Table of Contents](#table-of-contents)
+#### [Back to Table of Contents](#table-of-contents)
