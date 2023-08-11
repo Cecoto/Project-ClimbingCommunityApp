@@ -16,6 +16,24 @@
 <a id="overview"></a>
 ## Overview
 The Climbing Community application is a platform designed to bring climbing enthusiasts together. It offers a range of features including training programs, events, and user profiles for climbers and coaches. Users can easily find and join training sessions, view coach profiles, upload photos, and interact with fellow climbers in a dedicated community space. With its user-friendly interface and comprehensive functionalities, Climbing Community aims to foster a thriving community of climbers and coaches.
+<a id="getting-started"></a>
+## Getting started
+o access the project, download the project's zip file and open it with Visual Studio or another IDE. Ensure you have SQL Server Management Studio (SMSS) installed.
+Add a connection string to the "Manage Secrets JSON" and also add admin credential you want to use as admin after that.You can use that for easier setup:
+
+"ConnectionStrings": {
+    "DefaultConnection": "Server=;Database="";Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+  "AdminSettings": {
+    "AdminEmail": "admin@climbingcommunity.com",
+    "AdminPassword": "admin123456"
+  }
+  
+This step will change once the application is deployed.Create initial migration via the "package manager Control" to see the test data. You can use the following commands:
+
+Add-Migration initial
+
+Update-Database
 
 <a id="build-wtih"></a>
 ## Build with
@@ -27,6 +45,7 @@ The Climbing Community application is a platform designed to bring climbing enth
 * HTML&CSS
 * TempData messages
 * NUnit
+
 <a id="features"></a>
 ## Features
 Welcome to ClimbingCommunity, a web application designed to enhance your climbing experience. Explore the exciting features that our platform offers:
@@ -82,10 +101,11 @@ Trust in our commitment to delivering a reliable and bug-free experience.
 ## Contact
 If you have any questions, suggestions, or feedback, please feel free to contact us:
 
-Email: cecohristov97@gmail.com
+- Email: cecohristov97@gmail.com
+
 We appreciate your interest and engagement with the Climbing Community project! Your input helps us improve and grow the platform.
 
 <a id="license"></a>
 ## License
-This project is licensed under the [MIT License](LICENSE.md). Feel free to use, modify, and distribute the code according to the terms of the license.
+This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code according to the terms of the license.
 
