@@ -8,7 +8,6 @@
 - [Overview](#overview)
 - [Build with](#build-with)
 - [Getting Started](#getting-started)
-- [Credentials](#credentials)
 - [Features](#features)
 - [License](#license)
 - [Contact](#contact)
@@ -52,12 +51,7 @@ Add a connection string to the "Manage Secrets JSON" and also add admin credenti
   
 This step will change once the application is deployed.Create initial migration via the "package manager Control" to see the test data. You can use the following commands:
 
-Add-Migration initial
-
 Update-Database
-
-<a id="credentials"></a>
-## Credetials
 
 <a id="build-wtih"></a>
 ## Build with
