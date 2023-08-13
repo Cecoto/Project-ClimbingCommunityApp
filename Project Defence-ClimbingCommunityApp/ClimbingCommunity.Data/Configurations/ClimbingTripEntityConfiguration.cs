@@ -30,7 +30,7 @@
                 Destination = "France, Fontainebleau",
                 Duration = 10,
                 TripTypeId = 1,
-                OrganizatorId = "930cb0dc-0c2c-4e74-a885-d93f862588fb",
+                OrganizatorId = "5366c21a-db2f-4293-9ee4-f93fc22c2450",
                 IsActive = true,
                 PhotoUrl = "~/images/ClimbingTrips/Font.jpg"
             });
@@ -40,7 +40,7 @@
                 Destination = "South Afrika, Capetown",
                 Duration = 20,
                 TripTypeId = 1,
-                OrganizatorId = "930cb0dc-0c2c-4e74-a885-d93f862588fb",
+                OrganizatorId = "5366c21a-db2f-4293-9ee4-f93fc22c2450",
                 IsActive = true,
                 PhotoUrl = "~/images/ClimbingTrips/Rocklands.webp"
             });
@@ -50,7 +50,7 @@
                 Destination = "Spain, Mallorca",
                 Duration = 5,
                 TripTypeId = 3,
-                OrganizatorId = "930cb0dc-0c2c-4e74-a885-d93f862588fb",
+                OrganizatorId = "5366c21a-db2f-4293-9ee4-f93fc22c2450",
                 IsActive = true,
                 PhotoUrl = "~/images/ClimbingTrips/Mallorca.jpg"
             });

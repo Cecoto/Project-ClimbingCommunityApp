@@ -103,7 +103,7 @@
                         UserType = Administrator,
                         FirstName = "Admin",
                         LastName = "",
-                        ProfilePictureUrl = "/images/ProfilePictures/Admin2.webp"
+                        ProfilePictureUrl = "/images/ProfilePictures/Default/Admin2.webp"
 
                     };
                     await userManager.CreateAsync(adminUser, password);

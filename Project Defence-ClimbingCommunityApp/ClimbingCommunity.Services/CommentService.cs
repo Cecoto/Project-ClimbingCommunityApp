@@ -110,7 +110,8 @@
                    Id = c.Id,
                    Text = c.Text,
                    AuthorId = c.AuthorId,
-                   Author = c.Author
+                   Author = c.Author,
+                   CreatedOn = c.CreatedOn,
                })
                .ToListAsync();
             }
