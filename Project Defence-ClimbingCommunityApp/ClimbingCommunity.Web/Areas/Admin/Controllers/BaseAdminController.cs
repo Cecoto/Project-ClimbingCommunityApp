@@ -7,16 +7,25 @@
     using static Common.RoleConstants;
     using static Common.NotificationMessageConstants;
     using ClimbingCommunity.Common;
-
+    /// <summary>
+    /// Base admin controller only for admin area.
+    /// </summary>
     [Area(AdminAreaName)]
     [Authorize(Roles = Administrator)]
     [AutoValidateAntiforgeryToken]
     public class BaseAdminController : Controller
     {
-
+        /// <summary>
+        /// Get method for getting current user ID.
+        /// </summary>
+        /// <returns></returns>
         protected string? GetUserId()
      => User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
+        /// <summary>
+        /// General error in admin area
+        /// </summary>
+        /// <returns></returns>
         protected IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administrator.";

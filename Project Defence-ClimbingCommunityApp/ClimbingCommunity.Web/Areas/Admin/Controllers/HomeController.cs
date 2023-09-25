@@ -8,16 +8,28 @@
     using Microsoft.AspNetCore.Mvc;
 
     using static Common.NotificationMessageConstants;
+    /// <summary>
+    /// Home controller of the admin area
+    /// </summary>
     public class HomeController : BaseAdminController
     {
         private readonly IUserService userService;
         private readonly RoleManager<IdentityRole> roleManager;
+        /// <summary>
+        /// Contructor of the home controller where we inject dependencies.
+        /// </summary>
+        /// <param name="_userService"></param>
+        /// <param name="_roleManager"></param>
         public HomeController(IUserService _userService, RoleManager<IdentityRole> _roleManager)
         {
             userService = _userService;
             roleManager = _roleManager;
         }
 
+        /// <summary>
+        /// Get method for reachinh home page of the admin user.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index() 
         {

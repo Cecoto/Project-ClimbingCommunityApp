@@ -9,7 +9,9 @@
     using static Common.GeneralApplicationConstants;
     using Microsoft.AspNetCore.Identity;
     using ClimbingCommunity.Data.Models;
-
+    /// <summary>
+    /// Admnin controller
+    /// </summary>
     public class AdminController : BaseAdminController
     {
         private readonly IAdminService adminService;
@@ -19,6 +21,15 @@
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
 
+        /// <summary>
+        /// Constructor of the admin controller where we inject needed services in this case.
+        /// </summary>
+        /// <param name="_adminService"></param>
+        /// <param name="_userService"></param>
+        /// <param name="_climbingTripService"></param>
+        /// <param name="_trainingService"></param>
+        /// <param name="_roleManager"></param>
+        /// <param name="_userManager"></param>
         public AdminController(
             IAdminService _adminService,
             IUserService _userService,
@@ -35,6 +46,10 @@
             userManager = _userManager;
 
         }
+        /// <summary>
+        /// Post method for becoming a coach.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> BecomeCoach()
         {
@@ -66,7 +81,10 @@
                 return GeneralError();
             }
         }
-
+        /// <summary>
+        /// Post method for becoming a climber.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> BecomeClimber()
         {
@@ -97,6 +115,10 @@
                 return GeneralError();
             }
         }
+        /// <summary>
+        /// Get method for showing a page of all users join the application.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AllUsers()
         {
@@ -114,6 +136,10 @@
             }
 
         }
+        /// <summary>
+        /// Get method for shwoing a page of all activities created by the users.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AllActivities()
         {
@@ -132,6 +158,11 @@
                 return GeneralError();
             }
         }
+        /// <summary>
+        /// Post method for activating training.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ActivateTraining(string id)
         {
@@ -149,6 +180,11 @@
                 return GeneralError();
             }
         }
+        /// <summary>
+        /// Post method for activating climbing trip.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ActivateClimbingTrip(string id)
         {
