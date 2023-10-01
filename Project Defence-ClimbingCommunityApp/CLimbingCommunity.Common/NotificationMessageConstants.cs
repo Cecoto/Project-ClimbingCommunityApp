@@ -7,5 +7,7 @@
         public const string InformationMessage = "InfoMassage";
         public const string SuccessMessage = "SuccessMessage";
 
+        public const string GeneralErrorMessage = "Unexpected error occured! Please try again later or contact administrator.";
+
     }
 }

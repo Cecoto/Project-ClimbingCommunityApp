@@ -31,7 +31,7 @@
         /// <returns></returns>
         protected IActionResult GeneralError()
         {
-            this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact administrator.";
+            this.TempData[ErrorMessage] = GeneralErrorMessage;
 
             if (User.IsInRole(RoleConstants.Climber))
             {
