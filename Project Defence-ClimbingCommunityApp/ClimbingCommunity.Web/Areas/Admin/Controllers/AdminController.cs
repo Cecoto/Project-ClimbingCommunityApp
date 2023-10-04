@@ -3,12 +3,13 @@
     using ClimbingCommunity.Common;
     using ClimbingCommunity.Services.Contracts;
     using ClimbingCommunity.Web.ViewModels.AdminArea;
+    using ClimbingCommunity.Data.Models;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Identity;
 
     using static Common.NotificationMessageConstants;
     using static Common.GeneralApplicationConstants;
-    using Microsoft.AspNetCore.Identity;
-    using ClimbingCommunity.Data.Models;
+    using static Common.NotificationMessageConstants.AdminControllerMessages;
     /// <summary>
     /// Admnin controller
     /// </summary>
@@ -57,13 +58,13 @@
             bool isUserExist = await userService.IsUserExistsByIdAsync(userId);
             if (!isUserExist)
             {
-                this.TempData[ErrorMessage] = "User with provided id does not exist!";
+                this.TempData[ErrorMessage] = InvalidUserIdMessage;
 
                 return RedirectToAction("Index", "Home");
             }
             if (User.IsInRole(RoleConstants.Coach))
             {
-                this.TempData[WarningMessage] = "You are already a coach!";
+                this.TempData[WarningMessage] = AlreadyCoachMessage;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -72,7 +73,7 @@
             {
                 await adminService.BecomeCoachAsync(userId);
 
-                this.TempData[SuccessMessage] = "You successfully become a coach!";
+                this.TempData[SuccessMessage] = BecameCoachMessage;
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)
@@ -92,13 +93,13 @@
             bool isUserExist = await userService.IsUserExistsByIdAsync(userId);
             if (!isUserExist)
             {
-                this.TempData[ErrorMessage] = "User with provided id does not exist!";
+                this.TempData[ErrorMessage] = GeneralErrorMessage;
 
                 return RedirectToAction("Index", "Home");
             }
             if (User.IsInRole(RoleConstants.Climber))
             {
-                this.TempData[WarningMessage] = "You are already a climber!";
+                this.TempData[WarningMessage] = AlreadyClimberMessage;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -107,7 +108,7 @@
             {
                 await adminService.BecomeClimberAsync(userId);
 
-                this.TempData[SuccessMessage] = "You successfully become a climber!";
+                this.TempData[SuccessMessage] = BecameClimberMessage;
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)
@@ -170,7 +171,7 @@
             {
                 await adminService.ActivateTrainingByIdAsync(id);
 
-                this.TempData[SuccessMessage] = "Succesfully reactivted that activity in the application!";
+                this.TempData[SuccessMessage] = SuccessfullyActivatedActivityMessage;
 
                 return RedirectToAction("AllActivities", "Admin", new { area = AdminAreaName });
             }
@@ -192,7 +193,7 @@
             {
                 await adminService.ActivateClimbingTripByIdAsync(id);
 
-                this.TempData[SuccessMessage] = "Succesfully reactivted that activity in the application!";
+                this.TempData[SuccessMessage] = SuccessfullyActivatedActivityMessage;
 
                 return RedirectToAction("AllActivities", "Admin", new { area = AdminAreaName });
             }
@@ -212,14 +213,14 @@
         {
             if (string.IsNullOrWhiteSpace(role))
             {
-                this.TempData[ErrorMessage] = "Role name cannot be empty!";
+                this.TempData[ErrorMessage] = EmptyRoleMessage;
 
                 return RedirectToAction("Index", "Home", new { area = AdminAreaName });
             }
 
             if (await roleManager.RoleExistsAsync(role))
             {
-                TempData[ErrorMessage] = "Role already exists.";
+                TempData[ErrorMessage] = RoleAlreadyExistMessage;
                 return RedirectToAction("Index", "Home", new { area = AdminAreaName });
             }
 
@@ -249,14 +250,14 @@
 
             if (user == null)
             {
-                this.TempData[ErrorMessage] = "User with selected email does not exists!";
+                this.TempData[ErrorMessage] = InvalidUserEmailMessage;
                 return RedirectToAction("Index", "Home", new { area = AdminAreaName });
             }
 
             bool isUserInRole = await userManager.IsInRoleAsync(user, role);
             if (isUserInRole)
             {
-                this.TempData[ErrorMessage] = "User is already in that role!";
+                this.TempData[ErrorMessage] = AlreadyInRoleMessage;
                 return RedirectToAction("Index", "Home", new { area = AdminAreaName });
             }
             try

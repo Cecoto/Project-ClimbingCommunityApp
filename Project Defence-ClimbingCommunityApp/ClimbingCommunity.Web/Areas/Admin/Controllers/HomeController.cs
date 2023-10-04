@@ -35,7 +35,7 @@
         {
             if(!User.IsInRole(RoleConstants.Administrator))
             {
-                this.TempData[ErrorMessage] = "You don't have access to this page!";
+                this.TempData[ErrorMessage] = NoAccessMessage;
 
                 return RedirectToAction("All","ClimbingTrip");
             }
