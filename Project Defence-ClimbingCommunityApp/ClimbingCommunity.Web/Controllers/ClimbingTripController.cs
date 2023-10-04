@@ -9,6 +9,8 @@
 
     using static Common.NotificationMessageConstants;
     using static Common.GeneralApplicationConstants;
+    using static Common.NotificationMessageConstants.ClimbingTripControllerMessages;
+
 
     /// <summary>
     /// Controller with all action with climbing trips
@@ -46,7 +48,8 @@
         {
             if (!User.IsInRole(RoleConstants.Climber))
             {
-                this.TempData[ErrorMessage] = "You must be a climber to have access to that page!";
+                this.TempData[ErrorMessage] = MustBeClimberMessage;
+
                 if (User.IsInRole(RoleConstants.Administrator))
                 {
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
@@ -91,7 +94,7 @@
 
             if (!User.Identity?.IsAuthenticated ?? true)
             {
-                this.TempData[ErrorMessage] = "You must be logged in to reach that page!";
+                this.TempData[ErrorMessage] = MustBeLoggedInMessage;
 
                 return RedirectToAction("Login", "User");
             }
@@ -146,7 +149,7 @@
         {
             if (!User.IsInRole(RoleConstants.Climber))
             {
-                this.TempData[ErrorMessage] = "You must be a climber to see your joined activities";
+                this.TempData[ErrorMessage] = MustBeClimberMessage;
 
                 return RedirectToAction(nameof(All));
             }
@@ -184,7 +187,7 @@
         {
             if (!User.IsInRole(RoleConstants.Climber))
             {
-                this.TempData[ErrorMessage] = "You must be a climber to add new climbing trips!";
+                this.TempData[ErrorMessage] = MustBeClimberToAddMessage;
 
                 if (User.IsInRole(RoleConstants.Administrator))
                 {
@@ -218,7 +221,7 @@
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData[ErrorMessage] = "You must be a climber to add new climbing trips!";
+                this.TempData[ErrorMessage] = MustBeClimberToAddMessage;
 
                 if (User.IsInRole(RoleConstants.Administrator))
                 {
@@ -231,7 +234,7 @@
 
             if (!tripTypeExists)
             {
-                ModelState.AddModelError(nameof(model.TripTypeId), "Selected trip type does not exist!");
+                ModelState.AddModelError(nameof(model.TripTypeId), InvalidTripTypeMessage);
             }
             if (!ModelState.IsValid)
             {
@@ -244,13 +247,13 @@
 
                 await climbingTripService.CreateAsync(GetUserId()!, model);
 
-                this.TempData[SuccessMessage] = "Climbing trip was added successfully!";
+                this.TempData[SuccessMessage] = SuccessfullyAddedMessage;
 
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to add your new Climbing trip! Please try again leter or contact the administartor!");
+                ModelState.AddModelError(string.Empty, UnexpectedErrorMessage);
 
                 model.TripTypes = await climbingTripService.GetAllTripTypesAsync();
                 return View(model);
@@ -266,7 +269,7 @@
         {
             if (!User.IsInRole("Climber"))
             {
-                this.TempData[ErrorMessage] = "You must be a climber and organizator of the trip in order to edit info of the climbing trip!";
+                this.TempData[ErrorMessage] = MustBeOrganizatorMessage;
                 if (User.IsInRole(RoleConstants.Administrator))
                 {
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
@@ -277,7 +280,7 @@
 
             if (!tripExists)
             {
-                this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist!";
+                this.TempData[ErrorMessage] = InvalidClimbingTripIdMessage;
 
                 return RedirectToAction(nameof(All));
             }
@@ -290,7 +293,7 @@
             }
             if (!isOrganizerOfTrip)
             {
-                this.TempData[ErrorMessage] = "You must be an organizator of the trip in order to edit climbing trip info!";
+                this.TempData[ErrorMessage] = MustBeOrganizatorMessage;
 
                 return RedirectToAction("Add", "ClimbingTrip");
             }
@@ -328,7 +331,7 @@
             }
             if (!User.IsInRole("Climber"))
             {
-                this.TempData[ErrorMessage] = "You must be a climber and organizator of the trip in order to edit info of the climbing trip!";
+                this.TempData[ErrorMessage] = MustBeOrganizatorMessage;
 
                 if (User.IsInRole(RoleConstants.Administrator))
                 {
@@ -340,7 +343,7 @@
             bool tripExists = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
             if (!tripExists)
             {
-                this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist!";
+                this.TempData[ErrorMessage] = InvalidClimbingTripIdMessage;
 
                 return RedirectToAction(nameof(All));
             }
@@ -353,7 +356,7 @@
             }
             if (!isOrganizerOfTrip)
             {
-                this.TempData[ErrorMessage] = "You must be an organizator of the trip in order to edit climbing trip info!";
+                this.TempData[ErrorMessage] = MustBeOrganizatorMessage;
 
                 return RedirectToAction("Add", "ClimbingTrip");
             }
@@ -361,13 +364,13 @@
             {
                 await climbingTripService.EditClimbingTripByIdAsync(id, model);
 
-                this.TempData[SuccessMessage] = "Climbing trip was successfully edited!";
+                this.TempData[SuccessMessage] = SuccessfullyEditedMessage;
 
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Unexpected error occured while trying to edit the climbing trip. Please try again later or contact administrator!");
+                ModelState.AddModelError(string.Empty, UnexpectedErrorMessage);
 
                 model.TripTypes = await climbingTripService.GetAllTripTypesAsync();
 
@@ -385,13 +388,13 @@
             bool isTripExist = await climbingTripService.IsClimbingTripExistsByIdAsync(id);
             if (!isTripExist)
             {
-                this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist! Please try again.";
+                this.TempData[ErrorMessage] = InvalidClimbingTripIdMessage;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
             if (!User.IsInRole(RoleConstants.Climber))
             {
-                this.TempData[ErrorMessage] = "You must be climber in order to delete climbing trips!";
+                this.TempData[ErrorMessage] = MustBeOrganizatorMessage;
                 if (User.IsInRole(RoleConstants.Administrator))
                 {
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
@@ -405,7 +408,7 @@
             }
             if (!isClimberOrganizator)
             {
-                this.TempData[ErrorMessage] = "You must be the the organizator of the trip you want to edit!";
+                this.TempData[ErrorMessage] = MustBeOrganizatorMessage;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
@@ -415,7 +418,7 @@
 
                 if (User.IsInRole(RoleConstants.Administrator))
                 {
-                    this.TempData[SuccessMessage] = "Succesfully deleted that activity from the application!";
+                    this.TempData[SuccessMessage] = SuccessfullyDeletedMessage;
 
                     return RedirectToAction("AllActivities", "Admin", new { area = AdminAreaName });
                 }
@@ -440,20 +443,20 @@
 
             if (!isTripExists)
             {
-                this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist! Please try again.";
+                this.TempData[ErrorMessage] = InvalidClimbingTripIdMessage;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
 
             if (!User.IsInRole("Climber"))
             {
-                this.TempData[ErrorMessage] = "You must be climber in order to join this climbing trips!";
+                this.TempData[ErrorMessage] = MustBeClimberToJoinTripMessage;
                 return RedirectToAction(nameof(All));
             }
             bool isClimberOrganizator = await climbingTripService.isUserOrganizatorOfTripByIdAsync(GetUserId()!, id);
             if (isClimberOrganizator)
             {
-                this.TempData[ErrorMessage] = "You are the organizator of the trip!";
+                this.TempData[ErrorMessage] = YouAreOrganizatorMessage;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
@@ -461,7 +464,7 @@
             {
                 await climbingTripService.JoinClimbingTripAsync(id, GetUserId()!);
 
-                this.TempData[SuccessMessage] = "Successfuly joined in that trip!";
+                this.TempData[SuccessMessage] = SuccessfullyJoinedMessage;
 
                 return RedirectToAction(nameof(All));
             }
@@ -484,14 +487,14 @@
 
             if (!isTripExists)
             {
-                this.TempData[ErrorMessage] = "Climbing trip with the provided id does not exist! Please try again.";
+                this.TempData[ErrorMessage] = InvalidClimbingTripIdMessage;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
             bool isUserParticipant = await climbingTripService.IsUserParticipateInTripByIdAsync(GetUserId()!, id);
             if (!isUserParticipant)
             {
-                this.TempData[ErrorMessage] = "You are not participant of the that trip!";
+                this.TempData[ErrorMessage] = NotParticipantMessage;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
@@ -499,7 +502,7 @@
             {
                 await climbingTripService.LeaveClimbingTripByIdAsync(id, GetUserId()!);
 
-                this.TempData[SuccessMessage] = "Successfuly left that trip!";
+                this.TempData[SuccessMessage] = SuccessfullyLeftMessage;
 
                 return RedirectToAction(nameof(JoinedActivites));
             }
