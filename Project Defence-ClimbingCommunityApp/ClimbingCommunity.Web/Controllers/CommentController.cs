@@ -31,21 +31,21 @@
         {
             if (!User.Identity?.IsAuthenticated ?? true)
             {
-                this.TempData[ErrorMessage] = "You must be logged in to reach that page!";
+                this.TempData[ErrorMessage] = MustBeLoggedInMessage;
 
                 return RedirectToAction("Login", "User");
             }
             bool isActivityTypeExists = commentService.IsActivityTypeExist(activityType);
             if (!isActivityTypeExists)
             {
-                this.TempData[ErrorMessage] = "This type of activity does not exist in our climbing community!";
+                this.TempData[ErrorMessage] = InvalidActivityTypeMessage;
                 return RedirectToAction("All", "ClimbingTrip");
             }
 
             bool isActivityExists = await commentService.IsActivityExistsByIdAndTypeAsync(activityId, activityType);
             if (!isActivityExists)
             {
-                this.TempData[ErrorMessage] = "Activity with the provided id does not exist! Please try again.";
+                this.TempData[ErrorMessage] = InvalidActivityIdMessage;
                 return RedirectToAction("All", "ClimbingTrip");
             }
 
@@ -77,21 +77,21 @@
         {
             if (!User.Identity?.IsAuthenticated ?? true)
             {
-                this.TempData[ErrorMessage] = "You must be logged in to reach that page!";
+                this.TempData[ErrorMessage] = MustBeLoggedInMessage;
 
                 return RedirectToAction("Login", "User");
             }
             bool isActivityTypeExists = commentService.IsActivityTypeExist(activityType);
             if (!isActivityTypeExists)
             {
-                this.TempData[ErrorMessage] = "This type of activity does not exist in our climbing community!";
+                this.TempData[ErrorMessage] = InvalidActivityTypeMessage;
                 return RedirectToAction("All", "ClimbingTrip");
             }
 
             bool isActivityExists = await commentService.IsActivityExistsByIdAndTypeAsync(activityId, activityType);
             if (!isActivityExists)
             {
-                this.TempData[ErrorMessage] = "Activity with the provided id does not exist! Please try again.";
+                this.TempData[ErrorMessage] = InvalidActivityIdMessage;
                 return RedirectToAction("All", "ClimbingTrip");
             }
             if (string.IsNullOrEmpty(activityId) || string.IsNullOrEmpty(activityType))
@@ -110,7 +110,7 @@
             {
                 await commentService.AddCommentAsync(activityId, activityType, model.NewCommentText, GetUserId()!);
 
-                this.TempData[SuccessMessage] = "Successfully added a comment!";
+                this.TempData[SuccessMessage] = SuccessfullyAddedCommentMessage;
 
                 return RedirectToAction("ActivityComments", new { activityId, activityType });
             }
