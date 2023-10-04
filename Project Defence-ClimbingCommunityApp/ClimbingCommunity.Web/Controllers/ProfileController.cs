@@ -41,7 +41,7 @@
         {
             if (!User.Identity?.IsAuthenticated ?? true)
             {
-                TempData["ErrorMessage"] = "You need to be a member of the community to reach that page!";
+                TempData["ErrorMessage"] = MustBeMemberMessage;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -78,7 +78,7 @@
             ApplicationUser user = await userService.GetUserByIdAsync(id);
             if (user == null)
             {
-                this.TempData[ErrorMessage] = "User with that Id does not exist! Please try again later or contact the administrator"!;
+                this.TempData[ErrorMessage] = InvalidUserIdMessage!;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
@@ -86,7 +86,7 @@
             {
                 if (!User.IsInRole(RoleConstants.Administrator))
                 {
-                    this.TempData[ErrorMessage] = "You must be an administrator to have access to that pofile!";
+                    this.TempData[ErrorMessage] = MustBeAdminMessage;
                     return RedirectToAction("All", "ClimbingTrip");
                 }
                 return RedirectToAction("Index", "Home", new { area = AdminAreaName });
@@ -150,7 +150,7 @@
 
             if (!isUserExists)
             {
-                this.TempData[ErrorMessage] = "User with that Id does not exist! Please try again later or contact the administrator"!;
+                this.TempData[ErrorMessage] = InvalidUserIdMessage;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
@@ -185,14 +185,14 @@
 
             if (!isLevelValid)
             {
-                ModelState.AddModelError(nameof(model.LevelId), "Invalid level id, please select it again!");
+                ModelState.AddModelError(nameof(model.LevelId), InvalidLevelMessage);
             }
 
             bool isClimbingSpecialityValid = await userService.IsClimbingSpecialityIdValidByIdAsync(model.ClimberSpecialityId);
 
             if (!isClimbingSpecialityValid)
             {
-                ModelState.AddModelError(nameof(model.ClimberSpecialityId), "Invalid speciality id, please select it again!");
+                ModelState.AddModelError(nameof(model.ClimberSpecialityId), InvalidSpecialityMessage);
             }
 
             if (!ModelState.IsValid)
@@ -208,7 +208,7 @@
             {
                 await userService.UpdateClimberInfoAsync(GetUserId()!, model);
 
-                this.TempData[SuccessMessage] = "Your profile was successfully edited!";
+                this.TempData[SuccessMessage] = SucceessfulllyEditedProfileMessage;
 
                 return RedirectToAction(nameof(MyProfile));
 
@@ -232,7 +232,7 @@
 
             if (!isUserExists)
             {
-                this.TempData[ErrorMessage] = "User with that Id does not exist! Please try again later or contact the administrator"!;
+                this.TempData[ErrorMessage] = InvalidUserIdMessage;
 
                 return RedirectToAction("All", "ClimbingTrip");
             }
@@ -264,7 +264,7 @@
             {
                 await userService.UpdateCoachInfoAsync(GetUserId()!, model);
 
-                this.TempData[SuccessMessage] = "Your profile was successfully edited!";
+                this.TempData[SuccessMessage] = SucceessfulllyEditedProfileMessage;
 
                 return RedirectToAction(nameof(MyProfile));
             }
@@ -285,7 +285,7 @@
         {
             if (photos == null || !photos.Any())
             {
-                this.TempData[ErrorMessage] = "No photos selected.";
+                this.TempData[ErrorMessage] = NoPhotoSelecedMessage;
 
                 return RedirectToAction(nameof(MyProfile));
             }
@@ -296,7 +296,7 @@
             {
                 await userService.SavePhotosToUserByIdAsync(GetUserId()!, savedPhotoPaths);
 
-                this.TempData[SuccessMessage] = "Successfully uploaded.";
+                this.TempData[SuccessMessage] = SuccessfullyUploadedMessage;
 
                 return RedirectToAction(nameof(MyProfile));
             }
